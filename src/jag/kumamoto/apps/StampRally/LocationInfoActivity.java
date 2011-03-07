@@ -108,7 +108,7 @@ public class LocationInfoActivity extends Activity{
 		});
 		WebSettings settings = webInfo.getSettings();
 		settings.setJavaScriptEnabled(true);
-		webInfo.loadUrl(getWikipediaURL(mPin));
+		webInfo.loadUrl(getInfomationURL(mPin));
 		
 		
 		//クイズを表示できる状態ならボタンを表示
@@ -166,10 +166,12 @@ public class LocationInfoActivity extends Activity{
 		
 	}
 	
-	private String getWikipediaURL(StampPin pin) {
-		return new StringBuilder("http://ja.wikipedia.org/wiki/")
-			.append(URLEncoder.encode(pin.name))
-			.toString();
+	private String getInfomationURL(StampPin pin) {
+		return (pin.url != null && !pin.url.equals("") && !pin.url.equals("null")) ?
+				pin.url :
+				new StringBuilder("http://ja.wikipedia.org/wiki/")
+					.append(URLEncoder.encode(pin.name))
+					.toString();
 	}
 	
 	private View.OnClickListener createGoQuizOnClickListener() {
