@@ -73,6 +73,7 @@ public final class R {
         public static final int go_location_frame=0x7f0c0004;
         public static final int go_quiz=0x7f0c0001;
         public static final int go_quiz_frame=0x7f0c0000;
+        public static final int not_show_next_time=0x7f0c000a;
         public static final int progress_frame=0x7f0c0002;
         public static final int route_search_kind=0x7f0c0005;
         public static final int webView_progress=0x7f0c0009;
@@ -99,6 +100,7 @@ public final class R {
         public static final int frame_choices=0x7f100003;
         public static final int label_answer=0x7f100002;
         public static final int name=0x7f100000;
+        public static final int not_show_next_time=0x7f100009;
         public static final int ok=0x7f100004;
         public static final int result_icon=0x7f100006;
         public static final int result_message=0x7f100005;
@@ -142,16 +144,17 @@ public final class R {
         public static final int help=0x7f030003;
         public static final int home=0x7f030004;
         public static final int location_infomation=0x7f030005;
-        public static final int main=0x7f030006;
-        public static final int map=0x7f030007;
-        public static final int mascot_text_balloon=0x7f030008;
-        public static final int quiz=0x7f030009;
-        public static final int quiz_muliple_choice=0x7f03000a;
-        public static final int quiz_result_dialog_content=0x7f03000b;
-        public static final int quiz_single_choice=0x7f03000c;
-        public static final int settings=0x7f03000d;
-        public static final int settings_token_radiobutton=0x7f03000e;
-        public static final int thanks=0x7f03000f;
+        public static final int location_urge_login_dialog_content=0x7f030006;
+        public static final int main=0x7f030007;
+        public static final int map=0x7f030008;
+        public static final int mascot_text_balloon=0x7f030009;
+        public static final int quiz=0x7f03000a;
+        public static final int quiz_muliple_choice=0x7f03000b;
+        public static final int quiz_result_dialog_content=0x7f03000c;
+        public static final int quiz_single_choice=0x7f03000d;
+        public static final int settings=0x7f03000e;
+        public static final int settings_token_radiobutton=0x7f03000f;
+        public static final int thanks=0x7f030010;
     }
     public static final class raw {
         public static final int help=0x7f040000;

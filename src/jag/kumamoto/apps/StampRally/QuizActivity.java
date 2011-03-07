@@ -35,10 +35,12 @@ import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -186,7 +188,7 @@ public class QuizActivity extends Activity{
 					asyncSendAnswerLong();
 					
 					addUserRecord(correctness, duration);
-				} else {
+				} else if(StampRallyPreferences.getShowUrgeDialog()){
 					mResultDataAry.add(new ResultData(mQuizes[mIndex],
 							correctness, duration, isCheckedAry));
 				}
@@ -312,8 +314,11 @@ public class QuizActivity extends Activity{
 	 		((TextView)content.findViewById(R.id_quiz.result_message)).setText("正解!!");
 	 		((ImageView)content.findViewById(R.id_quiz.result_icon)).setImageResource(R.drawable.quiz_result_correctness);
 	 		
-			if(mUser == null) {
-				content.findViewById(R.id_quiz.result_warning).setVisibility(View.VISIBLE);
+			if(mUser == null && StampRallyPreferences.getShowUrgeDialog()) {
+		 		content.findViewById(R.id_quiz.result_separator).setVisibility(View.VISIBLE);
+		 		content.findViewById(R.id_quiz.result_warning).setVisibility(View.VISIBLE);
+		 		content.findViewById(R.id_quiz.not_show_next_time).setVisibility(View.VISIBLE);
+		 		
 				builder.setNeutralButton("ログインする", new DialogInterface.OnClickListener() {
 					@Override public void onClick(DialogInterface dialog, int which) {
 						Intent intent = new Intent(QuizActivity.this, SettingsActivity.class);
@@ -322,6 +327,19 @@ public class QuizActivity extends Activity{
 						startActivityForResult(intent, RequestLogin);
 					}
 				});
+				
+				((CheckBox)content.findViewById(R.id_quiz.not_show_next_time)).setChecked(!StampRallyPreferences.getShowUrgeDialog());
+		 		((CheckBox)content.findViewById(R.id_quiz.not_show_next_time)).setOnCheckedChangeListener(
+		 				new CompoundButton.OnCheckedChangeListener() {
+							@Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+								StampRallyPreferences.setShowUrgeDialog(!isChecked);
+								if(isChecked) {
+									Toast.makeText(QuizActivity.this, 
+											"設定画面でこのオプションを変更できます", Toast.LENGTH_LONG).show();
+								}
+							}
+						});
+				
 			} else {
 				content.findViewById(R.id_quiz.result_separator).setVisibility(View.GONE);
 			}
@@ -337,7 +355,6 @@ public class QuizActivity extends Activity{
 		} else {
 	 		((TextView)content.findViewById(R.id_quiz.result_message)).setText("不正解；；");
 	 		((ImageView)content.findViewById(R.id_quiz.result_icon)).setImageResource(R.drawable.quiz_result_incorrectness);
-	 		content.findViewById(R.id_quiz.result_separator).setVisibility(View.GONE);
 		}
 		
 		

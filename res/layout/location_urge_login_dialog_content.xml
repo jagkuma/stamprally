@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:padding="5dip"
+	>
+		
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textSize="16sp"
+		android:text="ログインしていないと到着ポイントはもらえません。\n設定画面からログインしてください"
+		/>
+		
+	<View 
+		android:layout_width="fill_parent"
+		android:layout_height="1dip"
+		android:background="#ddffffff"
+		android:layout_marginTop="30dip"
+		android:layout_marginBottom="2dip"
+		/>
+	
+	<CheckBox android:id="@+id_location_info/not_show_next_time"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textSize="16sp"
+		android:text="次回から表示しない"
+		/>
+	
+	
+</LinearLayout>

@@ -15,6 +15,7 @@ import jag.kumamoto.apps.gotochi.R;
 import aharisu.util.DataGetter;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +34,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -133,18 +137,23 @@ public class LocationInfoActivity extends Activity{
 		View goLocation = findViewById(R.id_location_info.go_location_frame);
 		View btnArriveReport = findViewById(R.id_location_info.arrive_report);
 		if(isArrive) {
-			goLocation.setVisibility(View.GONE);
-			btnArriveReport.setVisibility(View.VISIBLE);
-			btnArriveReport.setOnClickListener(new View.OnClickListener() {
-				@Override public void onClick(View v) {
-					if(mUser == null) {
-						showUrgeLoginDialog();
-					} else {
-						addUserRecord();
-						sendAsyncArrivedMessaeg();
+			if(StampRallyPreferences.getShowUrgeDialog()) {
+				goLocation.setVisibility(View.GONE);
+				btnArriveReport.setVisibility(View.VISIBLE);
+				btnArriveReport.setOnClickListener(new View.OnClickListener() {
+					@Override public void onClick(View v) {
+						if(mUser == null) {
+								showUrgeLoginDialog();
+						} else {
+							addUserRecord();
+							sendAsyncArrivedMessaeg();
+						}
 					}
-				}
-			});
+				});
+			} else {
+				goLocation.setVisibility(View.GONE);
+				btnArriveReport.setVisibility(View.GONE);
+			}
 		} else {
 			goLocation.setVisibility(View.VISIBLE);
 			btnArriveReport.setVisibility(View.GONE);
@@ -267,9 +276,24 @@ public class LocationInfoActivity extends Activity{
 	}
 	
 	private void showUrgeLoginDialog() {
+		View layout = ((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+			.inflate(R.layout.location_urge_login_dialog_content, null);
+		((CheckBox)layout.findViewById(R.id_location_info.not_show_next_time)).setChecked(!StampRallyPreferences.getShowUrgeDialog());
+		((CheckBox)layout.findViewById(R.id_location_info.not_show_next_time)).setOnCheckedChangeListener(
+				new CompoundButton.OnCheckedChangeListener() {
+					
+					@Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						StampRallyPreferences.setShowUrgeDialog(!isChecked);
+						if(isChecked) {
+							Toast.makeText(LocationInfoActivity.this, 
+									"設定画面でこのオプションを変更できます", Toast.LENGTH_LONG).show();
+						}
+					}
+				});
+		
 		new AlertDialog.Builder(this)
 			.setTitle("ログインしていません")
-			.setMessage("ログインしていないと到着ポイントはもらえません。\n設定画面からログインしてください")
+			.setView(layout)
 			.setPositiveButton("ログインする", new DialogInterface.OnClickListener() {
 				@Override public void onClick(DialogInterface dialog, int which) {
 					Intent intent = new Intent(LocationInfoActivity.this, SettingsActivity.class);

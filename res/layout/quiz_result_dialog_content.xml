@@ -34,8 +34,9 @@
 		android:layout_width="fill_parent"
 		android:layout_height="1dip"
 		android:background="#ddffffff"
-		android:layout_marginTop="5dip"
+		android:layout_marginTop="30dip"
 		android:layout_marginBottom="2dip"
+		android:visibility="gone"
 		/>
 	
 	<TextView android:id="@+id_quiz/result_warning"
@@ -43,6 +44,14 @@
 		android:layout_height="wrap_content"
 		android:textSize="14sp"
 		android:text="ログインしていないとクイズポイントはもらえません。\n設定画面からログインしてください。"
+		android:visibility="gone"
+		/>
+		
+	<CheckBox android:id="@+id_quiz/not_show_next_time"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textSize="16sp"
+		android:text="次回から表示しない"
 		android:visibility="gone"
 		/>
 	

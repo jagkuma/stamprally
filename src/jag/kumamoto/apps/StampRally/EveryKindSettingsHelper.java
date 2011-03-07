@@ -37,6 +37,12 @@ final class EveryKindSettingsHelper {
 		});
 		
 		CheckBox chkShowUrge = (CheckBox)mLayout.findViewById(R.id_settings.show_urge);
+		if(mUser == null) {
+			chkShowUrge.setEnabled(true);
+			chkShowUrge.setChecked(StampRallyPreferences.getShowUrgeDialog());
+		} else {
+			chkShowUrge.setEnabled(false);
+		}
 		chkShowUrge.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(mListener != null) {
@@ -44,12 +50,6 @@ final class EveryKindSettingsHelper {
 				}
 			}
 		});
-		if(mUser == null) {
-			chkShowUrge.setEnabled(true);
-		} else {
-			chkShowUrge.setEnabled(false);
-			chkShowUrge.setChecked(StampRallyPreferences.getShowUrgeDialog());
-		}
 	}
 	
 	private int convertPollingTypeToId(int type) {
