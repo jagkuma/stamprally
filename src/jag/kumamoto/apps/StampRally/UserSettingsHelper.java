@@ -487,21 +487,21 @@ final class UserSettingsHelper {
 				try {
 					JSONObject obj = DataGetter.getJSONObject(StampRallyURL.getRegistrationQuery(user));
 					if(StampRallyURL.isSuccess(obj)) {
-						switch(loginUpdate(dialog, handler, user, new UserRecord(0, 0, 0, 0, 0))) {
-						case 1:
-							//XXX サーバとの通信失敗(クエリの間違い?)
-							break;
-						case 2:
-							//XXX ネットワーク通信の失敗
-							break;
-						case 3:
-							//XXX JSONフォーマットが不正
-							break;
-						default:
-							return true;
+						if(User.isUpdate(obj)) {
+							switch(loginUpdate(dialog, handler, user, new UserRecord(0, 0, 0, 0, 0))) {
+							case 1:
+								//XXX サーバとの通信失敗(クエリの間違い?)
+								return false;
+							case 2:
+								//XXX ネットワーク通信の失敗
+								return false;
+							case 3:
+								//XXX JSONフォーマットが不正
+								return false;
+							}
 						}
 						
-						return false;
+						return true;
 					} else {
 						//XXX サーバとの通信失敗(クエリの間違い?)
 						Log.e("registration", obj.toString());

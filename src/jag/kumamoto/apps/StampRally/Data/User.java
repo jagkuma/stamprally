@@ -34,6 +34,10 @@ public final class User implements Parcelable {
 		return new User(token, gender, nickname);
 	}
 	
+	public static boolean isUpdate(JSONObject obj) throws JSONException {
+		return obj.getString("updated").equals("true");
+	}
+	
 	
 	/*
 	 * 以降 Parcelableクラスの実装
