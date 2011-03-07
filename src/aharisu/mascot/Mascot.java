@@ -65,28 +65,32 @@ public final class Mascot extends IMascot{
 				
 				if(mStateChange) {
 					mStateChange = false;
-					transition(getNextState());
+					changeState(true);
 				} else if(mCurState.isAllowInterrupt()) {
-					MascotEvent event = mEventQueue.poll();
-					if(event != null) {
-						if((event.type == Type.Text  || event.type == Type.Tweet)
-								&& mSpeakState.isEnable()) {
-							
-							mSpeakState.setEventType(event.type);
-							mSpeakState.setText(event.text);
-							forceTransition(mSpeakState);
-						}
-					} else if(mStateChange || isExist(mCurState)) {
-						//今の状態と次の状態が同じ場合もある
-						//その場合は何も起きない
-						transition(getNextState());
-					}
+					changeState(false);
 				}
 				
 				
 				if(mCurState.update()) {
 					mHandler.postDelayed(mUpdate, mCurState.getUpdateInterval());
 				}
+			}
+		}
+
+		private void changeState(boolean force) {
+			MascotEvent event = mEventQueue.poll();
+			if(event != null) {
+				if((event.type == Type.Text  || event.type == Type.Tweet)
+						&& mSpeakState.isEnable()) {
+					
+					mSpeakState.setEventType(event.type);
+					mSpeakState.setText(event.text);
+					forceTransition(mSpeakState);
+				}
+			} else if(force || isExist(mCurState)) {
+				//今の状態と次の状態が同じ場合もある
+				//その場合は何も起きない
+				transition(getNextState());
 			}
 		}
 		
@@ -197,14 +201,17 @@ public final class Mascot extends IMascot{
 			throw new IllegalStateException("基本状態が一つもありません");
 		}
 		
-		mCurState = mBasicStateList.get(0);
-		mHandler.postDelayed(mUpdate, mCurState.getUpdateInterval());
 		
-		mIsStarted = true;
+		if(!mIsStarted) {
+			mIsStarted = true;
+			mCurState = mBasicStateList.get(0);
+			mHandler.postDelayed(mUpdate, mCurState.getUpdateInterval());
+		}
 	}
 	
 	public void stop() {
 		mIsStarted = false;
+		mHandler.removeCallbacks(mUpdate);
 	}
 	
 	public void onLongPress() {
@@ -255,9 +262,9 @@ public final class Mascot extends IMascot{
 				
 				transition(state);
 				
-				state.update();
-				
-				mHandler.postDelayed(mUpdate, state.getUpdateInterval());
+				if(state.update()) {
+					mHandler.postDelayed(mUpdate, state.getUpdateInterval());
+				}
 			}
 		}
 	}

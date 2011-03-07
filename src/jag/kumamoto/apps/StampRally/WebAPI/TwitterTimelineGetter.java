@@ -19,6 +19,10 @@ public class TwitterTimelineGetter {
 	private long mMaxId;
 
 	private final Twitter mTwitter;
+	
+	private final Queue<String> mTweetQueue = new LinkedList<String>();
+	private int mMaxQueueSize = 20;
+
 
 	public TwitterTimelineGetter(String userName, long maxId) {
 		this.mUserName = userName;
@@ -38,17 +42,22 @@ public class TwitterTimelineGetter {
 		return mMaxId;
 	}
 
-	private Queue<String> queue = new LinkedList<String>();
-
 	public String getTweet() {
-		return queue.poll();
+		return mTweetQueue.poll();
+	}
+	
+	public int getMaxQueueSize() {
+		return mMaxQueueSize;
+	}
+	
+	public void setMaxQueueSize(int size) {
+		mMaxQueueSize = size;
 	}
 
 	public void requestTweet(boolean allowInReply, boolean allowReTweet) {
 		try {
 			ResponseList<Status> timeline = mTwitter.getUserTimeline(mUserName);
 			Collections.reverse(timeline);
-			queue.clear();
 
 			for (Status status : timeline) {
 				if (!allowInReply && status.getInReplyToStatusId() != -1) {
@@ -60,8 +69,13 @@ public class TwitterTimelineGetter {
 				}
 				if (status.getId() > mMaxId) {
 					mMaxId = status.getId();
-					queue.offer(status.getText());
+					mTweetQueue.offer(status.getText());
 				}
+			}
+			
+			//上限を超えないように超えた分は捨てる
+			while(mMaxQueueSize <= mTweetQueue.size()) {
+				mTweetQueue.poll();
 			}
 		} catch (TwitterException e) {
 			e.printStackTrace();

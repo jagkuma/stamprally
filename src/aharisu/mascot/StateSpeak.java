@@ -85,9 +85,9 @@ public class StateSpeak extends MascotState {
 		if(mRunCount <= mTotalRunCount) {
 			return 150;
 		} else {
-			return mType == Type.Text ? 10000 :
-				mType == Type.Tweet ? 15000 :
-				10000;
+			return mType == Type.Text ? 8000 :
+				mType == Type.Tweet ? 12000 :
+				8000;
 		}
 	}
 	

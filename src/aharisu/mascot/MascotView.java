@@ -208,6 +208,7 @@ public class MascotView extends FrameLayout {
 	}
 	
 	public void stop() {
+		hideText();
 		mShowMascotView.stop();
 	}
 	
@@ -301,7 +302,10 @@ public class MascotView extends FrameLayout {
 	}
 	
 	private void hideText() {
-		mLayout.removeView(mLayout.findViewById(TextBalloonViewId));
+		View balloon = mLayout.findViewById(TextBalloonViewId);
+		if(balloon != null) {
+			mLayout.removeView(balloon);
+		}
 	}
 	
 

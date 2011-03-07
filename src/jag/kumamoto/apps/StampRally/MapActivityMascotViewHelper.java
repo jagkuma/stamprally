@@ -1,7 +1,5 @@
 package jag.kumamoto.apps.StampRally;
 
-import java.util.Random;
-
 import jag.kumamoto.apps.StampRally.WebAPI.TwitterTimelineGetter;
 import jag.kumamoto.apps.gotochi.R;
 import aharisu.mascot.BitmapLoader;
@@ -13,60 +11,42 @@ import aharisu.mascot.StateRandomWalk;
 import aharisu.mascot.StateRepetition;
 import aharisu.mascot.StateTimeZoneRepetition;
 import aharisu.mascot.TimeZoneState;
+import aharisu.mascot.StateUserInteractionCallback;
 import aharisu.mascot.UserInteractionState;
-import aharisu.mascot.MascotEvent.Type;
 import aharisu.util.ImageUtill;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
-import android.os.Handler;
 
 public final class MapActivityMascotViewHelper {
 	private class TimeLineUpdater extends AsyncTask<Void, Void, Void> {
-		private long mNextUpdateTime = getNextUpdateTime();
+		private long mNextUpdateTime = 0;
 
 		@Override
 		protected Void doInBackground(Void... params) {
 			while (!isCancelled()) {
 				if (mNextUpdateTime < System.currentTimeMillis()) {
-					// final String tweet =
-					// mTimeLineGetter.getNewestTweet(false,
-					// false);
-					mTimeLineGetter.requestTweet(false, false);
+					synchronized (mTimeLineGetter) {
+						mTimeLineGetter.requestTweet(false, false);
+					}
 					mNextUpdateTime = getNextUpdateTime();
 				}
-
-				final String tweet = mTimeLineGetter.getTweet();
-				if (tweet != null) {
-					mHandler.post(new Runnable() {
-
-						@Override
-						public void run() {
-							mView.addMascotEvent(new MascotEvent(Type.Tweet,
-									tweet));
-						}
-					});
-				}
+				
+				android.os.SystemClock.sleep(5 * 1000); 
 			}
 
-			android.os.SystemClock.sleep(5 * 1000); 
 
 			return null;
 		}
 
 		private long getNextUpdateTime() {
-			return System.currentTimeMillis() +
-			// mRand.nextInt(5*60*1000) + 3 * 60 * 1000;//現在時刻+3分～8分
-					1 * 60 * 1000;// 現在時刻+1分
+			return System.currentTimeMillis() + 1 * 60 * 1000;// 現在時刻+1分
 		}
 	};
 
 	private final MascotView mView;
 
 	private final TwitterTimelineGetter mTimeLineGetter;
-
-	private final Random mRand = new Random();
-	private final Handler mHandler = new Handler();
 
 	private TimeLineUpdater mUpdater;
 
@@ -98,7 +78,28 @@ public final class MapActivityMascotViewHelper {
 		// 導入画像を以外を3回リピートする
 		falling.setNumRepetition(3);
 		mView.addUserInteractionState(falling);
-
+		
+		//シングルタップでTweetを表示する
+		StateUserInteractionCallback singleTap = new StateUserInteractionCallback(mascot,
+				UserInteractionState.Type.SingleTap, new StateUserInteractionCallback.Callback() {
+					private String mPrevTweet = null;
+					@Override public void onAction() {
+						String tweet;
+						synchronized (mTimeLineGetter) {
+							tweet = mTimeLineGetter.getTweet();
+						}
+						if(tweet == null) {
+							tweet = mPrevTweet;
+						}
+						
+						if(tweet != null) {
+							mView.addMascotEvent(new MascotEvent(MascotEvent.Type.Tweet, tweet));
+							mPrevTweet = tweet;
+						}
+					}
+				});
+		mView.addUserInteractionState(singleTap);
+		
 		// テキスト表示状態用の画像を設定
 		mView
 				.setSpeakStateBitmapLoader(new BitmapLoader.RawResourceBitmapLoader(
@@ -154,7 +155,8 @@ public final class MapActivityMascotViewHelper {
 	}
 
 	public void onDestroy() {
-		StampRallyPreferences.setKumamonTweetMaxId(mTimeLineGetter.getMaxId());
+		//次回起動時に最低一つはtweetを取得できるようにわざと１少ないidを保存しておく
+		StampRallyPreferences.setKumamonTweetMaxId(mTimeLineGetter.getMaxId() - 1);
 	}
 
 }

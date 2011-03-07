@@ -38,8 +38,8 @@ public class StateRandomWalk extends MascotState{
 	
 	
 	
-	private int mCurX = 0;
-	private int mCurY = 0;
+	private int mCurX = 20;
+	private int mCurY = 20;
 	
 	private int mState = StateStop;
 	private int mDirection = DirectionFront;
