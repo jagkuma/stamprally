@@ -638,14 +638,16 @@ final class UserSettingsHelper {
 				
 				handler.post(new ProgressManipulator(3));
 				//サーバから到着済みの場所を取得
-				obj = DataGetter.getJSONObject(StampRallyURL.getUserHistoryQuery(user, true));
+				obj = DataGetter.getJSONObject(StampRallyURL.getUserHistoryQuery(user, false));
 				handler.post(new ProgressManipulator(4));
-				long[] arrivedIds = UserHistory.decodeJSONGetArrivedIds(obj);
+				UserHistory history = UserHistory.decodeJSONGetExecutedIds(obj);
 				//ユーザ履歴からすでに到着しているスタンプにフラグを立てる
-				StampRallyDB.checkPinNonArrive(arrivedIds);
+				StampRallyDB.checkPinNonArrive(history.executedPinIds);
+				//ユーザ履歴からすでに正解しているクイズにフラグを立てる
+				StampRallyDB.setQuizResult(history.executedQuizIds);
 				
 				//ユーザレコードをプリファレンスに保存する
-				record.numStamp = arrivedIds.length;
+				record.numStamp = history.executedPinIds.length;
 				StampRallyPreferences.setUserRecord(record);
 				
 				return 0;
