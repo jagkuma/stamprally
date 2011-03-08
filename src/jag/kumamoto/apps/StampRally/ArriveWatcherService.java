@@ -187,14 +187,20 @@ public class ArriveWatcherService extends Service{
 		}
 		
 		@Override public void onProviderDisabled(String provider) {
+			setupLocationListener();
 		}
 		
 		@Override public void onLocationChanged(Location location) {
+			
 			LocationDistanceCalculator calc = new LocationDistanceCalculator(
 					(float)location.getLatitude(), (float)location.getLongitude());
 			
-			//許容誤差に取得位置情報の誤差を足す
-			float allowErrorRange = AllowErrroRange + location.getAccuracy();
+			//許容誤差計算
+			float accuracy = location.getAccuracy();
+			float allowErrorRange = AllowErrroRange + accuracy;
+			if(allowErrorRange > 500) {
+				allowErrorRange = accuracy;
+			}
 			
 			StampPin[] pins = StampRallyDB.getStampPinsNonArrive();
 			
