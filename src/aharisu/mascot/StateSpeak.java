@@ -40,7 +40,7 @@ public class StateSpeak extends MascotState {
 	 * @param loader
 	 */
 	public void setLoader(BitmapLoader loader) {
-		if(loader.getNumSplitVertical() != 5) {
+		if(loader.getNumSplitVertical() != 7) {
 			throw new IllegalArgumentException("number of vertical split require 5");
 		}
 		if(loader.getNumSplitHorizontal() != 1) {
@@ -135,8 +135,8 @@ public class StateSpeak extends MascotState {
 		if(mRunCount < mTotalRunCount) {
 			++mRunCount;
 		
-			int direcOrigin = mDirection * 2 + 1;
-			mIndex = (((mIndex - direcOrigin) + 1) % 2) + direcOrigin;
+			int direcOrigin = mDirection * 3 + 1;
+			mIndex = (((mIndex - direcOrigin) + 1) % 3) + direcOrigin;
 			
 			Bitmap image = getImageAt(mIndex);
 			

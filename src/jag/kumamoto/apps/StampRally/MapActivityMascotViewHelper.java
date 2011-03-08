@@ -103,7 +103,7 @@ public final class MapActivityMascotViewHelper {
 		// テキスト表示状態用の画像を設定
 		mView
 				.setSpeakStateBitmapLoader(new BitmapLoader.RawResourceBitmapLoader(
-						context, R.raw.speak, 5, 1));
+						context, R.raw.speak, 7, 1));
 
 		// スクロール中状態用の画像を設定
 		mView
