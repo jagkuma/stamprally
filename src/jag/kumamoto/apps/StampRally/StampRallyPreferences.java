@@ -242,4 +242,22 @@ public final class StampRallyPreferences {
 		editor.commit();
 	}
 	
+	
+	private static final String PreferenceIsFirstShowMap = "is-first-show-map";
+	
+	public static boolean isFirstShowMap() {
+		SharedPreferences pref = mContext.getSharedPreferences(
+				PreferenceName, Context.MODE_PRIVATE);
+		
+		if(pref.getBoolean(PreferenceIsFirstShowMap, true)) {
+			SharedPreferences.Editor editor = pref.edit();
+			editor.putBoolean(PreferenceIsFirstShowMap, false);
+			editor.commit();
+			
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }

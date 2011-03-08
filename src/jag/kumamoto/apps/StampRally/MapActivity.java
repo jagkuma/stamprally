@@ -8,6 +8,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 
@@ -16,9 +17,7 @@ import jag.kumamoto.apps.StampRally.Data.StampRallyURL;
 import jag.kumamoto.apps.StampRally.Data.User;
 import jag.kumamoto.apps.StampRally.Data.UserRecord;
 import jag.kumamoto.apps.gotochi.R;
-import aharisu.mascot.MascotEvent;
 import aharisu.mascot.MascotView;
-import aharisu.mascot.MascotEvent.Type;
 import aharisu.util.DataGetter;
 import aharisu.util.Pair;
 import android.content.ComponentName;
@@ -131,9 +130,6 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 			@Override public void onDrawerOpened() {
 				mIsOpenSlidingDrawer = true;
 				
-				((FlowingTextView)findViewById(R.id_map.infobar)).addFlowMessage("開いたよ");
-		((MascotView)findViewById(R.id_map.mascot)).addMascotEvent(new MascotEvent(Type.Text, "開いたよ。\nhahaha"));
-				
 				//設定ビューが開いている間はマップを動かせないようにする
 				map.setClickable(false);
 			}
@@ -152,8 +148,6 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 			@Override public void onDrawerClosed() {
 				mIsOpenSlidingDrawer = false;
 				
-				((FlowingTextView)findViewById(R.id_map.infobar)).addFlowMessage("閉じたよ");
-				
 				//設定ビューが閉じるとマップを動かせるようにする
 				map.setClickable(true);
 			}
@@ -166,6 +160,11 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 		
 		//スタンプラリーのピンの到着を監視するサービスとバインドする
 		bindArriveWatcherservice();
+		
+		if(StampRallyPreferences.isFirstShowMap()) {
+			//初めてマップを表示したときは熊本を表示するようにする
+			map.getController().animateTo(new GeoPoint(32790065, 130689401));
+		}
 	}
 	
 	private void GetAsyncStampPinsFromDB() {
