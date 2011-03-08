@@ -14,27 +14,39 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int gallery_item_background=0x7f020000;
-        public static final int gallery_item_selected_rect=0x7f020001;
-        public static final int home_icon=0x7f020002;
-        public static final int ic_menu_forward=0x7f020003;
-        public static final int icon=0x7f020004;
-        public static final int icon_status_bar=0x7f020005;
-        public static final int icon_status_bar_arrived=0x7f020006;
-        public static final int infobar_background=0x7f020007;
-        public static final int marker_none=0x7f020008;
-        public static final int marker_none_arrived=0x7f020009;
-        public static final int marker_quiz=0x7f02000a;
-        public static final int marker_quiz_arrived=0x7f02000b;
-        public static final int quiz_result_correctness=0x7f02000c;
-        public static final int quiz_result_incorrectness=0x7f02000d;
-        public static final int settings_group=0x7f02000e;
-        public static final int sliding_drawer_content_background=0x7f02000f;
-        public static final int sliding_drawer_content_group=0x7f020010;
-        public static final int sliding_drawer_handle=0x7f020011;
-        public static final int sliding_drawer_handle_normal=0x7f020012;
-        public static final int sliding_drawer_handle_pressed=0x7f020013;
-        public static final int transparent_background=0x7f020014;
+        public static final int button_home=0x7f020000;
+        public static final int button_home_disable=0x7f020001;
+        public static final int button_home_disable_focused=0x7f020002;
+        public static final int button_home_normal=0x7f020003;
+        public static final int button_home_pressed=0x7f020004;
+        public static final int button_home_selected=0x7f020005;
+        public static final int gallery_item_background=0x7f020006;
+        public static final int gallery_item_selected_rect=0x7f020007;
+        public static final int home_background=0x7f020008;
+        public static final int home_icon=0x7f020009;
+        public static final int ic_menu_forward=0x7f02000a;
+        public static final int icon=0x7f02000b;
+        public static final int icon_status_bar=0x7f02000c;
+        public static final int icon_status_bar_arrived=0x7f02000d;
+        public static final int infobar_background=0x7f02000e;
+        public static final int marker_none=0x7f02000f;
+        public static final int marker_none_arrived=0x7f020010;
+        public static final int marker_quiz=0x7f020011;
+        public static final int marker_quiz_arrived=0x7f020012;
+        public static final int quiz_result_correctness=0x7f020013;
+        public static final int quiz_result_incorrectness=0x7f020014;
+        public static final int settings_group=0x7f020015;
+        public static final int sliding_drawer_content_background=0x7f020016;
+        public static final int sliding_drawer_content_group=0x7f020017;
+        public static final int sliding_drawer_handle=0x7f020018;
+        public static final int sliding_drawer_handle_normal=0x7f020019;
+        public static final int sliding_drawer_handle_pressed=0x7f02001a;
+        public static final int thanks_image=0x7f02001b;
+        public static final int to_map=0x7f02001c;
+        public static final int to_map_normal=0x7f02001d;
+        public static final int to_map_pressed=0x7f02001e;
+        public static final int to_map_selected=0x7f02001f;
+        public static final int transparent_background=0x7f020020;
     }
     public static final class id {
         public static final int content=0x7f0f0001;
@@ -60,11 +72,12 @@ public final class R {
         public static final int webview=0x7f0a0000;
     }
     public static final class id_home {
-        public static final int collections=0x7f0b0003;
-        public static final int help=0x7f0b0000;
-        public static final int map=0x7f0b0001;
-        public static final int settings=0x7f0b0004;
-        public static final int thanks=0x7f0b0002;
+        public static final int collections=0x7f0b0001;
+        public static final int help=0x7f0b0002;
+        public static final int map=0x7f0b0000;
+        public static final int settings=0x7f0b0003;
+        public static final int signboard=0x7f0b0005;
+        public static final int thanks=0x7f0b0004;
     }
     public static final class id_location_info {
         public static final int arrive_report=0x7f0c0007;
@@ -182,6 +195,10 @@ public final class R {
         public static final int main_btnAmbition_text=0x7f050002;
     }
     public static final class style {
-        public static final int ServiceShowWarning=0x7f070000;
+        public static final int Custom_Button_Home=0x7f070000;
+        public static final int Custom_ImageButton_Home=0x7f070001;
+        public static final int Custom_TextView_Home=0x7f070002;
+        public static final int ServiceShowWarning=0x7f070003;
+        public static final int Theme_Home=0x7f070004;
     }
 }

@@ -123,7 +123,7 @@
 									android:textSize="20sp"
 									/>
 								<RadioButton
-									android:id="@id_settings/gender_unknown"
+									android:id="@+id_settings/gender_unknown"
 									android:layout_width="fill_parent"
 									android:layout_height="wrap_content"
 									android:checked="true"

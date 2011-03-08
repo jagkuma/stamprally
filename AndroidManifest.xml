@@ -35,7 +35,7 @@
 
 
 
-		<activity android:name="jag.kumamoto.apps.StampRally.HomeActivity">
+		<activity android:name="jag.kumamoto.apps.StampRally.HomeActivity" android:theme="@style/Theme.Home">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />

@@ -7,8 +7,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 
@@ -36,7 +38,7 @@ public class HomeActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
 		// 最初にDBのシングルトンインスタンスを作成する
 		StampRallyDB.createInstance(getApplicationContext());
 
@@ -122,6 +124,22 @@ public class HomeActivity extends Activity {
 						startActivity(intent);
 					}
 				});
+		
+		//看板の設定
+		View signboard = findViewById(R.id_home.signboard);
+		signboard.setOnTouchListener(createSignboardOnTouchListener());
+		signboard.setOnClickListener(new View.OnClickListener() {
+			@Override public void onClick(View v) {
+			// 設定画面へ遷移
+				Intent intent = new Intent(HomeActivity.this,
+						SettingsActivity.class);
+				User user = StampRallyPreferences.getUser();
+				if (user != null) {
+					intent.putExtra(ConstantValue.ExtrasUser, user);
+				}
+				startActivity(intent);
+			}
+		});
 
 		// 到着確認サービスを開始
 		startArriveWatcherservice();
@@ -150,6 +168,26 @@ public class HomeActivity extends Activity {
 		Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
 		intent.putExtra(ConstantValue.ExtrasFirstSettings, true);
 		startActivityForResult(intent, RequestFirstStartSettings);
+	}
+	
+	private View.OnTouchListener createSignboardOnTouchListener() {
+		return new View.OnTouchListener() {
+				private Drawable mBackground;
+			
+			@Override public boolean onTouch(View v, MotionEvent event) {
+					switch(event.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						mBackground = v.getBackground();
+						v.setBackgroundColor(0xffadfec4);
+						break;
+					case MotionEvent.ACTION_UP:
+					case MotionEvent.ACTION_CANCEL:
+						v.setBackgroundDrawable(mBackground);
+						break;
+					}
+				return false;
+			}
+		};
 	}
 
 	@Override
