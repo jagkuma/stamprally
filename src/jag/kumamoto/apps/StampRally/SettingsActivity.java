@@ -27,7 +27,11 @@ import android.widget.TabHost;
  *
  */
 public class SettingsActivity extends TabActivity{
+	private static final int RequestAccountSetting = 1;
+	
 	private User mUser;
+	
+	private UserSettingsHelper mUserSettings;
 	
 	private int mChangedType = -1;
 
@@ -99,7 +103,7 @@ public class SettingsActivity extends TabActivity{
 					}
 				});
 		
-		UserSettingsHelper.constractUserSettingsView((ViewGroup)findViewById(R.id_settings.tab_user), mUser, 
+		mUserSettings = new  UserSettingsHelper((ViewGroup)findViewById(R.id_settings.tab_user), mUser, 
 				new UserSettingsHelper.OnLoginLogoutListener() {
 					@Override public void onLogin(User user) {
 						if(loginRequest) {
@@ -114,6 +118,11 @@ public class SettingsActivity extends TabActivity{
 					
 					@Override public void onLogout() {
 						everyKindSettings.setUser(null);
+					}
+					
+					@Override public void gotoAccountSettngs() {
+						startActivityForResult(new Intent(android.provider.Settings.ACTION_SYNC_SETTINGS),
+								RequestAccountSetting);
 					}
 					
 				});
@@ -161,4 +170,16 @@ public class SettingsActivity extends TabActivity{
 	private void unbindArriveWatcherService() {
 		unbindService(mConnection);
 	}
+	
+	@Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode == RequestAccountSetting) {
+			mUserSettings.updateView();
+			
+			return;
+		}
+		
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	
 }

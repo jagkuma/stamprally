@@ -43,13 +43,14 @@ final class UserSettingsHelper {
 	public static interface OnLoginLogoutListener {
 		public void onLogin(User user);
 		public void onLogout();
+		public void gotoAccountSettngs();
 	}
 	
 	private final ViewGroup mLayout;
 	private final OnLoginLogoutListener mListener;
 	private User mUser;
 	
-	private UserSettingsHelper(ViewGroup layout, User user, OnLoginLogoutListener listner) {
+	public UserSettingsHelper(ViewGroup layout, User user, OnLoginLogoutListener listner) {
 		mLayout = layout;
 		mUser = user;
 		mListener = listner;
@@ -61,12 +62,23 @@ final class UserSettingsHelper {
 		}
 	}
 	
-	public static void constractUserSettingsView(ViewGroup layout, 
-			User user, OnLoginLogoutListener listener) {
-		//この中で自動的に構築される
-		new UserSettingsHelper(layout, user, listener);
+	public void updateView() {
+		EditText edt = (EditText)mLayout.findViewById(R.id_settings.nickname);
+		TextWatcher watcher = (TextWatcher)edt.getTag();
+		if(watcher != null) {
+			edt.removeTextChangedListener(watcher);
+		}
+		
+		if(mUser != null) {
+			constractUserInfoModifyView();
+		} else {
+			if(mLayout.findViewById(R.id_settings.registration_frame).getVisibility() == View.GONE) {
+				constractLoginView();
+			} else {
+				constractRegistrationView();
+			}
+		}
 	}
-	
 	
 	/*
 	 * 
@@ -299,20 +311,12 @@ final class UserSettingsHelper {
 		//タイトル設定
 		((TextView)mLayout.findViewById(R.id_settings.user_setting_title)).setText("ログイン");
 		
-		//トークンリストを表示
-		mLayout.findViewById(R.id_settings.select_token_frame).setVisibility(View.VISIBLE);
-		
-		//トークンリストを設定&初期化
-		((TextView)mLayout.findViewById(R.id_settings.token_label)).setText("登録したアドレスを選択してください");
-		initTokenFrame();
-		
 		//ニックネームと性別設定欄を非表示
 		mLayout.findViewById(R.id_settings.registration_frame).setVisibility(View.GONE);
 		
 		//okボタンを設定
 		Button btnLogin =  (Button)mLayout.findViewById(R.id_settings.ok);
 		btnLogin.setText("ログイン");
-		btnLogin.setEnabled(true);
 		btnLogin.setOnClickListener(new View.OnClickListener() {
 			@Override public void onClick(View v) {
 				login(getSelectedToken());
@@ -326,6 +330,19 @@ final class UserSettingsHelper {
 		tvwGotoRegistration.setOnTouchListener(createChangeViewOnTouchListener());
 		//テキストをタッチしたときに画面を変更する
 		tvwGotoRegistration.setOnClickListener(createChangeViewOnClickListener());
+		
+		//トークンリストを表示
+		mLayout.findViewById(R.id_settings.select_token_frame).setVisibility(View.VISIBLE);
+		
+		//トークンリストを設定&初期化
+		((TextView)mLayout.findViewById(R.id_settings.token_label)).setText("登録したアドレスを選択してください");
+		if(!initTokenFrame()) {
+			btnLogin.setEnabled(false);
+			//アカウントが一つもなかった
+			showNoneAccountDialog();
+		} else {
+			btnLogin.setEnabled(true);
+		}
 	}
 	
 	private void login(final String token) {
@@ -407,13 +424,6 @@ final class UserSettingsHelper {
 		//タイトル設定
 		((TextView)mLayout.findViewById(R.id_settings.user_setting_title)).setText("新規登録");
 		
-		//トークンリストを表示
-		mLayout.findViewById(R.id_settings.select_token_frame).setVisibility(View.VISIBLE);
-		
-		//トークンリストを設定&初期化
-		((TextView)mLayout.findViewById(R.id_settings.token_label)).setText("登録するアドレスを選択してください");
-		initTokenFrame();
-		
 		//ニックネームと性別設定欄を表示
 		mLayout.findViewById(R.id_settings.registration_frame).setVisibility(View.VISIBLE);
 		
@@ -440,6 +450,16 @@ final class UserSettingsHelper {
 		tvwGotoLogin.setOnTouchListener(createChangeViewOnTouchListener());
 		//テキストをタッチしたときに画面を変更する
 		tvwGotoLogin.setOnClickListener(createChangeViewOnClickListener());
+		
+		//トークンリストを表示
+		mLayout.findViewById(R.id_settings.select_token_frame).setVisibility(View.VISIBLE);
+		
+		//トークンリストを設定&初期化
+		((TextView)mLayout.findViewById(R.id_settings.token_label)).setText("登録するアドレスを選択してください");
+		if(!initTokenFrame()) {
+			//アカウントが一つもなかった
+			showNoneAccountDialog();
+		}
 	}
 
 	private TextWatcher createEditTextWatcher() {
@@ -575,6 +595,26 @@ final class UserSettingsHelper {
 		group.check(0);
 		
 		return true;
+	}
+	
+	private void showNoneAccountDialog() {
+		
+		new AlertDialog.Builder(mLayout.getContext())
+			.setTitle("アカウントがありません")
+			.setMessage(
+					"端末にGoogleアカウントが登録されていません。\n"
+					+ "このアプリケーションにはGoogleアカウントが必要です。\n"
+					+ "端末の設定メニューからGoogleアカウントを登録してください。\n"
+					)
+			.setPositiveButton("今は行わない", null)
+			.setNeutralButton("設定へ", new DialogInterface.OnClickListener() {
+				@Override public void onClick(DialogInterface dialog, int which) {
+					if(mListener != null) {
+						mListener.gotoAccountSettngs();
+					}
+				}
+			})
+			.show();
 	}
 	
 	private String[] getGoogleAccounts() {
