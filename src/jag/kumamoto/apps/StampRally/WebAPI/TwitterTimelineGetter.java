@@ -14,13 +14,23 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterTimelineGetter {
 	private final String ConsumerKey = "";
 	private final String ConsumerSecret = "";
+	public static class TweetData {
+		public final long id;
+		public final String text;
+		
+		public TweetData(String text, long id) {
+			this.text = text;
+			this.id = id;
+		}
+	}
+	
 
 	private final String mUserName;
 	private long mMaxId;
 
 	private final Twitter mTwitter;
 	
-	private final Queue<String> mTweetQueue = new LinkedList<String>();
+	private final Queue<TweetData> mTweetQueue = new LinkedList<TweetData>();
 	private int mMaxQueueSize = 20;
 
 
@@ -39,10 +49,11 @@ public class TwitterTimelineGetter {
 	}
 
 	public long getMaxId() {
-		return mMaxId;
+		TweetData data = mTweetQueue.peek();
+		return data != null ? data.id : mMaxId;
 	}
 
-	public String getTweet() {
+	public TweetData getTweet() {
 		return mTweetQueue.poll();
 	}
 	
@@ -67,9 +78,11 @@ public class TwitterTimelineGetter {
 					// リツイートのステータスは無視
 					continue;
 				}
-				if (status.getId() > mMaxId) {
-					mMaxId = status.getId();
-					mTweetQueue.offer(status.getText());
+				
+				long id = status.getId();
+				if (id > mMaxId) {
+					mMaxId = id;
+					mTweetQueue.offer(new TweetData(status.getText(), id));
 				}
 			}
 			

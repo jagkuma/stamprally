@@ -84,11 +84,16 @@ public final class MapActivityMascotViewHelper {
 				UserInteractionState.Type.SingleTap, new StateUserInteractionCallback.Callback() {
 					private String mPrevTweet = null;
 					@Override public void onAction() {
-						String tweet;
+						
+						TwitterTimelineGetter.TweetData data;
 						synchronized (mTimeLineGetter) {
-							tweet = mTimeLineGetter.getTweet();
+							data = mTimeLineGetter.getTweet();
 						}
-						if(tweet == null) {
+						
+						String tweet;
+						if(data != null) {
+							tweet = data.text;
+						} else {
 							tweet = mPrevTweet;
 						}
 						
