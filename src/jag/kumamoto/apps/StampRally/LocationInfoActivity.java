@@ -137,7 +137,7 @@ public class LocationInfoActivity extends Activity{
 		View goLocation = findViewById(R.id_location_info.go_location_frame);
 		View btnArriveReport = findViewById(R.id_location_info.arrive_report);
 		if(isArrive) {
-			if(StampRallyPreferences.getShowUrgeDialog()) {
+			if(mUser != null ||  StampRallyPreferences.getShowUrgeDialog()) {
 				goLocation.setVisibility(View.GONE);
 				btnArriveReport.setVisibility(View.VISIBLE);
 				btnArriveReport.setOnClickListener(new View.OnClickListener() {
