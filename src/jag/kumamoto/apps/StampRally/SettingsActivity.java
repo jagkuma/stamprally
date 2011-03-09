@@ -149,8 +149,10 @@ public class SettingsActivity extends TabActivity{
 
 	private void showFirstSettingsDialog() {
 		new AlertDialog.Builder(this)
-			.setTitle("設定")
-			.setMessage("ユーザ登録が必要です\n以下いろいろと説明があればいいな")
+			.setMessage(
+					"　このアプリケーションを始めるにはアカウントの登録が必要です。\n"
+					+ "　端末に登録したGoogleアカウントを利用してアカウントを作成します。\n"
+					+	"　なお、利用したGoogleアカウントを登録以外の目的で利用することはございません")
 			.setPositiveButton("OK", null)
 			.show();
 	}
