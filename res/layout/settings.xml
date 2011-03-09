@@ -203,7 +203,7 @@
 								android:layout_width="fill_parent"
 								android:layout_height="wrap_content"
 								android:layout_marginTop="15dip"
-								android:text="・到着確認する時間間隔"
+								android:text="・到着確認する間隔"
 								android:textSize="15sp"
 								/>
 								
@@ -233,6 +233,45 @@
 									/>
 							</RadioGroup>
 						</LinearLayout>
+						
+						<RelativeLayout
+							android:layout_width="fill_parent"
+							android:layout_height="fill_parent"
+							android:orientation="vertical"
+							android:paddingLeft="15dip"
+							android:layout_marginTop="15dip"
+							android:paddingTop="3dip"
+							android:paddingBottom="3dip"
+							android:background="@drawable/settings_group"
+							>
+							<TextView android:id="@+id_settings/check_new_stamp_label"
+								android:layout_width="fill_parent"
+								android:layout_height="wrap_content"
+								android:layout_alignParentTop="true"
+								android:layout_marginTop="15dip"
+								android:text="・新しいスタンプがあるか確認する"
+								android:textSize="15sp"
+								/>
+								
+							<TextView android:id="@+id_settings/prev_check_time"
+								android:layout_width="fill_parent"
+								android:layout_height="wrap_content"
+								android:layout_below="@id_settings/check_new_stamp_label"
+								android:gravity="center"
+								android:textSize="13sp"
+								/>
+								
+							<Button android:id="@+id_settings/check_new_stamp"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_below="@id_settings/prev_check_time"
+								android:layout_alignParentRight="true"
+								android:layout_marginTop="8dip"
+								android:layout_marginRight="10dip"
+								android:text="確認する"
+								/>
+							
+						</RelativeLayout>
 						
 						
 						<FrameLayout

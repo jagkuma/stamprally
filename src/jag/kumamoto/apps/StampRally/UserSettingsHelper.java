@@ -680,6 +680,10 @@ final class UserSettingsHelper {
 				StampRallyDB.deleteStampPins(extract.v2);
 				StampRallyDB.insertStampPins(extract.v1);
 				
+				//この時点でピン情報を更新できているので、
+				//ラストアップデート時刻の更新
+				StampRallyPreferences.setLastCheckDateStampPin(System.currentTimeMillis());
+				
 				handler.post(new ProgressManipulator(3));
 				//サーバから到着済みの場所を取得
 				obj = DataGetter.getJSONObject(StampRallyURL.getUserHistoryQuery(user, false));
