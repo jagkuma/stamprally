@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TabHost;
 import android.widget.TabHost.TabContentFactory;
 
@@ -172,6 +173,14 @@ public class SettingsActivity extends TabActivity{
 			}
 		});
 		tabHost.addTab(spec);
+		
+		tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+			
+			@Override public void onTabChanged(String tabId) {
+				((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE))
+					.hideSoftInputFromWindow(tabHost.getWindowToken(), 0);
+			}
+		});
 	}
 
 	private void showFirstSettingsDialog() {
