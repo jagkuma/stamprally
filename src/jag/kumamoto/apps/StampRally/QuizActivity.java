@@ -353,7 +353,7 @@ public class QuizActivity extends Activity{
 				});
 			}
 		} else {
-	 		((TextView)content.findViewById(R.id_quiz.result_message)).setText("不正解；；");
+	 		((TextView)content.findViewById(R.id_quiz.result_message)).setText("不正解...");
 	 		((ImageView)content.findViewById(R.id_quiz.result_icon)).setImageResource(R.drawable.quiz_result_incorrectness);
 		}
 		
