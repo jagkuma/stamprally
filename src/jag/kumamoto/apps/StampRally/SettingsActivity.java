@@ -41,6 +41,7 @@ public class SettingsActivity extends TabActivity{
 	private int mChangedType = -1;
 	
 	private boolean mLoginRequest;
+	private boolean mShowRegistration;
 
 	private IArriveWatcherService mArriveWatcher;
 	private final ServiceConnection mConnection = new ServiceConnection() {
@@ -82,6 +83,8 @@ public class SettingsActivity extends TabActivity{
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.settings);
 		
+		//初回起動時の場合、ログインではなく新規登録画面を表示するようにする
+		mShowRegistration = isFirstStart;
 		initTabPages();
 		if(isShowEverkindSettings) {
 			getTabHost().setCurrentTab(1);
@@ -97,7 +100,7 @@ public class SettingsActivity extends TabActivity{
 	}
 	
 	private void initTabPages() {
-		TabHost tabHost = getTabHost();
+		final TabHost tabHost = getTabHost();
 		
 		TabHost.TabSpec spec;
 		
@@ -108,8 +111,9 @@ public class SettingsActivity extends TabActivity{
 				ViewGroup content = (ViewGroup)((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE))
 					.inflate(R.layout.settings_user_content, null);
 				
-				mUserSettings = new  UserSettingsHelper(content, mUser,
-						new UserSettingsHelper.OnLoginLogoutListener() {
+				mUserSettings = new  UserSettingsHelper(content, mUser, mShowRegistration,
+						new UserSettingsHelper.Callback() {
+					
 							@Override public void onLogin(User user) {
 								mUser = user;
 								if(mLoginRequest) {
@@ -133,6 +137,16 @@ public class SettingsActivity extends TabActivity{
 								startActivityForResult(new Intent(android.provider.Settings.ACTION_SYNC_SETTINGS),
 										RequestAccountSetting);
 							}
+							
+							@Override public void onStampPinChanged() {
+								if(mArriveWatcher != null) {
+									try {
+										mArriveWatcher.checkArrive();
+									} catch (RemoteException e) {
+										e.printStackTrace();
+									}
+								}
+							}
 						});
 				
 				return content;
@@ -150,7 +164,8 @@ public class SettingsActivity extends TabActivity{
 				mEveryKindSettings = new EveryKindSettingsHelper(
 						content,
 						mUser,
-						new EveryKindSettingsHelper.OnValueChangeListener() {
+						new EveryKindSettingsHelper.Callback() {
+							
 							@Override public void onShowUrgeChanged(boolean bool) {
 								StampRallyPreferences.setShowUrgeDialog(bool);
 							}
@@ -165,6 +180,16 @@ public class SettingsActivity extends TabActivity{
 									}
 								} else {
 									mChangedType = type;
+								}
+							}
+							
+							@Override public void onStampPinChanged() {
+								if(mArriveWatcher != null) {
+									try {
+										mArriveWatcher.checkArrive();
+									} catch (RemoteException e) {
+										e.printStackTrace();
+									}
 								}
 							}
 						});

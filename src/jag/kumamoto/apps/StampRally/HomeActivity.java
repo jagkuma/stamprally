@@ -167,6 +167,7 @@ public class HomeActivity extends Activity {
 
 		Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
 		intent.putExtra(ConstantValue.ExtrasFirstSettings, true);
+		intent.putExtra(ConstantValue.ExtrasLoginRequest, true);
 		startActivityForResult(intent, RequestFirstStartSettings);
 	}
 	

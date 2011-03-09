@@ -24,16 +24,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 final class EveryKindSettingsHelper {
-	public static interface OnValueChangeListener {
+	public static interface Callback {
 		public void onPollingIntervalChanged(int type);
 		public void onShowUrgeChanged(boolean bool);
+		public void onStampPinChanged();
 	}
 	
 	private final ViewGroup mLayout;
 	private User mUser;
-	private final OnValueChangeListener mListener;
+	private final Callback mListener;
 	
-	public EveryKindSettingsHelper(ViewGroup layout, User user, OnValueChangeListener listener) {
+	public EveryKindSettingsHelper(ViewGroup layout, User user, Callback listener) {
 		mLayout = layout;
 		mUser = user;
 		this.mListener = listener;
@@ -123,6 +124,11 @@ final class EveryKindSettingsHelper {
 						StampRallyDB.deleteStampPins(extract.v2);
 						StampRallyDB.insertStampPins(extract.v1);
 						
+						if(extract.v1.length > 0 && mListener != null) {
+							//新規追加のピンがあれば強制的に到着チェックを行う
+							mListener.onStampPinChanged();
+						}
+						
 						//新規追加のピンの数を返す
 						return extract.v1.length;
 					} else {
@@ -172,6 +178,10 @@ final class EveryKindSettingsHelper {
 			chkShowUrge.setEnabled(true);
 		} else {
 			chkShowUrge.setEnabled(false);
+			
+			//ログイン時にスタンプピンの更新をしている可能性があるので
+			//スタンプピンの前回更新確認時間を再設定
+			settingStampPinPrevCheckTime(StampRallyPreferences.getLastCheckDateStampPin());
 		}
 	}
 	

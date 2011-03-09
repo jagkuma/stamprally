@@ -157,6 +157,16 @@ public class ArriveWatcherService extends Service{
 		@Override public void changeArriveCheckInterval(int type) throws RemoteException {
 			requestLocationUpdates(type);
 		}
+		
+		@Override public void checkArrive() throws RemoteException {
+			if(mLocationProvier != null) {
+				Location location =  ((LocationManager)getSystemService(Context.LOCATION_SERVICE))
+					.getLastKnownLocation(mLocationProvier);
+				if(location != null) {
+					mLocationListener.onLocationChanged(location);
+				}
+			}
+		}
 
 		@Override public void registerApproachCallback(IApproachPinCallback callback) throws RemoteException {
 			mApproachCallbackList.register(callback);

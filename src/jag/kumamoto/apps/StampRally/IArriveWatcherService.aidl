@@ -8,6 +8,7 @@ interface IArriveWatcherService {
 	void removeArriveNotification(long pinId);
 	long[] getArrivedStampPins();
 	void changeArriveCheckInterval(int type);
+	void checkArrive();
 	
 	void registerApproachCallback(in IApproachPinCallback callback);
 	void unregisterApproachCallback(in IApproachPinCallback callback);

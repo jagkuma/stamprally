@@ -56,6 +56,7 @@ import android.widget.ZoomControls;
  */
 public class MapActivity extends com.google.android.maps.MapActivity{
 	private static final int RequestShowInfoId = 1;
+	private static final int RequestToSettingsId = 2;
 	
 	private StampPinOverlay mPinOverlay;
 	private StampPin[] mStampPins;
@@ -263,6 +264,15 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 						(result.v2.v2 != null &&  result.v2.v2.length != 0)) {
 					((MapView)findViewById(R.id_map.mapview)).invalidate();
 				}
+				
+				if(result.v2.v1.length > 0 && mArriveWatcher != null) {
+					//新規追加のピンがあれば強制的に到着チェックを行う
+					try {
+						mArriveWatcher.checkArrive();
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 			
 		}.execute((Void)null);
@@ -376,7 +386,10 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 			@Override public void onClick(View v) {
 				Intent intent = new Intent(MapActivity.this, SettingsActivity.class);
 				intent.putExtra(ConstantValue.ExtrasShowEveryKindSettings, true);
-				startActivity(intent);
+				if(mUser != null) {
+					intent.putExtra(ConstantValue.ExtrasUser, mUser);
+				}
+				startActivityForResult(intent, RequestToSettingsId);
 				
 				//戻ってきたときにオプションビューを閉じた状態にしておく
 				SlidingDrawer drawer = (SlidingDrawer)findViewById(R.id_map.slidingdrawer);
@@ -521,6 +534,13 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 	    	mPinOverlay.setStampPins(StampRallyDB.getStampPins());	
     		
     		return;
+    	} else {
+    		//設定画面でログイン or ログアウトしている可能性があるので、
+    		//プリファレンスからユーザデータを読み込む
+    		mUser = StampRallyPreferences.getUser();
+    		
+			((FlowingTextView)findViewById(R.id_map.infobar))
+				.setText(constractInfoBarText(StampRallyPreferences.getUserRecord()));
     	}
     	
     	super.onActivityResult(requestCode, resultCode, data);

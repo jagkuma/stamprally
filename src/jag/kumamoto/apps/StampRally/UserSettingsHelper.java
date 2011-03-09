@@ -40,23 +40,29 @@ import jag.kumamoto.apps.StampRally.Data.UserRecord;
 import jag.kumamoto.apps.gotochi.R;
 
 final class UserSettingsHelper {
-	public static interface OnLoginLogoutListener {
+	public static interface Callback {
 		public void onLogin(User user);
 		public void onLogout();
 		public void gotoAccountSettngs();
+		public void onStampPinChanged();
 	}
 	
 	private final ViewGroup mLayout;
-	private final OnLoginLogoutListener mListener;
+	private final Callback mListener;
 	private User mUser;
 	
-	public UserSettingsHelper(ViewGroup layout, User user, OnLoginLogoutListener listner) {
+	public UserSettingsHelper(ViewGroup layout, User user, boolean showRegistration,
+			Callback listner) {
 		mLayout = layout;
 		mUser = user;
 		mListener = listner;
 		
 		if(mUser == null) {
-			constractLoginView();
+			if(showRegistration) {
+				constractRegistrationView();
+			} else {
+				constractLoginView();
+			}
 		} else {
 			constractUserInfoModifyView();
 		}
@@ -683,6 +689,11 @@ final class UserSettingsHelper {
 				//この時点でピン情報を更新できているので、
 				//ラストアップデート時刻の更新
 				StampRallyPreferences.setLastCheckDateStampPin(System.currentTimeMillis());
+				
+				if(extract.v1.length > 0 && mListener != null) {
+					//新規追加のピンがあれば強制的に到着チェックを行う
+					mListener.onStampPinChanged();
+				}
 				
 				handler.post(new ProgressManipulator(3));
 				//サーバから到着済みの場所を取得
