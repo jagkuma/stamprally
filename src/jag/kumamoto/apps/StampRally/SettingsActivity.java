@@ -13,9 +13,12 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TabHost;
+import android.widget.TabHost.TabContentFactory;
 
 
 
@@ -32,8 +35,11 @@ public class SettingsActivity extends TabActivity{
 	private User mUser;
 	
 	private UserSettingsHelper mUserSettings;
+	private EveryKindSettingsHelper mEveryKindSettings;
 	
 	private int mChangedType = -1;
+	
+	private boolean mLoginRequest;
 
 	private IArriveWatcherService mArriveWatcher;
 	private final ServiceConnection mConnection = new ServiceConnection() {
@@ -64,7 +70,7 @@ public class SettingsActivity extends TabActivity{
 			mUser = extras.getParcelable(ConstantValue.ExtrasUser);
 			isFirstStart = extras.getBoolean(ConstantValue.ExtrasFirstSettings, false);
 		}
-		final boolean loginRequest = extras != null ?
+		mLoginRequest = extras != null ?
 				extras.getBoolean(ConstantValue.ExtrasLoginRequest, false) :
 				false;
 				
@@ -80,52 +86,7 @@ public class SettingsActivity extends TabActivity{
 		if(isFirstStart) {
 			showFirstSettingsDialog();
 		}
-		
-		final EveryKindSettingsHelper everyKindSettings = new EveryKindSettingsHelper(
-				(ViewGroup)findViewById(R.id_settings.tab_every_kind),
-				mUser,
-				new EveryKindSettingsHelper.OnValueChangeListener() {
-					@Override public void onShowUrgeChanged(boolean bool) {
-						StampRallyPreferences.setShowUrgeDialog(bool);
-					}
-					
-					@Override public void onPollingIntervalChanged(int type) {
-						StampRallyPreferences.setArrivePollingIntervalType(type);
-						if(mArriveWatcher != null) {
-							try {
-								mArriveWatcher.changeArriveCheckInterval(type);
-							} catch(RemoteException e) {
-								e.printStackTrace();
-							}
-						} else {
-							mChangedType = type;
-						}
-					}
-				});
-		
-		mUserSettings = new  UserSettingsHelper((ViewGroup)findViewById(R.id_settings.tab_user), mUser, 
-				new UserSettingsHelper.OnLoginLogoutListener() {
-					@Override public void onLogin(User user) {
-						if(loginRequest) {
-							Intent intent = new Intent();
-							intent.putExtra(ConstantValue.ExtrasUser, user);
-							setResult(Activity.RESULT_OK, intent);
-							finish();
-						} else {
-							everyKindSettings.setUser(user);
-						}
-					}
-					
-					@Override public void onLogout() {
-						everyKindSettings.setUser(null);
-					}
-					
-					@Override public void gotoAccountSettngs() {
-						startActivityForResult(new Intent(android.provider.Settings.ACTION_SYNC_SETTINGS),
-								RequestAccountSetting);
-					}
-					
-				});
+
 		
 		//スタンプラリーのピンの到着を監視するサービスとバインドする
 		bindArriveWatcherservice();
@@ -138,12 +99,75 @@ public class SettingsActivity extends TabActivity{
 		
 		spec = tabHost.newTabSpec("user_settings");
 		spec.setIndicator("ユーザ設定");
-		spec.setContent(R.id_settings.tab_user);
+		spec.setContent(new TabContentFactory() {
+			@Override public View createTabContent(String tag) {
+				ViewGroup content = (ViewGroup)((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+					.inflate(R.layout.settings_user_content, null);
+				
+				mUserSettings = new  UserSettingsHelper(content, mUser,
+						new UserSettingsHelper.OnLoginLogoutListener() {
+							@Override public void onLogin(User user) {
+								mUser = user;
+								if(mLoginRequest) {
+									Intent intent = new Intent();
+									intent.putExtra(ConstantValue.ExtrasUser, user);
+									setResult(Activity.RESULT_OK, intent);
+									finish();
+								} else if(mEveryKindSettings != null) {
+									mEveryKindSettings.setUser(user);
+								}
+							}
+							
+							@Override public void onLogout() {
+								if(mEveryKindSettings != null) {
+									mUser = null;
+									mEveryKindSettings.setUser(null);
+								}
+							}
+							
+							@Override public void gotoAccountSettngs() {
+								startActivityForResult(new Intent(android.provider.Settings.ACTION_SYNC_SETTINGS),
+										RequestAccountSetting);
+							}
+						});
+				
+				return content;
+			}
+		});
 		tabHost.addTab(spec);
 		
 		spec = tabHost.newTabSpec("other");
 		spec.setIndicator("その他");
-		spec.setContent(R.id_settings.tab_every_kind);
+		spec.setContent(new TabContentFactory() {
+			@Override public View createTabContent(String tag) {
+				ViewGroup content = (ViewGroup)((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+					.inflate(R.layout.settings_everykind_content, null);
+						
+				mEveryKindSettings = new EveryKindSettingsHelper(
+						content,
+						mUser,
+						new EveryKindSettingsHelper.OnValueChangeListener() {
+							@Override public void onShowUrgeChanged(boolean bool) {
+								StampRallyPreferences.setShowUrgeDialog(bool);
+							}
+							
+							@Override public void onPollingIntervalChanged(int type) {
+								StampRallyPreferences.setArrivePollingIntervalType(type);
+								if(mArriveWatcher != null) {
+									try {
+										mArriveWatcher.changeArriveCheckInterval(type);
+									} catch(RemoteException e) {
+										e.printStackTrace();
+									}
+								} else {
+									mChangedType = type;
+								}
+							}
+						});
+				
+				return content;
+			}
+		});
 		tabHost.addTab(spec);
 	}
 

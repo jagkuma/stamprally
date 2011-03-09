@@ -123,28 +123,26 @@ public final class R {
         public static final int webview=0x7f100001;
     }
     public static final class id_settings {
-        public static final int arrive_polling_group=0x7f11000e;
-        public static final int change_view=0x7f11000c;
-        public static final int check_new_stamp=0x7f110014;
-        public static final int check_new_stamp_label=0x7f110012;
-        public static final int gender_female=0x7f110009;
-        public static final int gender_frame=0x7f110007;
-        public static final int gender_male=0x7f11000a;
-        public static final int gender_unknown=0x7f110008;
-        public static final int nickname=0x7f110006;
-        public static final int ok=0x7f11000b;
-        public static final int polling_long=0x7f110011;
-        public static final int polling_normal=0x7f110010;
-        public static final int polling_short=0x7f11000f;
-        public static final int prev_check_time=0x7f110013;
-        public static final int registration_frame=0x7f110005;
-        public static final int select_token_frame=0x7f110002;
-        public static final int show_urge=0x7f110015;
-        public static final int tab_every_kind=0x7f11000d;
-        public static final int tab_user=0x7f110000;
-        public static final int token_frame=0x7f110004;
-        public static final int token_label=0x7f110003;
-        public static final int user_setting_title=0x7f110001;
+        public static final int arrive_polling_group=0x7f110001;
+        public static final int change_view=0x7f110013;
+        public static final int check_new_stamp=0x7f110007;
+        public static final int check_new_stamp_label=0x7f110005;
+        public static final int gender_female=0x7f110010;
+        public static final int gender_frame=0x7f11000e;
+        public static final int gender_male=0x7f110011;
+        public static final int gender_unknown=0x7f11000f;
+        public static final int nickname=0x7f11000d;
+        public static final int ok=0x7f110012;
+        public static final int polling_long=0x7f110004;
+        public static final int polling_normal=0x7f110003;
+        public static final int polling_short=0x7f110002;
+        public static final int prev_check_time=0x7f110006;
+        public static final int registration_frame=0x7f11000c;
+        public static final int select_token_frame=0x7f11000a;
+        public static final int show_urge=0x7f110008;
+        public static final int token_frame=0x7f11000b;
+        public static final int token_label=0x7f110000;
+        public static final int user_setting_title=0x7f110009;
     }
     public static final class id_thanks {
         public static final int row1=0x7f120000;
@@ -170,8 +168,10 @@ public final class R {
         public static final int quiz_result_dialog_content=0x7f03000c;
         public static final int quiz_single_choice=0x7f03000d;
         public static final int settings=0x7f03000e;
-        public static final int settings_token_radiobutton=0x7f03000f;
-        public static final int thanks=0x7f030010;
+        public static final int settings_everykind_content=0x7f03000f;
+        public static final int settings_token_radiobutton=0x7f030010;
+        public static final int settings_user_content=0x7f030011;
+        public static final int thanks=0x7f030012;
     }
     public static final class raw {
         public static final int help=0x7f040000;
