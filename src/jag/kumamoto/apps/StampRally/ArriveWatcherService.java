@@ -19,6 +19,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.util.FloatMath;
 
@@ -128,6 +129,10 @@ public class ArriveWatcherService extends Service{
 	private HashMap<Long, Integer> mPinIdToNotificationIdMap = new HashMap<Long, Integer>();
 	
 	
+	private final RemoteCallbackList<IApproachPinCallback> mApproachCallbackList
+		= new RemoteCallbackList<IApproachPinCallback>();
+	
+	
 	private final IArriveWatcherService.Stub mStub = new IArriveWatcherService.Stub() {
 		
 		@Override public void showArriveNotification(StampPin pin) throws RemoteException {
@@ -151,6 +156,14 @@ public class ArriveWatcherService extends Service{
 		
 		@Override public void changeArriveCheckInterval(int type) throws RemoteException {
 			requestLocationUpdates(type);
+		}
+
+		@Override public void registerApproachCallback(IApproachPinCallback callback) throws RemoteException {
+			mApproachCallbackList.register(callback);
+		}
+		
+		@Override public void unregisterApproachCallback(IApproachPinCallback callback) throws RemoteException {
+			mApproachCallbackList.unregister(callback);
 		}
 	};
 	
@@ -180,6 +193,19 @@ public class ArriveWatcherService extends Service{
 	
 	private final LocationListener mLocationListener = new LocationListener() {
 		
+		final class ApproachData {
+			public final long id;
+			public boolean isTouch;
+			
+			public ApproachData(long id) {
+				this.id = id;
+				isTouch = true;
+			}
+		}
+		private final ArrayList<ApproachData> mInRangeOneKilometerList = new ArrayList<ApproachData>();
+		private final ArrayList<ApproachData> mInRangeHalfKilometerList = new ArrayList<ApproachData>();
+		
+		
 		@Override public void onStatusChanged(String provider, int status, Bundle extras) {
 		}
 		
@@ -207,11 +233,33 @@ public class ArriveWatcherService extends Service{
 			
 			ArrayList<Long> arriveList = new ArrayList<Long>();
 			for(int i = 0;i < pins.length;++i) {
-				float distance = calc.calcDistance(pins[i].latitude, pins[i].longitude);
+				StampPin pin = pins[i];
+				float distance = calc.calcDistance(pin.latitude, pin.longitude);
 				if(distance < allowErrorRange) {
-					arriveList.add((Long)pins[i].id);
+					arriveList.add((Long)pin.id);
+				}
+				
+				if(distance < 500) {
+					//500m以下
+					if(!checkApproachData(mInRangeHalfKilometerList, pin)) {
+						mInRangeHalfKilometerList.add(new ApproachData(pin.id));
+						doCallback(pin, (int)distance);
+					}
+				} else if(distance < 1000) {
+					//1000m以下
+					
+					//以前が500m以下でない、かつ、1000m以上だった時
+					if(!hasApproachData(mInRangeHalfKilometerList, pin) &&
+							checkApproachData(mInRangeOneKilometerList, pin)) {
+						mInRangeOneKilometerList.add(new ApproachData(pin.id));
+						doCallback(pin, (int)distance);
+					}
 				}
 			}
+			
+			//接近リストをアップデートする（不要なデータを削除する）
+			updateApproachData(mInRangeHalfKilometerList);
+			updateApproachData(mInRangeOneKilometerList);
 			
 			//新しく到着したピンと、離れたピンを抽出する
 			Pair<List<Long>, List<Long>> pair = extractNewAndDelete(mCurArriveLocation, arriveList);
@@ -279,6 +327,53 @@ public class ArriveWatcherService extends Service{
 			}
 			
 			return new Pair<List<Long>, List<Long>>(newAdded, delete);
+		}
+		
+		private boolean hasApproachData(ArrayList<ApproachData> list, StampPin pin) {
+			for(ApproachData data : list) {
+				if(data.id == pin.id) {
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		private boolean checkApproachData(ArrayList<ApproachData> list, StampPin pin) {
+			for(ApproachData data : list) {
+				if(data.id == pin.id) {
+					data.isTouch = true;
+					
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
+		private void updateApproachData(ArrayList<ApproachData> list) {
+			for(int i = 0;i < list.size();++i) {
+				ApproachData data = list.get(i);
+				if(!data.isTouch) {
+					list.remove(i);
+					return;
+				} else {
+					data.isTouch = false;
+				}
+			}
+		}
+		
+		private void doCallback(StampPin pin, int distance) {
+			int count = mApproachCallbackList.beginBroadcast();
+			
+			for(int i = 0;i < count;++i) {
+				try {
+					mApproachCallbackList.getBroadcastItem(i).onApproachPin(pin, distance);
+				} catch(RemoteException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			mApproachCallbackList.finishBroadcast();
 		}
 		
 	};

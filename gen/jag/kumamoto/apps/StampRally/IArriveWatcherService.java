@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: /Users/shiva/Documentations/workspace/jagkuma/aharisu/jagkuma/src/jag/kumamoto/apps/StampRally/IArriveWatcherService.aidl
+ * Original file: E:\\android\\work\\jagkuma-aharisu\\jagkuma\\src\\jag\\kumamoto\\apps\\StampRally\\IArriveWatcherService.aidl
  */
 package jag.kumamoto.apps.StampRally;
 public interface IArriveWatcherService extends android.os.IInterface
@@ -79,6 +79,24 @@ data.enforceInterface(DESCRIPTOR);
 int _arg0;
 _arg0 = data.readInt();
 this.changeArriveCheckInterval(_arg0);
+reply.writeNoException();
+return true;
+}
+case TRANSACTION_registerApproachCallback:
+{
+data.enforceInterface(DESCRIPTOR);
+jag.kumamoto.apps.StampRally.IApproachPinCallback _arg0;
+_arg0 = jag.kumamoto.apps.StampRally.IApproachPinCallback.Stub.asInterface(data.readStrongBinder());
+this.registerApproachCallback(_arg0);
+reply.writeNoException();
+return true;
+}
+case TRANSACTION_unregisterApproachCallback:
+{
+data.enforceInterface(DESCRIPTOR);
+jag.kumamoto.apps.StampRally.IApproachPinCallback _arg0;
+_arg0 = jag.kumamoto.apps.StampRally.IApproachPinCallback.Stub.asInterface(data.readStrongBinder());
+this.unregisterApproachCallback(_arg0);
 reply.writeNoException();
 return true;
 }
@@ -168,14 +186,48 @@ _reply.recycle();
 _data.recycle();
 }
 }
+public void registerApproachCallback(jag.kumamoto.apps.StampRally.IApproachPinCallback callback) throws android.os.RemoteException
+{
+android.os.Parcel _data = android.os.Parcel.obtain();
+android.os.Parcel _reply = android.os.Parcel.obtain();
+try {
+_data.writeInterfaceToken(DESCRIPTOR);
+_data.writeStrongBinder((((callback!=null))?(callback.asBinder()):(null)));
+mRemote.transact(Stub.TRANSACTION_registerApproachCallback, _data, _reply, 0);
+_reply.readException();
+}
+finally {
+_reply.recycle();
+_data.recycle();
+}
+}
+public void unregisterApproachCallback(jag.kumamoto.apps.StampRally.IApproachPinCallback callback) throws android.os.RemoteException
+{
+android.os.Parcel _data = android.os.Parcel.obtain();
+android.os.Parcel _reply = android.os.Parcel.obtain();
+try {
+_data.writeInterfaceToken(DESCRIPTOR);
+_data.writeStrongBinder((((callback!=null))?(callback.asBinder()):(null)));
+mRemote.transact(Stub.TRANSACTION_unregisterApproachCallback, _data, _reply, 0);
+_reply.readException();
+}
+finally {
+_reply.recycle();
+_data.recycle();
+}
+}
 }
 static final int TRANSACTION_showArriveNotification = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
 static final int TRANSACTION_removeArriveNotification = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
 static final int TRANSACTION_getArrivedStampPins = (android.os.IBinder.FIRST_CALL_TRANSACTION + 2);
 static final int TRANSACTION_changeArriveCheckInterval = (android.os.IBinder.FIRST_CALL_TRANSACTION + 3);
+static final int TRANSACTION_registerApproachCallback = (android.os.IBinder.FIRST_CALL_TRANSACTION + 4);
+static final int TRANSACTION_unregisterApproachCallback = (android.os.IBinder.FIRST_CALL_TRANSACTION + 5);
 }
 public void showArriveNotification(jag.kumamoto.apps.StampRally.Data.StampPin pin) throws android.os.RemoteException;
 public void removeArriveNotification(long pinId) throws android.os.RemoteException;
 public long[] getArrivedStampPins() throws android.os.RemoteException;
 public void changeArriveCheckInterval(int type) throws android.os.RemoteException;
+public void registerApproachCallback(jag.kumamoto.apps.StampRally.IApproachPinCallback callback) throws android.os.RemoteException;
+public void unregisterApproachCallback(jag.kumamoto.apps.StampRally.IApproachPinCallback callback) throws android.os.RemoteException;
 }

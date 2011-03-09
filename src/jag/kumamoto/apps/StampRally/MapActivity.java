@@ -61,6 +61,23 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 	
 	private boolean mIsOpenSlidingDrawer = false;
 	
+	private IApproachPinCallback.Stub mApproachPinCallback = new IApproachPinCallback.Stub() {
+		
+		@Override public void onApproachPin(StampPin pin, int distanceInMeter) throws RemoteException {
+			FlowingTextView flowing = (FlowingTextView)findViewById(R.id_map.infobar);
+			if(flowing != null) {
+				flowing.addFlowMessage(constractInfoBarText(pin, distanceInMeter));
+			}
+		}
+		
+		private String constractInfoBarText(StampPin pin, int distance) {
+			return new StringBuilder(pin.name).append("まであと")
+				.append(distance).append("メートルです")
+				.toString();
+		}
+		
+	};
+	
 	private IArriveWatcherService mArriveWatcher;
 	private final ServiceConnection mConnection = new ServiceConnection() {
 		
@@ -69,6 +86,12 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 		
 		@Override public void onServiceConnected(ComponentName name, IBinder service) {
 			mArriveWatcher = IArriveWatcherService.Stub.asInterface(service);
+			
+			try {
+				mArriveWatcher.registerApproachCallback(mApproachPinCallback);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 		}
 	};
 	
@@ -417,6 +440,12 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 	}
 	
 	private void unbindArriveWatcherService() {
+		try {
+			mArriveWatcher.unregisterApproachCallback(mApproachPinCallback);
+		} catch(RemoteException e) {
+			e.printStackTrace();
+		}
+		
 		unbindService(mConnection);
 	}
 	
