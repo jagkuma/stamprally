@@ -108,8 +108,9 @@ public final class R {
         public static final int radio_alt_visit_visited=0x7f0e0006;
         public static final int show_marker_alt_type=0x7f0e0008;
         public static final int show_marker_alt_visit=0x7f0e0004;
+        public static final int show_my_location=0x7f0e000c;
         public static final int slidingdrawer=0x7f0e0003;
-        public static final int to_everykind_settings=0x7f0e000c;
+        public static final int to_everykind_settings=0x7f0e000d;
     }
     public static final class id_quiz {
         public static final int frame_choices=0x7f100003;

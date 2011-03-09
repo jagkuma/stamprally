@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -44,6 +45,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ZoomControls;
 
 
@@ -59,6 +61,7 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 	private static final int RequestToSettingsId = 2;
 	
 	private StampPinOverlay mPinOverlay;
+	private MyLocationOverlay mMyLocationOverlay;
 	private StampPin[] mStampPins;
 	private User mUser;
 	
@@ -137,6 +140,19 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 				map);
 		overlayList.add(mPinOverlay);
 		
+		mMyLocationOverlay = new MyLocationOverlay(this, map, 
+				new MyLocationOverlay.LocationChangeListener() {
+					@Override public void onLocationChanged(Location location) {
+						if(mArriveWatcher != null) {
+							try {
+								mArriveWatcher.onLocationChanged(location);
+							} catch(RemoteException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				});
+		overlayList.add(mMyLocationOverlay);
 		
 		//ピンの情報を示すレイヤを追加
 		PinInfoOverlay infoOverlay = new PinInfoOverlay(createPinInfoOnClickListener(),
@@ -380,6 +396,22 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 		}
 		
 		
+		//現在位置を表示するか否かチェックボックス設定
+		CheckBox chkShowMyLocation = (CheckBox)findViewById(R.id_map.show_my_location);
+		chkShowMyLocation.setChecked(StampRallyPreferences.isShowMyLocation());
+		chkShowMyLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				StampRallyPreferences.setShowMyLocation(isChecked);
+				if(isChecked) {
+					mMyLocationOverlay.enableMyLocation();
+					Toast.makeText(MapActivity.this, "現在位置の取得中です\n少し時間がかかることがあります", Toast.LENGTH_SHORT).show();
+				} else {
+					mMyLocationOverlay.disableMyLocation();
+				}
+			}
+		});
+		
+		
 		//その他の設定アクティビティへ遷移するテキスト設定
 		TextView toSettings = (TextView)findViewById(R.id_map.to_everykind_settings);
 		toSettings.setOnClickListener(new View.OnClickListener() {
@@ -503,12 +535,17 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 		super.onResume();
 		
 		mMascotHelper.onResume();
+		
+		if(StampRallyPreferences.isShowMyLocation()) {
+			mMyLocationOverlay.enableMyLocation();
+		}
 	}
 	
 	@Override protected void onPause() {
 		super.onPause();
 		
 		mMascotHelper.onPause();
+		mMyLocationOverlay.disableMyLocation();
 	}
 	
     @Override public boolean onKeyDown(int keyCode, KeyEvent event) {

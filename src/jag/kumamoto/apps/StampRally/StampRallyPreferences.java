@@ -260,4 +260,23 @@ public final class StampRallyPreferences {
 		}
 	}
 	
+	
+	private static final String PreferenceShowMyLocation = "show-my-location";
+	
+	public static boolean isShowMyLocation() {
+		SharedPreferences pref = mContext.getSharedPreferences(
+				PreferenceName, Context.MODE_PRIVATE);
+		
+		return pref.getBoolean(PreferenceShowMyLocation, true);
+	}
+	
+	public static void setShowMyLocation(boolean bool) {
+		SharedPreferences pref = mContext.getSharedPreferences(
+				PreferenceName, Context.MODE_PRIVATE);
+		
+		SharedPreferences.Editor editor = pref.edit();
+		editor.putBoolean(PreferenceShowMyLocation, bool);
+		editor.commit();
+	}
+	
 }

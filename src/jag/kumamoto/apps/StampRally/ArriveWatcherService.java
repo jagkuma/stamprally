@@ -168,6 +168,12 @@ public class ArriveWatcherService extends Service{
 			}
 		}
 
+		@Override public void onLocationChanged(Location location) throws RemoteException {
+			if(location != null) {
+				mLocationListener.onLocationChanged(location);
+			}
+		}
+
 		@Override public void registerApproachCallback(IApproachPinCallback callback) throws RemoteException {
 			mApproachCallbackList.register(callback);
 		}
