@@ -139,8 +139,19 @@
 	    				/>
 	    		</RadioGroup>
 	    		
+	    		
+	    		<TextView android:id="@+id_map/to_everykind_settings"
+	    			android:layout_width="wrap_content"
+	    			android:layout_height="wrap_content"
+	    			android:layout_gravity="center"
+	    			android:layout_marginTop="20dip"
+	    			android:textSize="23sp"
+	    			android:text="その他の設定へ"
+	    			android:textColor="#ffeeeeee"
+	    			/>
+	    		
 	    	</LinearLayout>
-	    	</ScrollView>
+	    </ScrollView>
     </SlidingDrawer>
     
 </FrameLayout>

@@ -24,6 +24,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -32,6 +33,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -40,6 +43,7 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SlidingDrawer;
+import android.widget.TextView;
 import android.widget.ZoomControls;
 
 
@@ -364,6 +368,39 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 			});
 			
 		}
+		
+		
+		//その他の設定アクティビティへ遷移するテキスト設定
+		TextView toSettings = (TextView)findViewById(R.id_map.to_everykind_settings);
+		toSettings.setOnClickListener(new View.OnClickListener() {
+			@Override public void onClick(View v) {
+				Intent intent = new Intent(MapActivity.this, SettingsActivity.class);
+				intent.putExtra(ConstantValue.ExtrasShowEveryKindSettings, true);
+				startActivity(intent);
+				
+				//戻ってきたときにオプションビューを閉じた状態にしておく
+				SlidingDrawer drawer = (SlidingDrawer)findViewById(R.id_map.slidingdrawer);
+				drawer.close();
+			}
+		});
+		
+		toSettings.setOnTouchListener(new View.OnTouchListener() {
+				private Drawable mBackground;
+				
+				@Override public boolean onTouch(View v, MotionEvent event) {
+					switch(event.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						mBackground = v.getBackground();
+						v.setBackgroundColor(0xffadaea4);
+						break;
+					case MotionEvent.ACTION_UP:
+					case MotionEvent.ACTION_CANCEL:
+						v.setBackgroundDrawable(mBackground);
+						break;
+					}
+				return false;
+			}
+		});
 	}
 		
 	

@@ -65,14 +65,14 @@ public class SettingsActivity extends TabActivity{
 
 		Bundle extras = getIntent().getExtras();
 		boolean isFirstStart = false;
+		boolean isShowEverkindSettings = false;
 		
 		if(extras != null) {
 			mUser = extras.getParcelable(ConstantValue.ExtrasUser);
 			isFirstStart = extras.getBoolean(ConstantValue.ExtrasFirstSettings, false);
+			mLoginRequest = extras.getBoolean(ConstantValue.ExtrasLoginRequest, false);
+			isShowEverkindSettings = extras.getBoolean(ConstantValue.ExtrasShowEveryKindSettings, false);
 		}
-		mLoginRequest = extras != null ?
-				extras.getBoolean(ConstantValue.ExtrasLoginRequest, false) :
-				false;
 				
 		//初回表示タイミングでキーボードを表示させないようにする
 		this.getWindow().setSoftInputMode(
@@ -82,6 +82,9 @@ public class SettingsActivity extends TabActivity{
 		setContentView(R.layout.settings);
 		
 		initTabPages();
+		if(isShowEverkindSettings) {
+			getTabHost().setCurrentTab(1);
+		}
 
 		if(isFirstStart) {
 			showFirstSettingsDialog();

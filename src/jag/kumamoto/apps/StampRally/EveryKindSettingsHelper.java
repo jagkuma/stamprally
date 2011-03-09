@@ -62,9 +62,9 @@ final class EveryKindSettingsHelper {
 		
 		
 		CheckBox chkShowUrge = (CheckBox)mLayout.findViewById(R.id_settings.show_urge);
+		chkShowUrge.setChecked(StampRallyPreferences.getShowUrgeDialog());
 		if(mUser == null) {
 			chkShowUrge.setEnabled(true);
-			chkShowUrge.setChecked(StampRallyPreferences.getShowUrgeDialog());
 		} else {
 			chkShowUrge.setEnabled(false);
 		}

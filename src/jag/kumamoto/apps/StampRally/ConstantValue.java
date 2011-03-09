@@ -16,4 +16,5 @@ public final class ConstantValue {
 	public static final String ExtrasUser = "user";
 	public static final String ExtrasFirstSettings = "first-settings";
 	public static final String ExtrasLoginRequest = "login-request";
+	public static final String ExtrasShowEveryKindSettings = "show-everkind-settings";
 }
