@@ -41,12 +41,13 @@ public final class R {
         public static final int sliding_drawer_handle=0x7f020018;
         public static final int sliding_drawer_handle_normal=0x7f020019;
         public static final int sliding_drawer_handle_pressed=0x7f02001a;
-        public static final int thanks_image=0x7f02001b;
-        public static final int to_map=0x7f02001c;
-        public static final int to_map_normal=0x7f02001d;
-        public static final int to_map_pressed=0x7f02001e;
-        public static final int to_map_selected=0x7f02001f;
-        public static final int transparent_background=0x7f020020;
+        public static final int test=0x7f02001b;
+        public static final int thanks_image=0x7f02001c;
+        public static final int to_map=0x7f02001d;
+        public static final int to_map_normal=0x7f02001e;
+        public static final int to_map_pressed=0x7f02001f;
+        public static final int to_map_selected=0x7f020020;
+        public static final int transparent_background=0x7f020021;
     }
     public static final class id {
         public static final int content=0x7f0f0001;
