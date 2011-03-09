@@ -1,9 +1,11 @@
 package aharisu.widget;
 
+import jag.kumamoto.apps.gotochi.R;
 import aharisu.util.AsyncDataGetter;
 import aharisu.util.Size;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.CheckBox;
@@ -41,7 +43,7 @@ public class ImageCheckBox extends CheckBox{
 	}
 	
 	public void setImageURL(String url) {
-		AsyncDataGetter.getBitmap(url, new AsyncDataGetter.BitmapCallback() {
+		AsyncDataGetter.getBitmapCache(url, new AsyncDataGetter.BitmapCallback() {
 			
 			@Override public void onGetData(Bitmap data) {
 				mImage = data;
@@ -59,6 +61,12 @@ public class ImageCheckBox extends CheckBox{
 				//TODO ダミーの画像を表示する？
 			}
 		});
+		
+		this.mImage =  BitmapFactory.decodeResource(
+				getContext().getResources(), R.drawable.now_loading);
+		requestLayout();
+		forceLayout();
+		invalidate();
 	}
 	
 	
