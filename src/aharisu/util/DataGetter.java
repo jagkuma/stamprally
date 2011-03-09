@@ -45,6 +45,21 @@ public final class DataGetter {
 		return new JSONObject(data);
 	}
 	
+	private static final LruCache<String, String> mJSONCache = new LruCache<String, String>(10);
+	public static JSONObject getJSONObjectCache(String url) throws IOException, JSONException {
+		
+		String data = mJSONCache.get(url);
+		if(data == null) {
+			byte[] raw = HttpClient.getByteArrayFromURL(url);
+			data = new String(raw);
+			raw = null;
+			
+			mJSONCache.put(url, data);
+		}
+		
+		return new JSONObject(data);
+	}
+	
 	public static class BitmapDecodeException extends Exception {
 
 		/**

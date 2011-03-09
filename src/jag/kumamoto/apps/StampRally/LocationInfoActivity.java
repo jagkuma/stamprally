@@ -210,7 +210,7 @@ public class LocationInfoActivity extends Activity{
 				
 				QuizData[] quizes = null;
 				try {
-					JSONObject obj = DataGetter.getJSONObject(StampRallyURL.getQuizesQuery(pin));
+					JSONObject obj = DataGetter.getJSONObjectCache(StampRallyURL.getQuizesQuery(pin));
 					if(StampRallyURL.isSuccess(obj)) {
 						quizes = QuizData.decodeJSONObject(obj);
 					} else {
