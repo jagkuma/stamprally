@@ -474,6 +474,10 @@ public class MapActivity extends com.google.android.maps.MapActivity{
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	if(requestCode == RequestShowInfoId) {
     		
+    		//LocationInfoやQuizでログインしている可能性があるので、
+    		//プリファレンスからユーザデータを読み込む
+    		mUser = StampRallyPreferences.getUser();
+    		
 			((FlowingTextView)findViewById(R.id_map.infobar))
 				.setText(constractInfoBarText(StampRallyPreferences.getUserRecord()));
 			
@@ -486,10 +490,14 @@ public class MapActivity extends com.google.android.maps.MapActivity{
     }
     
     private String constractInfoBarText(UserRecord record) {
-    	return new StringBuilder()
-    		.append("獲得ポイント:").append(record.point)
-    		.append("　スタンプ数：").append(record.numStamp)
-    		.toString();
+    	if(mUser != null) {
+	    	return new StringBuilder()
+	    		.append("獲得ポイント:").append(record.point)
+	    		.append("　スタンプ数：").append(record.numStamp)
+	    		.toString();
+    	} else {
+	    	return "ログインしていません";
+    	}
     }
 	
 }
