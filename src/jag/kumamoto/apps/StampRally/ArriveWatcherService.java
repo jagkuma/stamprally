@@ -244,7 +244,7 @@ public class ArriveWatcherService extends Service{
 				allowErrorRange = accuracy;
 			}
 			
-			StampPin[] pins = StampRallyDB.getStampPinsNonArrive();
+			StampPin[] pins = StampRallyDB.getStampPins();
 			
 			
 			ArrayList<Long> arriveList = new ArrayList<Long>();
