@@ -14,11 +14,13 @@ import android.graphics.Paint.Style;
 import android.graphics.Path.Direction;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.view.MotionEvent;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
@@ -39,8 +41,10 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 		
 		private static final int MinInfomationWidth = 250;
 		private static final int MaxOneLineTextLength = 10;
-		private static final int InformationMargin = 22;
-		private static final int InformationTitleTextSize = 48;
+		private static final int InfomationMargin = 22;
+		private static final int InfomationTitleTextSize = 48;
+		private static final int InfomationDistanceTextSize = 33;
+		private static final int InfomationDistanceMarginTop = 15;
 		
 		public static final int InfomationOffset = -75;
 		
@@ -55,32 +59,31 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 		
 		static {
 			mPaint.setAntiAlias(true);
-			mPaint.setTextSize(InformationTitleTextSize);
+			mPaint.setTextSize(InfomationTitleTextSize);
 			mPaint.setStrokeWidth(1);
 			mPaint.setStyle(Style.FILL);
 		}
 		
-		public InfoMarker(StampPinOverlay.StampRallyMarker marker) {
+		public InfoMarker(StampPinOverlay.StampRallyMarker marker, float distance) {
 			super(marker.getPoint(), marker.getTitle(), marker.getSnippet());
 			
 			this.stampPin = marker.stampPin;
 			
-			mNormalDrawable = createInfoDrawable(marker, 0xffefefef);
+			mNormalDrawable = createInfoDrawable(marker, 0xffefefef, distance);
 			boundCenterBottom(mNormalDrawable).getBounds().offset(0,InfomationOffset);
-			mPressedDrawable = createInfoDrawable(marker, 0xff00ffff);
+			mPressedDrawable = createInfoDrawable(marker, 0xff00ffff, distance);
 			boundCenterBottom(mPressedDrawable).getBounds().offset(0, InfomationOffset);
 			
 			setMarker(mNormalDrawable);
 		}
 		
 		private Drawable createInfoDrawable(StampPinOverlay.StampRallyMarker marker,
-				int background) {
+				int background, float distance) {
 			
 			String name = marker.getTitle();
 			int len = name.length();
 			int numLines = ((len - 1) / MaxOneLineTextLength) + 1;
 			int maxLength = numLines == 1 ? len : MaxOneLineTextLength;
-			
 			
 			//インフォメーションプレートのサイズを調べる
 			mPaint.getTextBounds(name, 0, maxLength, mTextBounds);
@@ -90,10 +93,26 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 			int height = mTextBounds.height() * numLines;
 			
 			
+			String distanceText = createDistanceText(distance);
+			Rect rect = new Rect();
+			if(distanceText != null) {
+				mPaint.setTextSize(InfomationDistanceTextSize);
+				
+				mPaint.getTextBounds(distanceText, 0, distanceText.length(), rect);
+				int distanceWidth = rect.width();
+				if(width < distanceWidth) {
+					width = distanceWidth;
+				}
+				height += rect.height();
+				height += InfomationDistanceMarginTop;
+				
+				mPaint.setTextSize(InfomationTitleTextSize);
+			}
+			
 			float descent = mPaint.descent();
 			Bitmap bitmap = Bitmap.createBitmap(
-					width + InformationMargin * 2, 
-					(int)(height + InformationMargin * 2 + (numLines - 1) * descent),
+					width + InfomationMargin * 2, 
+					(int)(height + InfomationMargin * 2 + (numLines - 1) * descent),
 					Bitmap.Config.ARGB_4444);
 			
 			Canvas canvas = new Canvas(bitmap);
@@ -117,18 +136,18 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 					20, 25, mPaint);
 			
 			//タイトルテキスト描画
-			mPaint.setTextSize(InformationTitleTextSize);
+			mPaint.setTextSize(InfomationTitleTextSize);
 			mPaint.setStrokeWidth(1);
 			mPaint.setStyle(Style.FILL);
 			float ascent = mPaint.ascent();
 			
-			float top = InformationMargin - ascent - 3;
+			float top = InfomationMargin - ascent - 3;
 			
 			float left;
 			if(numLines == 1) {
-				left = (bitmap.getWidth() - mTextBounds.width() - InformationMargin / 2.0f) / 2;
+				left = (bitmap.getWidth() - mTextBounds.width() - InfomationMargin / 2.0f) / 2;
 			} else {
-				left = InformationMargin / 2.0f;
+				left = InfomationMargin / 2.0f;
 			}
 				
 			int start = 0;
@@ -144,8 +163,29 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 					end = MaxOneLineTextLength * (i+2);
 			}
 			
+			if(distanceText != null) {
+				mPaint.setTextSize(InfomationDistanceTextSize);
+				
+				left = (bitmap.getWidth() - rect.width() - InfomationMargin / 2.0f) / 2;
+				canvas.drawText(distanceText, left, top + InfomationDistanceMarginTop + mPaint.ascent(), mPaint);
+				
+				mPaint.setTextSize(InfomationTitleTextSize);
+			}
+			
 			return new BitmapDrawable(bitmap);
 		}
+		
+		private String createDistanceText(float distance) {
+			if(distance < 0) {
+				return null;
+			} else if (distance > 1000) {
+				distance /= 1000;
+				return String.format("あと約%.2fkmです", distance);
+			} else {
+				return String.format("あと約%.0fmです", distance);
+			}
+		}
+		
 	};
 	
 	private  InfoMarker mItem = null;
@@ -159,9 +199,10 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 	private final MapView mMap;
 	private final Drawable mDrawable;
 	private final StampPinOverlay mOverlay;
+	private final MyLocationOverlay mMyLocationOverlay;
 	
-	public PinInfoOverlay(OnClickListener listener,
-			StampPinOverlay overlay, MapView map, Drawable drawble) {
+	public PinInfoOverlay(OnClickListener listener, StampPinOverlay overlay,
+			MyLocationOverlay myLocationOverlay, MapView map, Drawable drawble) {
 		super(drawble);
 		
 		mListener = listener;
@@ -169,6 +210,7 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 		mMap = map;
 		mDrawable = drawble;
 		mOverlay = overlay;
+		mMyLocationOverlay = myLocationOverlay;
 		
 		populate();
 	}
@@ -182,7 +224,16 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 	}
 	
 	public void setMarkerInfo(StampPinOverlay.StampRallyMarker marker) {
-		mItem = new InfoMarker(marker);
+		Location location = mMyLocationOverlay.getLastFix();
+		float distance = -1;
+		if(location != null) {
+			GeoPoint pt = marker.getPoint();
+			distance = LocationDistanceCalculator.calcDistanec(
+					(float)location.getLatitude(), (float)location.getLongitude(),
+					pt.getLatitudeE6() * 1e-6f, pt.getLongitudeE6() * 1e-6f);
+		}
+		
+		mItem = new InfoMarker(marker, distance);
 		
 		populate();
 	}
@@ -221,7 +272,8 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 			List<Overlay> overlays = mMap.getOverlays();
 			overlays.remove(this);
 			
-			PinInfoOverlay overlay = new PinInfoOverlay(mListener, mOverlay, mMap,  mDrawable);
+			PinInfoOverlay overlay = new PinInfoOverlay(
+					mListener, mOverlay, mMyLocationOverlay, mMap,  mDrawable);
 			
 			mOverlay.setInfoOverlay(overlay);
 			overlays.add(overlay);

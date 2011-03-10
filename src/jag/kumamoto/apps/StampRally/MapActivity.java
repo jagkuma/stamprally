@@ -156,7 +156,7 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 		
 		//ピンの情報を示すレイヤを追加
 		PinInfoOverlay infoOverlay = new PinInfoOverlay(createPinInfoOnClickListener(),
-				mPinOverlay, map, getResources().getDrawable(R.drawable.marker_none));
+				mPinOverlay, mMyLocationOverlay, map, getResources().getDrawable(R.drawable.marker_none));
 		overlayList.add(infoOverlay);
 		mPinOverlay.setInfoOverlay(infoOverlay);
 		

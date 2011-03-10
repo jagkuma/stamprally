@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
-import android.util.FloatMath;
 
 
 /**
@@ -32,84 +31,6 @@ import android.util.FloatMath;
  *
  */
 public class ArriveWatcherService extends Service{
-	
-	private static final class LocationDistanceCalculator {
-		
-		private static final class DataStore {
-			public float latSeconds;
-			public float latitude;
-			public float longitude;
-		}
-		
-		private float mLatSeconds;
-		private float mLatOrigin;
-		private float mLongiOrigin;
-		
-		private final DataStore mDataStore = new DataStore();
-		
-		/*
-		public LocationDistanceCalculator(int latitudeE6, int longitudeE6) {
-			this(latitudeE6 * 1e-6f, longitudeE6 * 1e-6f);
-		}
-		*/
-		
-		public LocationDistanceCalculator(float latitude, float longitude) {
-			calclation(latitude, longitude, mDataStore);
-			
-			mLatSeconds = mDataStore.latSeconds;
-			mLatOrigin = mDataStore.latitude;
-			mLongiOrigin = mDataStore.longitude;
-		}
-		
-		private void calclation(float latitude, float longitude, DataStore ret) {
-			int latDegree = (int)latitude;
-			latitude -= latDegree;
-			latitude *= 60;
-			
-			int latMinute = (int)latitude;
-			latitude -= latMinute;
-			latitude *= 60;
-			
-			float latSecond = latitude;
-			
-			int longiDegree = (int)longitude;
-			longitude -= longiDegree;
-			longitude *= 60;
-			
-			int longiMinute = (int)longitude;
-			longitude -= longiMinute;
-			longitude *= 60;
-			
-			float longiSecond = longitude;
-			
-			
-			ret.latSeconds = latDegree * 60 * 60 + latMinute * 60 + latSecond;
-			ret.latitude = ret.latSeconds / 3600 * (float)Math.PI / 180;
-			ret.longitude = (longiDegree * 60 * 60 + longiMinute * 60 + longiSecond) / 3600 * (float)Math.PI / 180;
-		}
-		
-		
-		/**
-		 * 
-		 * @param latitudeE6
-		 * @param longitudeE6
-		 * @return 基準点との距離.単位はm(メーター).
-		 */
-		public float calcDistance(int latitudeE6, int longitudeE6) {
-			calclation(latitudeE6 * 1e-6f, longitudeE6 * 1e-6f, mDataStore);
-			
-			float latO = (mLatSeconds + mDataStore.latSeconds) / 2 / 3600 * (float)Math.PI / 180;
-			
-			float tmp1 = (mLongiOrigin - mDataStore.longitude) * FloatMath.cos(latO);
-			tmp1 = tmp1 * tmp1; //tmp1 ^ 2;
-			float tmp2 = mLatOrigin - mDataStore.latitude;
-			tmp2 = tmp2 * tmp2; //tmp2 ^ 2;
-			
-			return FloatMath.sqrt(tmp1 + tmp2) * 6370 * 1000;
-		}
-		
-	}
-	
 	private static final int LocationUpdateMinTimeShort = 1 * 60 * 1000;//1分より短い間隔では通知されない
 	private static final int LocationUpdateMinDistanceShort = 5; //5m動いていなければ通知しない
 	private static final int LocationUpdateMinTimeNormal = 5 * 60 * 1000;//5分より短い間隔では通知されない
