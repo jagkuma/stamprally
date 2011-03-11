@@ -81,17 +81,7 @@ public class HomeActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						if (StampRallyPreferences.isFirstStampRallyStart()) {
-							firstStartAction();
-						} else {
-							Intent intent = new Intent(HomeActivity.this,
-									MapActivity.class);
-							User user = StampRallyPreferences.getUser();
-							if (user != null) {
-								intent.putExtra(ConstantValue.ExtrasUser, user);
-							}
-							startActivity(intent);
-						}
+						gotoStampRallyMap();
 					}
 				});
 
@@ -130,14 +120,7 @@ public class HomeActivity extends Activity {
 		signboard.setOnTouchListener(createSignboardOnTouchListener());
 		signboard.setOnClickListener(new View.OnClickListener() {
 			@Override public void onClick(View v) {
-			// 設定画面へ遷移
-				Intent intent = new Intent(HomeActivity.this,
-						SettingsActivity.class);
-				User user = StampRallyPreferences.getUser();
-				if (user != null) {
-					intent.putExtra(ConstantValue.ExtrasUser, user);
-				}
-				startActivity(intent);
+				gotoStampRallyMap();
 			}
 		});
 
@@ -160,6 +143,20 @@ public class HomeActivity extends Activity {
 
 	private void stopArriveWatcherService() {
 		unbindService(mConnection);
+	}
+	
+	private void gotoStampRallyMap() {
+		if (StampRallyPreferences.isFirstStampRallyStart()) {
+			firstStartAction();
+		} else {
+			Intent intent = new Intent(HomeActivity.this,
+					MapActivity.class);
+			User user = StampRallyPreferences.getUser();
+			if (user != null) {
+				intent.putExtra(ConstantValue.ExtrasUser, user);
+			}
+			startActivity(intent);
+		}
 	}
 
 	private void firstStartAction() {
