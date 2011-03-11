@@ -35,22 +35,22 @@
 
 
 
-		<activity android:name="jag.kumamoto.apps.StampRally.HomeActivity" android:theme="@style/Theme.Home">
+		<activity android:name="jag.kumamoto.apps.StampRally.HomeActivity" android:theme="@style/Theme.Home" android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name="jag.kumamoto.apps.StampRally.HelpActivity"></activity>
-		<activity android:name="jag.kumamoto.apps.StampRally.ThanksActivity"></activity>
-		<activity android:name="jag.kumamoto.apps.StampRally.SettingsActivity"></activity>
-		<activity android:name="jag.kumamoto.apps.StampRally.CollectionsActivity"></activity>
+		<activity android:name="jag.kumamoto.apps.StampRally.HelpActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"></activity>
+		<activity android:name="jag.kumamoto.apps.StampRally.ThanksActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"></activity>
+		<activity android:name="jag.kumamoto.apps.StampRally.SettingsActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"></activity>
+		<activity android:name="jag.kumamoto.apps.StampRally.CollectionsActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"></activity>
 		<activity android:name="jag.kumamoto.apps.StampRally.MapActivity"
-			android:launchMode="singleTop"></activity>
+			android:launchMode="singleTop" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"></activity>
 		<activity android:name="jag.kumamoto.apps.StampRally.LocationInfoActivity"
-			android:launchMode="singleTop"></activity>
-		<activity android:name="jag.kumamoto.apps.StampRally.QuizActivity"></activity>
-		<service android:name="jag.kumamoto.apps.StampRally.ArriveWatcherService"></service>
+			android:launchMode="singleTop" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"></activity>
+		<activity android:name="jag.kumamoto.apps.StampRally.QuizActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"></activity>
+		<service android:name="jag.kumamoto.apps.StampRally.ArriveWatcherService" android:exported="false"></service>
 		<uses-library android:name="com.google.android.maps" />
 
 
