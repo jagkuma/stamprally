@@ -2,6 +2,7 @@ package aharisu.mascot;
 
 import aharisu.util.ImageUtill;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 
 /***
@@ -31,6 +32,32 @@ public interface BitmapLoader {
 		@Override public Bitmap getBitmap() {
 			return ImageUtill.loadImage(mContext.getResources().
 					openRawResource(mResId), 1024, 1024);
+		}
+		
+		@Override public int getNumSplitVertical() {
+			return mNumSplitVertical;
+		}
+		
+		@Override public int getNumSplitHorizontal() {
+			return mNumSplitHorizontal;
+		}
+	}
+	
+	public final static class DrawableBitmapLoader implements BitmapLoader {
+		private final Resources mResources;
+		private final int mDrawableId;
+		private final int mNumSplitVertical;
+		private final int mNumSplitHorizontal;
+		
+		public DrawableBitmapLoader(Resources res, int drawableId, int numSplitVertical, int numSplitHorizontal) {
+			this.mResources = res;
+			this.mDrawableId = drawableId;
+			this.mNumSplitVertical = numSplitVertical;
+			this.mNumSplitHorizontal = numSplitHorizontal;
+		}
+		
+		@Override public Bitmap getBitmap() {
+			return ImageUtill.loadImage(mResources, mDrawableId, 1024, 1024);
 		}
 		
 		@Override public int getNumSplitVertical() {

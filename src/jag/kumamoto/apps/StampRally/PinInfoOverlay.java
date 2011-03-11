@@ -1,9 +1,12 @@
 package jag.kumamoto.apps.StampRally;
 
 import jag.kumamoto.apps.StampRally.Data.StampPin;
+import jag.kumamoto.apps.gotochi.R;
 
 import java.util.List;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -37,17 +40,16 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 		public void onClick(StampPin pin);
 	}
 	
+	private static int InfomationOffset;
+	private static int MinInfomationWidth;
+	private static int MaxOneLineTextLength = 10;
+	private static int InfomationMargin;
+	private static int InfomationStrokeWidth;
+	private static int InfomationTitleTextSize;
+	private static int InfomationDistanceTextSize;
+	private static int InfomationDistanceMarginTop;
+	
 	private static class InfoMarker extends OverlayItem {
-		
-		private static final int MinInfomationWidth = 250;
-		private static final int MaxOneLineTextLength = 10;
-		private static final int InfomationMargin = 22;
-		private static final int InfomationTitleTextSize = 48;
-		private static final int InfomationDistanceTextSize = 33;
-		private static final int InfomationDistanceMarginTop = 15;
-		
-		public static final int InfomationOffset = -75;
-		
 		private static final Path mPath = new Path();
 		private static final Paint mPaint = new Paint();
 		private static final Rect mTextBounds = new Rect();
@@ -59,12 +61,11 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 		
 		static {
 			mPaint.setAntiAlias(true);
-			mPaint.setTextSize(InfomationTitleTextSize);
 			mPaint.setStrokeWidth(1);
 			mPaint.setStyle(Style.FILL);
 		}
 		
-		public InfoMarker(StampPinOverlay.StampRallyMarker marker, float distance) {
+		public InfoMarker(StampPinOverlay.StampRallyMarker marker, float distance, Context context) {
 			super(marker.getPoint(), marker.getTitle(), marker.getSnippet());
 			
 			this.stampPin = marker.stampPin;
@@ -86,6 +87,7 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 			int maxLength = numLines == 1 ? len : MaxOneLineTextLength;
 			
 			//インフォメーションプレートのサイズを調べる
+			mPaint.setTextSize(InfomationTitleTextSize);
 			mPaint.getTextBounds(name, 0, maxLength, mTextBounds);
 			int width = mTextBounds.width();
 			if(width < MinInfomationWidth)
@@ -131,9 +133,10 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 			
 			mPaint.setARGB(0xff, 0x33, 0x33, 0x33);
 			mPaint.setStyle(Style.STROKE);
-			mPaint.setStrokeWidth(6);
-			canvas.drawRoundRect(new RectF(3, 3, bitmap.getWidth() - 3, bitmap.getHeight() - 3),
-					20, 25, mPaint);
+			mPaint.setStrokeWidth(InfomationStrokeWidth);
+			float padding = InfomationStrokeWidth / 2.0f;
+			canvas.drawRoundRect(new RectF(padding, padding, bitmap.getWidth() - padding, bitmap.getHeight() - padding),
+					20, 30 - InfomationStrokeWidth, mPaint);
 			
 			//タイトルテキスト描画
 			mPaint.setTextSize(InfomationTitleTextSize);
@@ -188,6 +191,7 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 		
 	};
 	
+	
 	private  InfoMarker mItem = null;
 	private boolean mTouchDown = false;
 	private boolean mTouchOutside = true;
@@ -212,6 +216,17 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 		mOverlay = overlay;
 		mMyLocationOverlay = myLocationOverlay;
 		
+		InfomationOffset = mMap.getContext().
+			getResources().getInteger(R.attr.InfomationOffset);
+		Resources res = mMap.getContext().getResources();
+		MinInfomationWidth = res.getInteger(R.attr.MinInfomationWidth);
+		InfomationMargin = res.getInteger(R.attr.InfomationMargin);
+		InfomationStrokeWidth = res.getInteger(R.attr.InfomationStrokeWidth);
+		InfomationTitleTextSize = res.getInteger(R.attr.InfomationTitleTextSize);
+		InfomationDistanceTextSize = res.getInteger(R.attr.InfomationDistanceTextSize);
+		InfomationDistanceMarginTop = res.getInteger(R.attr.InfomationDistanceMarginTop);
+			
+		
 		populate();
 	}
 	
@@ -233,7 +248,7 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 					pt.getLatitudeE6() * 1e-6f, pt.getLongitudeE6() * 1e-6f);
 		}
 		
-		mItem = new InfoMarker(marker, distance);
+		mItem = new InfoMarker(marker, distance, mMap.getContext());
 		
 		populate();
 	}
@@ -316,7 +331,7 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 	@Override public void draw(Canvas canvas, MapView mapView, boolean shadow) {
 		if(shadow) {
 			canvas.save();
-			canvas.translate(InfoMarker.InfomationOffset / 2.0f, InfoMarker.InfomationOffset / 2.0f);
+			canvas.translate(InfomationOffset / 2.0f, InfomationOffset / 2.0f);
 		}
 		super.draw(canvas, mapView, shadow);
 		

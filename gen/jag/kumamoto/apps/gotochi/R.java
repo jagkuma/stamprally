@@ -12,6 +12,13 @@ public final class R {
         public static final int RouteSearchKind=0x7f060000;
     }
     public static final class attr {
+        public static final int InfomationDistanceMarginTop=0x7f010005;
+        public static final int InfomationDistanceTextSize=0x7f010004;
+        public static final int InfomationMargin=0x7f010001;
+        public static final int InfomationOffset=0x7f010006;
+        public static final int InfomationStrokeWidth=0x7f010002;
+        public static final int InfomationTitleTextSize=0x7f010003;
+        public static final int MinInfomationWidth=0x7f010000;
     }
     public static final class drawable {
         public static final int button_home=0x7f020000;
@@ -35,32 +42,38 @@ public final class R {
         public static final int icon_status_bar=0x7f020012;
         public static final int icon_status_bar_arrived=0x7f020013;
         public static final int infobar_background=0x7f020014;
-        public static final int location_info_below_background=0x7f020015;
-        public static final int marker_none=0x7f020016;
-        public static final int marker_none_arrived=0x7f020017;
-        public static final int marker_quiz=0x7f020018;
-        public static final int marker_quiz_arrived=0x7f020019;
-        public static final int now_loading=0x7f02001a;
-        public static final int quiz_result_correctness=0x7f02001b;
-        public static final int quiz_result_incorrectness=0x7f02001c;
-        public static final int search_route_button=0x7f02001d;
-        public static final int search_route_button_disable=0x7f02001e;
-        public static final int search_route_button_disable_focused=0x7f02001f;
-        public static final int search_route_button_normal=0x7f020020;
-        public static final int search_route_button_pressed=0x7f020021;
-        public static final int search_route_button_selected=0x7f020022;
-        public static final int settings_group=0x7f020023;
-        public static final int sliding_drawer_content_background=0x7f020024;
-        public static final int sliding_drawer_content_group=0x7f020025;
-        public static final int sliding_drawer_handle=0x7f020026;
-        public static final int sliding_drawer_handle_normal=0x7f020027;
-        public static final int sliding_drawer_handle_pressed=0x7f020028;
-        public static final int thanks_image=0x7f020029;
-        public static final int to_map=0x7f02002a;
-        public static final int to_map_normal=0x7f02002b;
-        public static final int to_map_pressed=0x7f02002c;
-        public static final int to_map_selected=0x7f02002d;
-        public static final int transparent_background=0x7f02002e;
+        public static final int koke=0x7f020015;
+        public static final int kumamon=0x7f020016;
+        public static final int location_info_below_background=0x7f020017;
+        public static final int marker_none=0x7f020018;
+        public static final int marker_none_arrived=0x7f020019;
+        public static final int marker_quiz=0x7f02001a;
+        public static final int marker_quiz_arrived=0x7f02001b;
+        public static final int now_loading=0x7f02001c;
+        public static final int ofuro=0x7f02001d;
+        public static final int quiz_result_correctness=0x7f02001e;
+        public static final int quiz_result_incorrectness=0x7f02001f;
+        public static final int scroll=0x7f020020;
+        public static final int search_route_button=0x7f020021;
+        public static final int search_route_button_disable=0x7f020022;
+        public static final int search_route_button_disable_focused=0x7f020023;
+        public static final int search_route_button_normal=0x7f020024;
+        public static final int search_route_button_pressed=0x7f020025;
+        public static final int search_route_button_selected=0x7f020026;
+        public static final int settings_group=0x7f020027;
+        public static final int sleeping=0x7f020028;
+        public static final int sliding_drawer_content_background=0x7f020029;
+        public static final int sliding_drawer_content_group=0x7f02002a;
+        public static final int sliding_drawer_handle=0x7f02002b;
+        public static final int sliding_drawer_handle_normal=0x7f02002c;
+        public static final int sliding_drawer_handle_pressed=0x7f02002d;
+        public static final int speak=0x7f02002e;
+        public static final int thanks_image=0x7f02002f;
+        public static final int to_map=0x7f020030;
+        public static final int to_map_normal=0x7f020031;
+        public static final int to_map_pressed=0x7f020032;
+        public static final int to_map_selected=0x7f020033;
+        public static final int transparent_background=0x7f020034;
     }
     public static final class id {
         public static final int content=0x7f0f0001;
@@ -190,15 +203,9 @@ public final class R {
     }
     public static final class raw {
         public static final int help=0x7f040000;
-        public static final int koke=0x7f040001;
-        public static final int kumamon=0x7f040002;
-        public static final int ofuro=0x7f040003;
-        public static final int scroll=0x7f040004;
-        public static final int sleeping=0x7f040005;
-        public static final int speak=0x7f040006;
-        public static final int test_location_info=0x7f040007;
-        public static final int test_quiz=0x7f040008;
-        public static final int thanks=0x7f040009;
+        public static final int test_location_info=0x7f040001;
+        public static final int test_quiz=0x7f040002;
+        public static final int thanks=0x7f040003;
     }
     public static final class string {
         public static final int RouteSearchKindPrompt=0x7f05000a;

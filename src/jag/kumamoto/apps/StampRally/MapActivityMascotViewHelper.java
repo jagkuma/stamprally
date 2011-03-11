@@ -66,13 +66,12 @@ public final class MapActivityMascotViewHelper {
 
 		// ランダム歩行の基本状態追加
 		mView.addBasicState(new StateRandomWalk(mascot, ImageUtill.loadImage(
-				res.openRawResource(R.raw.kumamon), 1024, 1024)));
+				res, R.drawable.kumamon, 1024, 1024)));
 
 		// ダブルタップのときのこけるアニメーション
 		StateRepetition falling = new StateRepetition(mascot,
 				UserInteractionState.Type.DoubleTap,
-				new BitmapLoader.RawResourceBitmapLoader(context, R.raw.koke,
-						3, 1));
+				new BitmapLoader.DrawableBitmapLoader(res, R.drawable.koke, 3, 1));
 		// 一つ導入画像がある
 		falling.setNumHeaderFrame(1);
 		// 導入画像を以外を3回リピートする
@@ -107,19 +106,19 @@ public final class MapActivityMascotViewHelper {
 		
 		// テキスト表示状態用の画像を設定
 		mView
-				.setSpeakStateBitmapLoader(new BitmapLoader.RawResourceBitmapLoader(
-						context, R.raw.speak, 7, 1));
+				.setSpeakStateBitmapLoader(new BitmapLoader.DrawableBitmapLoader(
+						res, R.drawable.speak, 7, 1));
 
 		// スクロール中状態用の画像を設定
 		mView
-				.setScrollStateBitmapLoader(new BitmapLoader.RawResourceBitmapLoader(
-						context, R.raw.scroll, 2, 1));
+				.setScrollStateBitmapLoader(new BitmapLoader.DrawableBitmapLoader(
+						res, R.drawable.scroll, 2, 1));
 
 		// 入浴中状態を設定
 		StateTimeZoneRepetition bathing = new StateTimeZoneRepetition(mascot,
 				TimeZoneState.Type.Evening,
-				new BitmapLoader.RawResourceBitmapLoader(context, R.raw.ofuro,
-						2, 1), Mascot.Level.Middle, Mascot.Level.Low);
+				new BitmapLoader.DrawableBitmapLoader(res, R.drawable.ofuro,2, 1),
+					Mascot.Level.Middle, Mascot.Level.Low);
 		bathing.setNumRepetition(-1);
 		mView.addTimeZoneState(bathing);
 		// 昼・夜は入浴状態に移る確率は低い
@@ -131,9 +130,8 @@ public final class MapActivityMascotViewHelper {
 		// 睡眠状態を設定
 		StateTimeZoneRepetition sleeping = new StateTimeZoneRepetition(mascot,
 				TimeZoneState.Type.Night,
-				new BitmapLoader.RawResourceBitmapLoader(context,
-						R.raw.sleeping, 3, 1), Mascot.Level.Middle,
-				Mascot.Level.Low);
+				new BitmapLoader.DrawableBitmapLoader(res, R.drawable.sleeping, 3, 1),
+					Mascot.Level.Middle, Mascot.Level.Low);
 		sleeping.setNumRepetition(-1);
 		mView.addTimeZoneState(sleeping);
 		// 昼は睡眠状態に移る確率は低い

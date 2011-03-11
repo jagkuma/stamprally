@@ -1,0 +1,9 @@
+<resources>
+<item format="integer" type="attr" name="MinInfomationWidth">100</item>
+<item name="InfomationMargin" format="integer" type="attr">10</item>
+<item format="integer" name="InfomationStrokeWidth" type="attr">3</item>
+<item format="integer" name="InfomationTitleTextSize" type="attr">22</item>
+<item format="integer" name="InfomationDistanceTextSize" type="attr">17</item>
+<item format="integer" name="InfomationDistanceMarginTop" type="attr">7</item>
+<item format="integer" name="InfomationOffset" type="attr">-50</item>
+</resources>

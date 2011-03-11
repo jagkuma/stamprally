@@ -11,6 +11,7 @@ import java.util.Date;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -54,6 +55,39 @@ public final class ImageUtill {
 			++number;
 		}while(true);
 		
+	}
+	
+	public static Bitmap loadImage(Resources res, int drawableId, int width, int height) {
+		Bitmap image = null;
+		
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeResource(res, drawableId, options);
+		options.inJustDecodeBounds = false;
+		
+		Size size = fitting(options.outWidth, options.outHeight, width, height);
+		
+		Bitmap tmp = null;
+		float factor = options.outWidth / (float)size.width;
+		if(factor >= 2) {
+			options.inSampleSize = (int)factor;
+			tmp = BitmapFactory.decodeResource(res, drawableId, options);
+		} else {
+			tmp = BitmapFactory.decodeResource(res, drawableId);
+		}
+		
+		if(tmp == null)
+			return null;
+		
+		if(factor != (int)factor) {
+			image = Bitmap.createScaledBitmap(tmp, size.width, size.height, true);
+			tmp.recycle();
+			tmp = null;
+		} else {
+			image = tmp;
+		}
+		
+		return image;
 	}
 	
 	public static Bitmap loadImage(InputStream is, int width, int height) {
