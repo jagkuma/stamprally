@@ -7,7 +7,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
 
@@ -140,7 +139,6 @@ public class FlowingTextView extends TextView{
 		case INVISIBLE:
 		case GONE:
 			if(mScrollTask != null) {
-				Log.i("TEST", "Invisible");
 				mScrollTask.cancel(true);
 				mScrollTask = null;
 			}

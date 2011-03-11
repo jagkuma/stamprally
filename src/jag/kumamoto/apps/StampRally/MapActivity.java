@@ -79,9 +79,8 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 		}
 		
 		private String constractInfoBarText(StampPin pin, int distance) {
-			return new StringBuilder(pin.name).append("まであと")
-				.append(distance).append("メートルです")
-				.toString();
+			return String.format(getResources().getString(R.string.map_distance_integer_meter_format),
+					pin.name, distance);
 		}
 		
 	};
@@ -404,7 +403,8 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 				StampRallyPreferences.setShowMyLocation(isChecked);
 				if(isChecked) {
 					mMyLocationOverlay.enableMyLocation();
-					Toast.makeText(MapActivity.this, "現在位置の取得中です\n少し時間がかかることがあります", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MapActivity.this, 
+							R.string.map_getting_my_location_message, Toast.LENGTH_SHORT).show();
 				} else {
 					mMyLocationOverlay.disableMyLocation();
 				}
@@ -585,12 +585,10 @@ public class MapActivity extends com.google.android.maps.MapActivity{
     
     private String constractInfoBarText(UserRecord record) {
     	if(mUser != null) {
-	    	return new StringBuilder()
-	    		.append("獲得ポイント:").append(record.point)
-	    		.append("　スタンプ数：").append(record.numStamp)
-	    		.toString();
+    		return String.format(getResources().getString(R.string.map_infobar_text_format,
+    				record.point, record.numStamp));
     	} else {
-	    	return "ログインしていません";
+    		return getResources().getString(R.string.common_no_login);
     	}
     }
 	

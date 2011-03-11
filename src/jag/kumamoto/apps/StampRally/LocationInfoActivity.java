@@ -114,7 +114,6 @@ public class LocationInfoActivity extends Activity{
 		settings.setJavaScriptEnabled(true);
 		webInfo.loadUrl(getInfomationURL(mPin));
 		
-		
 		//クイズを表示できる状態ならボタンを表示
 		View goQuizFrame = findViewById(R.id_location_info.go_quiz_frame);
 		if(isShowGoQuiz) {
@@ -251,7 +250,7 @@ public class LocationInfoActivity extends Activity{
 		
 		Button goQuiz = (Button)findViewById(R.id_location_info.go_quiz);
 		goQuiz.setEnabled(true);
-		goQuiz.setText("クイズへGo!!");
+		goQuiz.setText(R.string.location_goto_quiz);
 	}
 	
 	private View.OnClickListener createOnRouteSearachClickListener() {
@@ -286,15 +285,15 @@ public class LocationInfoActivity extends Activity{
 						StampRallyPreferences.setShowUrgeDialog(!isChecked);
 						if(isChecked) {
 							Toast.makeText(LocationInfoActivity.this, 
-									"設定画面でこのオプションを変更できます", Toast.LENGTH_LONG).show();
+									R.string.common_can_modify_option_on_settings, Toast.LENGTH_LONG).show();
 						}
 					}
 				});
 		
 		new AlertDialog.Builder(this)
-			.setTitle("ログインしていません")
+			.setTitle(R.string.common_no_login)
 			.setView(layout)
-			.setPositiveButton("ログインする", new DialogInterface.OnClickListener() {
+			.setPositiveButton(R.string.common_login, new DialogInterface.OnClickListener() {
 				@Override public void onClick(DialogInterface dialog, int which) {
 					Intent intent = new Intent(LocationInfoActivity.this, SettingsActivity.class);
 					intent.putExtra(ConstantValue.ExtrasLoginRequest, true);
@@ -302,7 +301,7 @@ public class LocationInfoActivity extends Activity{
 					startActivityForResult(intent, RequestLogin);
 				}
 			})
-			.setNegativeButton("取り消し", null)
+			.setNegativeButton(R.string.common_cancel, null)
 			.show();
 	}
 	
@@ -317,7 +316,8 @@ public class LocationInfoActivity extends Activity{
 	}
 	
 	private void sendAsyncArrivedMessaeg() {
-		Toast.makeText(LocationInfoActivity.this, "到着確認を送信します", Toast.LENGTH_SHORT).show();
+		Toast.makeText(LocationInfoActivity.this,
+				R.string.location_send_arrive_query, Toast.LENGTH_SHORT).show();
 		
 		final String query = StampRallyURL.getArriveQuery(mUser, mPin);
 		
@@ -355,7 +355,8 @@ public class LocationInfoActivity extends Activity{
 				}
 				
 				Toast.makeText(LocationInfoActivity.this, result ?
-						"到着完了!" : "あれ？ネットワークの調子がおかしいぞ",
+						R.string.location_send_complete :
+						R.string.common_communication_failure,
 						Toast.LENGTH_SHORT).show();
 			}
 			
@@ -364,7 +365,7 @@ public class LocationInfoActivity extends Activity{
 	
 	//WebViewを操作するメニュー
 	@Override public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, MenuItemGoForward, 0, "進む").setIcon(R.drawable.ic_menu_forward);
+		menu.add(0, MenuItemGoForward, 0, R.string.common_forward).setIcon(R.drawable.ic_menu_forward);
 		
 		return super.onCreateOptionsMenu(menu);
 	}

@@ -14,13 +14,12 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.text.Editable;
-import android.text.Spannable;
 import android.text.TextWatcher;
-import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -94,7 +93,7 @@ final class UserSettingsHelper {
 	
 	private void constractUserInfoModifyView() {
 		//タイトル設定
-		((TextView)mLayout.findViewById(R.id_settings.user_setting_title)).setText("ユーザー情報編集");
+		((TextView)mLayout.findViewById(R.id_settings.user_setting_title)).setText(R.string.settings_title_modify);
 		
 		//トークンリストを非表示
 		mLayout.findViewById(R.id_settings.select_token_frame).setVisibility(View.GONE);
@@ -137,7 +136,7 @@ final class UserSettingsHelper {
 		
 		//okボタンを設定
 		Button btnModify =  (Button)mLayout.findViewById(R.id_settings.ok);
-		btnModify.setText("変更");
+		btnModify.setText(R.string.settings_ok_modify);
 		btnModify.setEnabled(false);
 		btnModify.setOnClickListener(new View.OnClickListener() {
 			@Override public void onClick(View v) {
@@ -152,7 +151,7 @@ final class UserSettingsHelper {
 		
 		//ログアウトするテキストを設定
 		TextView tvwLogout = (TextView)mLayout.findViewById(R.id_settings.change_view);
-		setUnderlineText(tvwLogout, "ログアウトする");
+		tvwLogout.setText(R.string.settings_do_logout);
 		//テキストをタッチしたときに背景色を変える
 		tvwLogout.setOnTouchListener(createChangeViewOnTouchListener());
 		//テキストをタッチしたときに画面を変更する
@@ -169,14 +168,6 @@ final class UserSettingsHelper {
 		return id == R.id_settings.gender_female ? User.Female :
 			id == R.id_settings.gender_male ? User.Male :
 			User.Unknown;
-	}
-	
-	private void setUnderlineText(TextView tvw, String text) {
-		//テキストに下線を引く
-		Spannable span = Spannable.Factory.getInstance().newSpannable(text);
-		UnderlineSpan us = new UnderlineSpan();
-		span.setSpan(us, 0, text.length(), span.getSpanFlags(us));
-		tvw.setText(span, TextView.BufferType.SPANNABLE);
 	}
 	
 	private void checkModifyEnable() {
@@ -227,15 +218,14 @@ final class UserSettingsHelper {
 	
 	private void showLogoutAlertDialog() {
 		new AlertDialog.Builder(mLayout.getContext())
-			.setTitle("本当に？")
-			.setMessage("ログアウトします。\nよろしいですか?")
-			.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			.setMessage(R.string.settings_confirmation_logout)
+			.setPositiveButton(R.string.common_ok, new DialogInterface.OnClickListener() {
 				
 				@Override public void onClick(DialogInterface dialog, int which) {
 					logout();
 				}
 			})
-			.setNegativeButton("キャンセル", null)
+			.setNegativeButton(R.string.common_cancel, null)
 			.setCancelable(true)
 			.show();
 	}
@@ -262,8 +252,10 @@ final class UserSettingsHelper {
 	}
 	
 	private void modifyUser(final User user) {
-		final ProgressDialog dialog = new ProgressDialog(mLayout.getContext());
-		dialog.setMessage("変更中です");
+		Context context = mLayout.getContext();
+		
+		final ProgressDialog dialog = new ProgressDialog(context);
+		dialog.setMessage(context.getResources().getString(R.string.settings_progress_modify));
 		dialog.setIndeterminate(false);
 		dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		dialog.setCancelable(false);
@@ -298,9 +290,11 @@ final class UserSettingsHelper {
 					StampRallyPreferences.setUser(user);
 					mUser = user;
 
-					Toast.makeText(mLayout.getContext(), "変更しました", Toast.LENGTH_SHORT).show();
+					Toast.makeText(mLayout.getContext(), 
+							R.string.settings_modify_complete , Toast.LENGTH_SHORT).show();
 				} else {
-					Toast.makeText(mLayout.getContext(), "変更に失敗しました", Toast.LENGTH_SHORT).show();
+					Toast.makeText(mLayout.getContext(), 
+							R.string.settings_modify_not_complete,Toast.LENGTH_SHORT).show();
 				}
 			}
 
@@ -315,14 +309,14 @@ final class UserSettingsHelper {
 	
 	private void constractLoginView() {
 		//タイトル設定
-		((TextView)mLayout.findViewById(R.id_settings.user_setting_title)).setText("ログイン");
+		((TextView)mLayout.findViewById(R.id_settings.user_setting_title)).setText(R.string.settings_title_login);
 		
 		//ニックネームと性別設定欄を非表示
 		mLayout.findViewById(R.id_settings.registration_frame).setVisibility(View.GONE);
 		
 		//okボタンを設定
 		Button btnLogin =  (Button)mLayout.findViewById(R.id_settings.ok);
-		btnLogin.setText("ログイン");
+		btnLogin.setText(R.string.settings_ok_login);
 		btnLogin.setOnClickListener(new View.OnClickListener() {
 			@Override public void onClick(View v) {
 				login(getSelectedToken());
@@ -331,7 +325,7 @@ final class UserSettingsHelper {
 		
 		//新規登録するテキストを設定
 		TextView tvwGotoRegistration = (TextView)mLayout.findViewById(R.id_settings.change_view);
-		setUnderlineText(tvwGotoRegistration, "新規登録はこちら");
+		tvwGotoRegistration.setText(R.string.settings_do_registration);
 		//テキストをタッチしたときに背景色を変える
 		tvwGotoRegistration.setOnTouchListener(createChangeViewOnTouchListener());
 		//テキストをタッチしたときに画面を変更する
@@ -341,7 +335,7 @@ final class UserSettingsHelper {
 		mLayout.findViewById(R.id_settings.select_token_frame).setVisibility(View.VISIBLE);
 		
 		//トークンリストを設定&初期化
-		((TextView)mLayout.findViewById(R.id_settings.token_label)).setText("登録したアドレスを選択してください");
+		((TextView)mLayout.findViewById(R.id_settings.token_label)).setText(R.string.settings_choise_registerd_address);
 		if(!initTokenFrame()) {
 			btnLogin.setEnabled(false);
 			//アカウントが一つもなかった
@@ -352,8 +346,10 @@ final class UserSettingsHelper {
 	}
 	
 	private void login(final String token) {
-		final ProgressDialog dialog = new ProgressDialog(mLayout.getContext());
-		dialog.setMessage("認証中です");
+		Context context = mLayout.getContext();
+		
+		final ProgressDialog dialog = new ProgressDialog(context);
+		dialog.setMessage(context.getResources().getString(R.string.settings_progress_attestation));
 		dialog.setMax(5);
 		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		dialog.setCancelable(false);
@@ -410,9 +406,11 @@ final class UserSettingsHelper {
 					}
 					constractUserInfoModifyView();
 
-					Toast.makeText(mLayout.getContext(), "ログインしました", Toast.LENGTH_SHORT).show();
+					Toast.makeText(mLayout.getContext(), 
+							R.string.settings_login_complete, Toast.LENGTH_SHORT).show();
 				} else {
-					Toast.makeText(mLayout.getContext(), "ログインに失敗しました", Toast.LENGTH_SHORT).show();
+					Toast.makeText(mLayout.getContext(), 
+							R.string.settings_login_not_complete, Toast.LENGTH_SHORT).show();
 				}
 			}
 
@@ -428,7 +426,7 @@ final class UserSettingsHelper {
 	
 	private void constractRegistrationView() {
 		//タイトル設定
-		((TextView)mLayout.findViewById(R.id_settings.user_setting_title)).setText("新規登録");
+		((TextView)mLayout.findViewById(R.id_settings.user_setting_title)).setText(R.string.settings_title_registration);
 		
 		//ニックネームと性別設定欄を表示
 		mLayout.findViewById(R.id_settings.registration_frame).setVisibility(View.VISIBLE);
@@ -445,13 +443,13 @@ final class UserSettingsHelper {
 		
 		//okボタンを設定
 		Button btnOK = (Button)mLayout.findViewById(R.id_settings.ok);
-		btnOK.setText("新規登録");
+		btnOK.setText(R.string.settings_ok_registration);
 		btnOK.setEnabled(false);
 		btnOK.setOnClickListener(createRegistrationOnClickListener());
 		
 		//ログインするテキストを設定
 		TextView tvwGotoLogin = (TextView)mLayout.findViewById(R.id_settings.change_view);
-		setUnderlineText(tvwGotoLogin, "ログインはこちら");
+		tvwGotoLogin.setText(R.string.settings_do_login);
 		//テキストをタッチしたときに背景色を変える
 		tvwGotoLogin.setOnTouchListener(createChangeViewOnTouchListener());
 		//テキストをタッチしたときに画面を変更する
@@ -461,7 +459,7 @@ final class UserSettingsHelper {
 		mLayout.findViewById(R.id_settings.select_token_frame).setVisibility(View.VISIBLE);
 		
 		//トークンリストを設定&初期化
-		((TextView)mLayout.findViewById(R.id_settings.token_label)).setText("登録するアドレスを選択してください");
+		((TextView)mLayout.findViewById(R.id_settings.token_label)).setText(R.string.settings_choise_registration_address);
 		if(!initTokenFrame()) {
 			//アカウントが一つもなかった
 			showNoneAccountDialog();
@@ -499,8 +497,10 @@ final class UserSettingsHelper {
 	}
 	
 	private void registration(final User user) {
-		final ProgressDialog dialog = new ProgressDialog(mLayout.getContext());
-		dialog.setMessage("登録中です");
+		Context context = mLayout.getContext();
+		
+		final ProgressDialog dialog = new ProgressDialog(context);
+		dialog.setMessage(context.getResources().getString(R.string.settings_progress_registration));
 		dialog.setMax(5);
 		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		dialog.setCancelable(false);
@@ -559,9 +559,11 @@ final class UserSettingsHelper {
 					}
 					constractUserInfoModifyView();
 					
-					Toast.makeText(mLayout.getContext(), "認証しました", Toast.LENGTH_SHORT).show();
+					Toast.makeText(mLayout.getContext(), 
+							R.string.settings_registration_complete, Toast.LENGTH_SHORT).show();
 				} else {
-					Toast.makeText(mLayout.getContext(), "認証に失敗しました", Toast.LENGTH_SHORT).show();
+					Toast.makeText(mLayout.getContext(), 
+							R.string.settings_registration_not_complete, Toast.LENGTH_SHORT).show();
 				}
 			}
 
@@ -571,7 +573,7 @@ final class UserSettingsHelper {
 	private String getSelectedToken() {
 		int id = ((RadioGroup)mLayout.findViewById(R.id_settings.token_frame)).getCheckedRadioButtonId();
 		if(id < 0) {
-			throw new RuntimeException("tokenが選択されていません.実装のエラー");
+			throw new RuntimeException("token is not chosen. implemented error");
 		}
 		
 		return getGoogleAccounts()[id];
@@ -608,16 +610,13 @@ final class UserSettingsHelper {
 	}
 	
 	private void showNoneAccountDialog() {
+		Context context = mLayout.getContext();
 		
-		new AlertDialog.Builder(mLayout.getContext())
-			.setTitle("アカウントがありません")
-			.setMessage(
-					"端末にGoogleアカウントが登録されていません。\n"
-					+ "このアプリケーションにはGoogleアカウントが必要です。\n"
-					+ "端末の設定メニューからGoogleアカウントを登録してください。\n"
-					)
-			.setPositiveButton("今は行わない", null)
-			.setNeutralButton("設定へ", new DialogInterface.OnClickListener() {
+		new AlertDialog.Builder(context)
+			.setTitle(R.string.settings_no_address_title)
+			.setMessage(context.getResources().getString(R.string.settings_no_address_message))
+			.setPositiveButton(R.string.settings_no_address_cancel, null)
+			.setNeutralButton(R.string.settings_no_address_goto_device_settings, new DialogInterface.OnClickListener() {
 				@Override public void onClick(DialogInterface dialog, int which) {
 					if(mListener != null) {
 						mListener.gotoAccountSettngs();
@@ -651,19 +650,20 @@ final class UserSettingsHelper {
 			
 			public void run() {
 				dialog.setProgress(progress);
+				Resources res = dialog.getContext().getResources();
 				
 				switch(progress) {
 				case 1:
-					dialog.setMessage("スタンプ情報取得中...");
+					dialog.setMessage(res.getString(R.string.settings_progress_getting_stamp_pin));
 					break;
 				case 2:
-					dialog.setMessage("スタンプ情報更新中...");
+					dialog.setMessage(res.getString(R.string.settings_progress_updateing_stamp_pin));
 					break;
 				case 3:
-					dialog.setMessage("ユーザー履歴取得中...");
+					dialog.setMessage(res.getString(R.string.settings_progress_getting_user_history));
 					break;
 				case 4:
-					dialog.setMessage("ユーザー履歴更新中...");
+					dialog.setMessage(res.getString(R.string.settings_progress_updateing_user_history));
 					break;
 				}
 			}

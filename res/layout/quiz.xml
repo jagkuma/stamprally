@@ -69,7 +69,7 @@
 		    	android:layout_height="wrap_content"
 		    	android:layout_marginTop="5dip"
 		    	android:textSize="18sp"
-		    	android:text="選択してください"
+		    	android:text="@string/quiz_answers_label"
 		    	android:gravity="center"
 		    	android:textColor="#666666"
 		    	/>
@@ -90,7 +90,7 @@
     	layout_ratioWidth="0.6"
     	layout_ratioHeight="0.08"
 		android:textSize="21sp"
-		android:text="これでOK!!"
+		android:text="@string/quiz_ok"
 		/>
 	
 </aharisu.widget.RatioLayout>

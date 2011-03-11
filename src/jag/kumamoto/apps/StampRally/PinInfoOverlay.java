@@ -58,6 +58,7 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 		private final Drawable  mPressedDrawable;
 		
 		public final StampPin stampPin;
+		private final Context mContext;
 		
 		static {
 			mPaint.setAntiAlias(true);
@@ -69,6 +70,7 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 			super(marker.getPoint(), marker.getTitle(), marker.getSnippet());
 			
 			this.stampPin = marker.stampPin;
+			this.mContext = context;
 			
 			mNormalDrawable = createInfoDrawable(marker, 0xffefefef, distance);
 			boundCenterBottom(mNormalDrawable).getBounds().offset(0,InfomationOffset);
@@ -179,13 +181,14 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 		}
 		
 		private String createDistanceText(float distance) {
+			Resources res = mContext.getResources();
 			if(distance < 0) {
 				return null;
 			} else if (distance > 1000) {
 				distance /= 1000;
-				return String.format("あと約%.2fkmです", distance);
+				return String.format(res.getString(R.string.map_distance_kilometer_format), distance);
 			} else {
-				return String.format("あと約%.0fmです", distance);
+				return String.format(res.getString(R.string.map_distance_meter_format), distance);
 			}
 		}
 		

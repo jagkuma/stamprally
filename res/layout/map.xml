@@ -75,7 +75,7 @@
 	    			android:layout_height="wrap_content"
 	    			android:gravity="center"
 	    			android:textSize="20sp"
-	    			android:text="表示するスタンプを限定する"
+	    			android:text="@string/map_show_pin_filter"
 	    			android:textColor="#ffeeeeee"
 	    			/>
 	    		
@@ -91,20 +91,20 @@
 	    				android:layout_width="wrap_content"
 	    				android:layout_height="wrap_content"
 		    			android:textSize="19sp"
-	    				android:text="訪れたことが?"
+	    				android:text="@string/map_question_visited"
 	    				/>
 	    				
 	    			<RadioButton android:id="@+id_map/radio_alt_visit_visited"
 	    				android:layout_width="wrap_content"
 	    				android:layout_height="wrap_content"
 	    				android:layout_marginLeft="30dip"
-	    				android:text="ある!!"
+	    				android:text="@string/map_visited"
 	    				/>
 	    			<RadioButton android:id="@+id_map/radio_alt_visit_no_visite"
 	    				android:layout_width="wrap_content"
 	    				android:layout_height="wrap_content"
 	    				android:layout_marginLeft="30dip"
-	    				android:text="ない..."
+	    				android:text="@string/map_not_visit"
 	    				/>
 	    			
 	    		</RadioGroup>
@@ -122,20 +122,20 @@
 	    				android:layout_width="wrap_content"
 	    				android:layout_height="wrap_content"
 		    			android:textSize="19sp"
-	    				android:text="スタンプのタイプ"
+	    				android:text="@string/map_question_type"
 	    				/>
 	    				
 	    			<RadioButton android:id="@+id_map/radio_alt_type_stamp"
 	    				android:layout_width="wrap_content"
 	    				android:layout_height="wrap_content"
 	    				android:layout_marginLeft="30dip"
-	    				android:text="スタンプ"
+	    				android:text="@string/map_pin_type_none"
 	    				/>
 	    			<RadioButton android:id="@+id_map/radio_alt_type_quiz"
 	    				android:layout_width="wrap_content"
 	    				android:layout_height="wrap_content"
 	    				android:layout_marginLeft="30dip"
-	    				android:text="クイズ"
+	    				android:text="@string/map_pin_type_quiz"
 	    				/>
 	    		</RadioGroup>
 	    		
@@ -149,7 +149,7 @@
 	    			<CheckBox android:id="@+id_map/show_my_location"
 		    			android:layout_width="fill_parent"
 		    			android:layout_height="wrap_content"
-		    			android:text="現在位置を表示する"
+		    			android:text="@string/map_show_my_location"
 		    			/>
 	    		</FrameLayout>
 	    		
@@ -161,7 +161,7 @@
 	    			android:layout_marginTop="15dip"
 	    			android:layout_marginBottom="20dip"
 	    			android:textSize="23sp"
-	    			android:text="その他の設定へ"
+	    			android:text="@string/map_goto_settings"
 	    			android:textColor="#ffeeeeee"
 	    			/>
 	    		

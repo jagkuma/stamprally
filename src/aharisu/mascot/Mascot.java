@@ -198,7 +198,7 @@ public final class Mascot extends IMascot{
 	 */
 	public void start() {
 		if(mBasicStateList.size() == 0) {
-			throw new IllegalStateException("基本状態が一つもありません");
+			throw new IllegalStateException("doesn't have the basic state");
 		}
 		
 		

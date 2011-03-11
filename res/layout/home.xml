@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
--->
 <aharisu.widget.RatioLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -26,7 +20,7 @@
     	layout_ratioY="0.33"
     	layout_ratioWidth="0.8"
     	layout_ratioHeight="0.1"
-    	android:text="コレクション＆ランキング"
+    	android:text="@string/home_goto_collections"
     	android:textSize="20sp"
     	/>
     	
@@ -36,7 +30,7 @@
     	layout_ratioY="0.46"
     	layout_ratioWidth="0.26"
     	layout_ratioHeight="0.1"
-    	android:text="ヘルプ"
+    	android:text="@string/home_goto_help"
     	android:textSize="20sp"
     	/>
     	
@@ -45,7 +39,7 @@
     	layout_ratioY="0.46"
     	layout_ratioWidth="0.3"
     	layout_ratioHeight="0.1"
-    	android:text="各種設定"
+    	android:text="@string/home_goto_settings"
     	android:textSize="20sp"
     	/>
     	
@@ -63,14 +57,10 @@
     	layout_ratioY="0.87"
     	layout_ratioWidth="0.235"
     	layout_ratioHeight="0.06"
-    	android:text="スタート"
+    	android:text="@string/home_goto_start"
     	android:textSize="18sp"
     	android:focusable="true"
     	/>
     	
     
 </aharisu.widget.RatioLayout>
-    
-<!--  
-</FrameLayout>
--->

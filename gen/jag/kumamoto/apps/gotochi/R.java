@@ -9,7 +9,7 @@ package jag.kumamoto.apps.gotochi;
 
 public final class R {
     public static final class array {
-        public static final int RouteSearchKind=0x7f060000;
+        public static final int location_search_route_kind=0x7f060000;
     }
     public static final class attr {
         public static final int InfomationDistanceMarginTop=0x7f010005;
@@ -152,24 +152,25 @@ public final class R {
     }
     public static final class id_settings {
         public static final int arrive_polling_group=0x7f110001;
-        public static final int change_view=0x7f110013;
+        public static final int arrive_polling_interval_label=0x7f110000;
+        public static final int change_view=0x7f110014;
         public static final int check_new_stamp=0x7f110007;
         public static final int check_new_stamp_label=0x7f110005;
-        public static final int gender_female=0x7f110010;
-        public static final int gender_frame=0x7f11000e;
-        public static final int gender_male=0x7f110011;
-        public static final int gender_unknown=0x7f11000f;
-        public static final int nickname=0x7f11000d;
-        public static final int ok=0x7f110012;
+        public static final int gender_female=0x7f110011;
+        public static final int gender_frame=0x7f11000f;
+        public static final int gender_male=0x7f110012;
+        public static final int gender_unknown=0x7f110010;
+        public static final int nickname=0x7f11000e;
+        public static final int ok=0x7f110013;
         public static final int polling_long=0x7f110004;
         public static final int polling_normal=0x7f110003;
         public static final int polling_short=0x7f110002;
         public static final int prev_check_time=0x7f110006;
-        public static final int registration_frame=0x7f11000c;
+        public static final int registration_frame=0x7f11000d;
         public static final int select_token_frame=0x7f11000a;
         public static final int show_urge=0x7f110008;
-        public static final int token_frame=0x7f11000b;
-        public static final int token_label=0x7f110000;
+        public static final int token_frame=0x7f11000c;
+        public static final int token_label=0x7f11000b;
         public static final int user_setting_title=0x7f110009;
     }
     public static final class id_thanks {
@@ -208,9 +209,25 @@ public final class R {
         public static final int thanks=0x7f040003;
     }
     public static final class string {
-        public static final int RouteSearchKindPrompt=0x7f05000a;
         public static final int ambition=0x7f050003;
         public static final int app_name=0x7f050001;
+        public static final int arrive_stamp_arrive_content_format=0x7f05006d;
+        public static final int arrive_stamp_arrive_format=0x7f05006b;
+        public static final int arrive_stamp_arrive_title=0x7f05006c;
+        public static final int arrive_stamprally_content=0x7f05006a;
+        public static final int arrive_stamprally_title=0x7f050069;
+        public static final int arrive_start_stamprally=0x7f050068;
+        public static final int common_can_modify_option_on_settings=0x7f050011;
+        public static final int common_cancel=0x7f05000b;
+        public static final int common_communication_failure=0x7f050012;
+        public static final int common_forward=0x7f05000d;
+        public static final int common_login=0x7f05000f;
+        public static final int common_no_login=0x7f050010;
+        public static final int common_not_show_next_time=0x7f05000e;
+        /**  スタンプラリー 
+         */
+        public static final int common_ok=0x7f05000a;
+        public static final int common_return=0x7f05000c;
         public static final int common_settings=0x7f050004;
         public static final int device_cap_dialog_msg=0x7f050006;
         public static final int device_cap_dialog_title=0x7f050005;
@@ -218,7 +235,92 @@ public final class R {
         public static final int device_cap_location_disable=0x7f050009;
         public static final int device_cap_network_disable=0x7f050007;
         public static final int hello=0x7f050000;
+        public static final int home_goto_collections=0x7f050013;
+        public static final int home_goto_help=0x7f050014;
+        public static final int home_goto_settings=0x7f050015;
+        public static final int home_goto_start=0x7f050016;
+        public static final int location_arrive_report=0x7f050067;
+        public static final int location_goto_quiz=0x7f050064;
+        public static final int location_search_route=0x7f050065;
+        public static final int location_search_route_kind_prompt=0x7f050066;
+        public static final int location_send_arrive_query=0x7f050061;
+        public static final int location_send_complete=0x7f050062;
+        public static final int location_urge_login_message=0x7f050063;
         public static final int main_btnAmbition_text=0x7f050002;
+        public static final int map_distance_integer_meter_format=0x7f05005e;
+        public static final int map_distance_kilometer_format=0x7f05005c;
+        public static final int map_distance_meter_format=0x7f05005d;
+        public static final int map_getting_my_location_message=0x7f05005f;
+        public static final int map_goto_settings=0x7f05005b;
+        public static final int map_infobar_text_format=0x7f050060;
+        public static final int map_not_visit=0x7f050056;
+        public static final int map_pin_type_none=0x7f050058;
+        public static final int map_pin_type_quiz=0x7f050059;
+        public static final int map_question_type=0x7f050057;
+        public static final int map_question_visited=0x7f050054;
+        public static final int map_show_my_location=0x7f05005a;
+        public static final int map_show_pin_filter=0x7f050053;
+        public static final int map_visited=0x7f050055;
+        public static final int quiz_answers_label=0x7f05004c;
+        public static final int quiz_go_next_quiz=0x7f050052;
+        public static final int quiz_ok=0x7f05004d;
+        public static final int quiz_question_result=0x7f05004f;
+        public static final int quiz_result_correctness=0x7f050050;
+        public static final int quiz_result_incorrectness=0x7f050051;
+        public static final int quiz_result_warning=0x7f05004e;
+        public static final int settings_arrive_polling_interval=0x7f050045;
+        public static final int settings_arrive_polling_interval_long=0x7f050048;
+        public static final int settings_arrive_polling_interval_normal=0x7f050047;
+        public static final int settings_arrive_polling_interval_short=0x7f050046;
+        public static final int settings_check_new_stamp=0x7f050049;
+        public static final int settings_check_new_stamp_button=0x7f05004a;
+        public static final int settings_choise_registerd_address=0x7f050024;
+        public static final int settings_choise_registration_address=0x7f05002b;
+        public static final int settings_confirmation_logout=0x7f05001d;
+        public static final int settings_do_login=0x7f05002a;
+        public static final int settings_do_logout=0x7f05001c;
+        public static final int settings_do_registration=0x7f050023;
+        public static final int settings_everykind=0x7f050044;
+        public static final int settings_first_show_message=0x7f050019;
+        public static final int settings_get_new_stamp_format=0x7f05003a;
+        public static final int settings_login_complete=0x7f050026;
+        public static final int settings_login_not_complete=0x7f050027;
+        public static final int settings_modify_complete=0x7f05001f;
+        public static final int settings_modify_not_complete=0x7f050020;
+        public static final int settings_no_address_cancel=0x7f050031;
+        public static final int settings_no_address_goto_device_settings=0x7f050032;
+        public static final int settings_no_address_message=0x7f050030;
+        public static final int settings_no_address_title=0x7f05002f;
+        public static final int settings_no_check_stamp_pin=0x7f050038;
+        public static final int settings_no_new_stamp=0x7f05003b;
+        public static final int settings_ok_login=0x7f050022;
+        public static final int settings_ok_modify=0x7f05001b;
+        public static final int settings_ok_registration=0x7f050029;
+        public static final int settings_prev_check_time_stamp_pin_format=0x7f050037;
+        public static final int settings_progress_attestation=0x7f050025;
+        public static final int settings_progress_confirming=0x7f050039;
+        public static final int settings_progress_getting_stamp_pin=0x7f050033;
+        public static final int settings_progress_getting_user_history=0x7f050035;
+        public static final int settings_progress_modify=0x7f05001e;
+        public static final int settings_progress_registration=0x7f05002c;
+        public static final int settings_progress_updateing_stamp_pin=0x7f050034;
+        public static final int settings_progress_updateing_user_history=0x7f050036;
+        public static final int settings_register_address=0x7f05003d;
+        public static final int settings_registration_complete=0x7f05002d;
+        public static final int settings_registration_not_complete=0x7f05002e;
+        public static final int settings_show_urge=0x7f05004b;
+        public static final int settings_tab_everkind=0x7f050018;
+        public static final int settings_tab_user=0x7f050017;
+        public static final int settings_title_login=0x7f050021;
+        public static final int settings_title_modify=0x7f05001a;
+        public static final int settings_title_registration=0x7f050028;
+        public static final int settings_user=0x7f05003c;
+        public static final int settings_user_gender=0x7f050040;
+        public static final int settings_user_gender_female=0x7f050041;
+        public static final int settings_user_gender_male=0x7f050042;
+        public static final int settings_user_gender_unknown=0x7f050043;
+        public static final int settings_user_nickname=0x7f05003e;
+        public static final int settings_user_nickname_input_hint=0x7f05003f;
     }
     public static final class style {
         public static final int Custom_Button_Home=0x7f070000;

@@ -296,9 +296,9 @@ public class QuizActivity extends Activity{
  		
  		
 		AlertDialog.Builder builder =  new AlertDialog.Builder(this)
-			.setTitle("結果は?")
+			.setTitle(R.string.quiz_question_result)
 			.setView(content)
-			.setPositiveButton("戻る", new DialogInterface.OnClickListener() {
+			.setPositiveButton(R.string.common_return, new DialogInterface.OnClickListener() {
 				@Override public void onClick(DialogInterface dialog, int which) {
 					finish();
 				}
@@ -311,7 +311,7 @@ public class QuizActivity extends Activity{
 			});
 		
 		if(correctness) {
-	 		((TextView)content.findViewById(R.id_quiz.result_message)).setText("正解!!");
+	 		((TextView)content.findViewById(R.id_quiz.result_message)).setText(R.string.quiz_result_correctness);
 	 		((ImageView)content.findViewById(R.id_quiz.result_icon)).setImageResource(R.drawable.quiz_result_correctness);
 	 		
 			if(mUser == null && StampRallyPreferences.getShowUrgeDialog()) {
@@ -319,7 +319,7 @@ public class QuizActivity extends Activity{
 		 		content.findViewById(R.id_quiz.result_warning).setVisibility(View.VISIBLE);
 		 		content.findViewById(R.id_quiz.not_show_next_time).setVisibility(View.VISIBLE);
 		 		
-				builder.setNeutralButton("ログインする", new DialogInterface.OnClickListener() {
+				builder.setNeutralButton(R.string.common_login, new DialogInterface.OnClickListener() {
 					@Override public void onClick(DialogInterface dialog, int which) {
 						Intent intent = new Intent(QuizActivity.this, SettingsActivity.class);
 						intent.putExtra(ConstantValue.ExtrasLoginRequest, true);
@@ -335,7 +335,7 @@ public class QuizActivity extends Activity{
 								StampRallyPreferences.setShowUrgeDialog(!isChecked);
 								if(isChecked) {
 									Toast.makeText(QuizActivity.this, 
-											"設定画面でこのオプションを変更できます", Toast.LENGTH_LONG).show();
+											R.string.common_can_modify_option_on_settings, Toast.LENGTH_LONG).show();
 								}
 							}
 						});
@@ -345,7 +345,7 @@ public class QuizActivity extends Activity{
 			}
 			
 			if(mIndex + 1 < mQuizes.length) {
-				builder.setNegativeButton("次の問題へ", new DialogInterface.OnClickListener() {
+				builder.setNegativeButton(R.string.quiz_go_next_quiz, new DialogInterface.OnClickListener() {
 					@Override public void onClick(DialogInterface dialog, int which) {
 						++mIndex;
 						constractQuizView();
@@ -353,7 +353,7 @@ public class QuizActivity extends Activity{
 				});
 			}
 		} else {
-	 		((TextView)content.findViewById(R.id_quiz.result_message)).setText("不正解...");
+	 		((TextView)content.findViewById(R.id_quiz.result_message)).setText(R.string.quiz_result_incorrectness);
 	 		((ImageView)content.findViewById(R.id_quiz.result_icon)).setImageResource(R.drawable.quiz_result_incorrectness);
 		}
 		

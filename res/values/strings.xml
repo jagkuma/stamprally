@@ -10,11 +10,125 @@
 <string name="device_cap_network_disable">・ネットワーク接続がありません</string>
 <string name="device_cap_gps_disable">・GPSが無効になっています</string>
 <string name="device_cap_location_disable">・位置情報を取得できません</string>
-<string-array name="RouteSearchKind">
+
+<!-- スタンプラリー -->
+
+<string name="common_ok">OK</string>
+<string name="common_cancel">キャンセル</string>
+<string name="common_return">戻る</string>
+<string name="common_forward">進む</string>
+<string name="common_not_show_next_time">次回から表示しない</string>
+<string name="common_login">ログインする</string>
+<string name="common_no_login">ログインしていません</string>
+<string name="common_can_modify_option_on_settings">設定画面でこのオプションを変更することだできます</string>
+<string name="common_communication_failure">あれ?ネットワークの調子がおかしいぞ\n設定を変更するか時間をおいて実行してください</string>
+
+
+<string name="home_goto_collections">コレクション&amp;ランキング</string>
+<string name="home_goto_help">ヘルプ</string>
+<string name="home_goto_settings">各種設定</string>
+<string name="home_goto_start"><u>スタート</u></string>
+
+<string name="settings_tab_user">ユーザー設定</string>
+<string name="settings_tab_everkind">その他</string>
+<string name="settings_first_show_message">このアプリケーションを始めるにはアカウントの登録が必要です。\n端末に登録したGoogleアカウントを利用してアカウントを作成します。\nなお、利用したGoogleアカウントを登録以外の目的で利用することはございません"</string>
+<string name="settings_title_modify">ユーザー情報編集</string>
+<string name="settings_ok_modify">変更</string>
+<string name="settings_do_logout"><u>ログアウトする</u></string>
+<string name="settings_confirmation_logout">ログアウトします\nよろしいですか？</string>
+<string name="settings_progress_modify">変更中です</string>
+<string name="settings_modify_complete">変更しました</string>
+<string name="settings_modify_not_complete">変更に失敗しました</string>
+<string name="settings_title_login">ログイン</string>
+<string name="settings_ok_login">ログイン</string>
+<string name="settings_do_registration"><u>新規登録はこちら</u></string>
+<string name="settings_choise_registerd_address">登録したアドレスを選択してください</string>
+<string name="settings_progress_attestation">認証中です</string>
+<string name="settings_login_complete">ログインしました</string>
+<string name="settings_login_not_complete">ログインに失敗しました</string>
+<string name="settings_title_registration">新規登録</string>
+<string name="settings_ok_registration">新規登録</string>
+<string name="settings_do_login"><u>ログインはこちら</u></string>
+<string name="settings_choise_registration_address">登録するアドレスを選択してください</string>
+<string name="settings_progress_registration">登録中です</string>
+<string name="settings_registration_complete">認証しました</string>
+<string name="settings_registration_not_complete">認証に失敗しました</string>
+<string name="settings_no_address_title">アカウントがありません</string>
+<string name="settings_no_address_message">端末にGoogleアカウントが登録されていません。\nこのアプリケーションにはGoogleアカウントが必要です。\n端末の設定メニューからGoogleアカウントを登録してください。\n</string>
+<string name="settings_no_address_cancel">今は行わない</string>
+<string name="settings_no_address_goto_device_settings">設定へ</string>
+<string name="settings_progress_getting_stamp_pin">スタンプ情報取得中...</string>
+<string name="settings_progress_updateing_stamp_pin">スタンプピン情報更新中...</string>
+<string name="settings_progress_getting_user_history">ユーザー履歴取得中...</string>
+<string name="settings_progress_updateing_user_history">ユーザー履歴更新中...</string>
+<string name="settings_prev_check_time_stamp_pin_format">前回確認した時間:%s</string>
+<string name="settings_no_check_stamp_pin">まだ一度も確認していません</string>
+<string name="settings_progress_confirming">確認中です</string>
+<string name="settings_get_new_stamp_format">%d個の新しいスタンプを取得しました</string>
+<string name="settings_no_new_stamp">新しいスタンプはありませんでした</string>
+<string name="settings_user">・登録するアドレス</string>
+<string name="settings_register_address">・登録するアドレス</string>
+<string name="settings_user_nickname">・ニックネーム</string>
+<string name="settings_user_nickname_input_hint">ニックネームを入力</string>
+<string name="settings_user_gender">・性別</string>
+<string name="settings_user_gender_female">女性</string>
+<string name="settings_user_gender_male">男性</string>
+<string name="settings_user_gender_unknown">不明</string>
+<string name="settings_everykind">各種設定</string>
+<string name="settings_arrive_polling_interval">・到着確認する間隔</string>
+<string name="settings_arrive_polling_interval_short">短め</string>
+<string name="settings_arrive_polling_interval_normal">普通</string>
+<string name="settings_arrive_polling_interval_long">長め</string>
+<string name="settings_check_new_stamp">・新しいスタンプがあるか確認する</string>
+<string name="settings_check_new_stamp_button">確認する</string>
+<string name="settings_show_urge">ログイン確認を毎回出す</string>
+
+
+<string name="quiz_answers_label">選択してください</string>
+<string name="quiz_ok">これでOK!!</string>
+<string name="quiz_result_warning">ログインしていないとクイズポイントはもらえません。\n設定画面からログインしてください。</string>
+<string name="quiz_question_result">結果は?</string>
+<string name="quiz_result_correctness">正解!!</string>
+<string name="quiz_result_incorrectness">不正解...</string>
+<string name="quiz_go_next_quiz">次の問題へ</string>
+
+
+<string name="map_show_pin_filter">表示するスタンプを限定する</string>
+<string name="map_question_visited">訪れたことが？</string>
+<string name="map_visited">ある!!</string>
+<string name="map_not_visit">ない...</string>
+<string name="map_question_type">スタンプのタイプ</string>
+<string name="map_pin_type_none">スタンプ</string>
+<string name="map_pin_type_quiz">クイズ</string>
+<string name="map_show_my_location">現在位置を表示する</string>
+<string name="map_goto_settings"><u>その他の設定へ</u></string>
+<string name="map_distance_kilometer_format">あと約%.2fkmです"</string>
+<string name="map_distance_meter_format">あと約%.0fmです"</string>
+<string name="map_distance_integer_meter_format">"%1$sまであと約%2$dメートルです"</string>
+<string name="map_getting_my_location_message">現在位置の取得中です\n少し時間がかかることがあります</string>
+<string name="map_infobar_text_format">獲得ポイント:%1$d スタンプ数:%2$d</string>
+
+
+<string name="location_send_arrive_query">到着確認を送信します</string>
+<string name="location_send_complete">到着完了!</string>
+<string name="location_urge_login_message">"ログインしていないと到着ポイントはもらえません。\n設定画面からログインしてください"</string>
+<string name="location_goto_quiz">クイズへGO</string>
+<string name="location_search_route">経路検索</string>
+<string name="location_search_route_kind_prompt">移動手段</string>
+<string-array name="location_search_route_kind">
     <item>車</item>
     <item>公共交通機関</item>
     <item>徒歩</item>
 </string-array>
-<string name="RouteSearchKindPrompt">移動手段</string>
+<string name="location_arrive_report">到着!!</string>
+
+
+<string name="arrive_start_stamprally">スタンプラリースタートだモン</string>
+<string name="arrive_stamprally_title">熊本ご当地スタンプラリー</string>
+<string name="arrive_stamprally_content">熊本各所を回ってクイズに答えよう</string>
+<string name="arrive_stamp_arrive_format">%sに着いたよ</string>
+<string name="arrive_stamp_arrive_title">スタンプ発見!!</string>
+<string name="arrive_stamp_arrive_content_format">%sに到着しました。ここをタップして情報を見てみよう</string>
+
 
 </resources>

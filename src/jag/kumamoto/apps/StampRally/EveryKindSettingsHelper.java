@@ -13,6 +13,7 @@ import jag.kumamoto.apps.gotochi.R;
 import aharisu.util.DataGetter;
 import aharisu.util.Pair;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -93,16 +94,20 @@ final class EveryKindSettingsHelper {
 	private void settingStampPinPrevCheckTime(long time) {
 		if(time != 0) {
 			((TextView)mLayout.findViewById(R.id_settings.prev_check_time)).setText(
-					"前回確認した時間" + " : " + new Date(time).toLocaleString());
+					String.format(mLayout.getContext().getResources().getString(
+							R.string.settings_prev_check_time_stamp_pin_format)
+							,new Date(time).toLocaleString()));
 		} else {
 			((TextView)mLayout.findViewById(R.id_settings.prev_check_time)).setText(
-					"まだ一度も確認していません");
+					R.string.settings_no_check_stamp_pin);
 		}
 	}
 	
 	private void checkNewStampPin() {
-		final ProgressDialog dialog = new ProgressDialog(mLayout.getContext());
-		dialog.setMessage("確認中です");
+		Context context = mLayout.getContext();
+		
+		final ProgressDialog dialog = new ProgressDialog(context);
+		dialog.setMessage(context.getResources().getString(R.string.settings_progress_confirming));
 		dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		dialog.setCancelable(false);
 		dialog.show();
@@ -158,13 +163,16 @@ final class EveryKindSettingsHelper {
 					
 					if(result > 0) {
 						Toast.makeText(mLayout.getContext(), 
-								result.toString() + "個の新しいスタンプを取得しました", Toast.LENGTH_SHORT).show();
+								String.format(mLayout.getContext().getResources().getString(
+										R.string.settings_get_new_stamp_format), (int)result)
+										,Toast.LENGTH_SHORT).show();
 					} else {
 						Toast.makeText(mLayout.getContext(), 
-								"新しいスタンプはありませんでした", Toast.LENGTH_SHORT).show();
+								R.string.settings_no_new_stamp, Toast.LENGTH_SHORT).show();
 					}
 				} else {
-					Toast.makeText(mLayout.getContext(), "確認に失敗しました", Toast.LENGTH_SHORT).show();
+					Toast.makeText(mLayout.getContext(), 
+							R.string.common_communication_failure, Toast.LENGTH_SHORT).show();
 				}
 			}
 		}.execute((Void)null);

@@ -13,6 +13,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -375,12 +376,16 @@ public class ArriveWatcherService extends Service{
 	private void showNotification() {
 		NotificationManager nm = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 		
+		Resources res = getResources();
+		
 		Notification notification = new Notification(
 				R.drawable.icon_status_bar,
-				"スタンプラリースタートだよ",
+				res.getString(R.string.arrive_start_stamprally),
 				System.currentTimeMillis());
 		
-		notification.setLatestEventInfo(this, "スタンプラリー", null, 
+		notification.setLatestEventInfo(this, 
+				res.getString(R.string.arrive_stamprally_title), 
+				res.getString(R.string.arrive_stamprally_content),
 				PendingIntent.getActivity(this, 0, new Intent(this, MapActivity.class), 
 						Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | 
 						Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -407,9 +412,11 @@ public class ArriveWatcherService extends Service{
 		
 		NotificationManager nm = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 		
+		Resources res = getResources();
+		
 		Notification notification = new Notification(
 				R.drawable.icon_status_bar_arrived,
-				pin.name + "に着いたよ",
+				String.format(res.getString(R.string.arrive_stamp_arrive_format), pin.name),
 				System.currentTimeMillis());
 		
 		//ロケーションインフォのアクティビティを起動するインテント
@@ -420,7 +427,9 @@ public class ArriveWatcherService extends Service{
 			intent.putExtra(ConstantValue.ExtrasShowGoQuiz, true);
 		}
 		
-		notification.setLatestEventInfo(this, "スタンプ発見!!", pin.name + "に到着しました",
+		notification.setLatestEventInfo(this, 
+				res.getString(R.string.arrive_stamp_arrive_title),
+				String.format(res.getString(R.string.arrive_stamp_arrive_content_format), pin.name),
 				PendingIntent.getActivity(this, 0, intent, 
 						Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | 
 						Intent.FLAG_ACTIVITY_NEW_TASK));

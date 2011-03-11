@@ -24,7 +24,7 @@
 				android:id="@+id_location_info/go_quiz"
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"
-				android:text="クイズへGo"
+				android:text="@string/location_goto_quiz"
 				android:background="@drawable/go_quiz_button"
 				/>
 			<ProgressBar android:id="@+id_location_info/progress_frame"
@@ -52,7 +52,7 @@
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
 					android:layout_weight="4.0"
-					android:text="経路検索"
+					android:text="@string/location_search_route"
 					android:background="@drawable/search_route_button"
 					/>
 				<Spinner
@@ -60,8 +60,8 @@
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
 					android:layout_weight="6.0"
-					android:prompt="@string/RouteSearchKindPrompt"
-					android:entries="@array/RouteSearchKind"
+					android:prompt="@string/location_search_route_kind_prompt"
+					android:entries="@array/location_search_route_kind"
 					/>
 			</LinearLayout>		
 				
@@ -70,7 +70,7 @@
 				android:id="@+id_location_info/arrive_report"
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"
-				android:text="到着!!"
+				android:text="@string/location_arrive_report"
 				android:background="@drawable/search_route_button"
 				/>
 		</FrameLayout>

@@ -10,6 +10,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -100,12 +101,14 @@ public class SettingsActivity extends TabActivity{
 	}
 	
 	private void initTabPages() {
+		Resources res = getResources();
+		
 		final TabHost tabHost = getTabHost();
 		
 		TabHost.TabSpec spec;
 		
 		spec = tabHost.newTabSpec("user_settings");
-		spec.setIndicator("ユーザ設定");
+		spec.setIndicator(res.getString(R.string.settings_tab_user));
 		spec.setContent(new TabContentFactory() {
 			@Override public View createTabContent(String tag) {
 				ViewGroup content = (ViewGroup)((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE))
@@ -155,7 +158,7 @@ public class SettingsActivity extends TabActivity{
 		tabHost.addTab(spec);
 		
 		spec = tabHost.newTabSpec("other");
-		spec.setIndicator("その他");
+		spec.setIndicator(res.getString(R.string.settings_tab_everkind));
 		spec.setContent(new TabContentFactory() {
 			@Override public View createTabContent(String tag) {
 				ViewGroup content = (ViewGroup)((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE))
@@ -210,11 +213,8 @@ public class SettingsActivity extends TabActivity{
 
 	private void showFirstSettingsDialog() {
 		new AlertDialog.Builder(this)
-			.setMessage(
-					"　このアプリケーションを始めるにはアカウントの登録が必要です。\n"
-					+ "　端末に登録したGoogleアカウントを利用してアカウントを作成します。\n"
-					+	"　なお、利用したGoogleアカウントを登録以外の目的で利用することはございません")
-			.setPositiveButton("OK", null)
+			.setMessage(getResources().getString(R.string.settings_first_show_message))
+			.setPositiveButton(R.string.common_ok, null)
 			.show();
 	}
 	

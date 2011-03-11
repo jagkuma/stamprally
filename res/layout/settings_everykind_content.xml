@@ -13,7 +13,7 @@
 		android:layout_marginTop="5dip"
 		android:layout_marginBottom="5dip"
 		android:textSize="18sp"
-		android:text="各種設定"
+		android:text="@string/settings_everykind"
 		/>
 		
 	<ScrollView
@@ -37,11 +37,11 @@
 				android:background="@drawable/settings_group"
 				>
 				
-				<TextView android:id="@+id_settings/token_label"
+				<TextView android:id="@+id_settings/arrive_polling_interval_label"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
 					android:layout_marginTop="15dip"
-					android:text="・到着確認する間隔"
+					android:text="@string/settings_arrive_polling_interval"
 					android:textSize="15sp"
 					/>
 					
@@ -55,19 +55,19 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:textSize="18sp"
-						android:text="短め"
+						android:text="@string/settings_arrive_polling_interval_short"
 						/>
 					<RadioButton android:id="@+id_settings/polling_normal"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:textSize="18sp"
-						android:text="普通"
+						android:text="@string/settings_arrive_polling_interval_normal"
 						/>
 					<RadioButton android:id="@+id_settings/polling_long"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:textSize="18sp"
-						android:text="長め"
+						android:text="@string/settings_arrive_polling_interval_long"
 						/>
 				</RadioGroup>
 			</LinearLayout>
@@ -87,7 +87,7 @@
 					android:layout_height="wrap_content"
 					android:layout_alignParentTop="true"
 					android:layout_marginTop="15dip"
-					android:text="・新しいスタンプがあるか確認する"
+					android:text="@string/settings_check_new_stamp"
 					android:textSize="15sp"
 					/>
 					
@@ -106,7 +106,7 @@
 					android:layout_alignParentRight="true"
 					android:layout_marginTop="8dip"
 					android:layout_marginRight="10dip"
-					android:text="確認する"
+					android:text="@string/settings_check_new_stamp_button"
 					/>
 				
 			</RelativeLayout>
@@ -124,7 +124,7 @@
 				<CheckBox android:id="@+id_settings/show_urge"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:text="ログイン確認を毎回出す"
+					android:text="@string/settings_show_urge"
 					android:textSize="15sp"
 					/>
 			</FrameLayout>

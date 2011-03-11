@@ -43,7 +43,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:textSize="14sp"
-		android:text="ログインしていないとクイズポイントはもらえません。\n設定画面からログインしてください。"
+		android:text="@string/quiz_result_warning"
 		android:visibility="gone"
 		/>
 		
@@ -51,7 +51,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:textSize="16sp"
-		android:text="次回から表示しない"
+		android:text="@string/common_not_show_next_time"
 		android:visibility="gone"
 		/>
 	
