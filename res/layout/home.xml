@@ -22,6 +22,7 @@
     	layout_ratioHeight="0.1"
     	android:text="@string/home_goto_collections"
     	android:textSize="20sp"
+    	android:enabled="false"
     	/>
     	
     	
