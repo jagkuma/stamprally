@@ -6,89 +6,81 @@
 	android:orientation="vertical"
 	>
 	
-	<FrameLayout
-		android:id="@+id_location_info/go_quiz_frame"
+	<LinearLayout android:id="@+id_location_info/below_frame"
 		android:layout_width="fill_parent"
 		android:layout_height="60dip"
-		android:layout_alignParentTop="true"
-		>
-		<Button
-			android:id="@+id_location_info/go_quiz"
-			android:layout_width="fill_parent"
-			android:layout_height="60dip"
-			android:text="クイズへGo"
-			/>
-			
-		<LinearLayout
-			android:id="@+id_location_info/progress_frame"
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-			android:paddingLeft="30dip"
-			android:orientation="horizontal"
-			>
-			<ProgressBar
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
-				style="?android:attr/progressBarStyle" />
-				
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
-				android:textSize="22sp"
-				android:text="読み込み中..."
-				/>
-				
-		</LinearLayout>
-			
-	</FrameLayout>
-		
-		
-	<FrameLayout
-		android:id="@+id_location_info/below_frame"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
+		android:paddingTop="5dip"
+		android:orientation="horizontal"
+		android:background="@drawable/location_info_below_background"
 		>
-		
-		<LinearLayout
-			android:id="@+id_location_info/go_location_frame"
-			android:layout_width="fill_parent"
-			android:layout_height="60dip"
-			android:weightSum="10.0"
-			android:orientation="horizontal"
+		<FrameLayout
+			android:id="@+id_location_info/go_quiz_frame"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:layout_weight="0.8"
 			>
-			<Spinner
-				android:id="@+id_location_info/route_search_kind"
-				android:layout_width="0dip"
-				android:layout_height="60dip"
-				android:layout_weight="6.0"
-				android:prompt="@string/RouteSearchKindPrompt"
-				android:entries="@array/RouteSearchKind"
-				/>
 			<Button
-				android:id="@+id_location_info/go_location"
-				android:layout_width="0dip"
-				android:layout_height="60dip"
-				android:layout_weight="4.0"
-				android:text="ここへ行く"
+				android:id="@+id_location_info/go_quiz"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:text="クイズへGo"
+				android:background="@drawable/go_quiz_button"
 				/>
-		</LinearLayout>		
-			
+			<ProgressBar android:id="@+id_location_info/progress_frame"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				style="?android:attr/progressBarStyle" />
+		</FrameLayout>
 		
-		<Button 
-			android:id="@+id_location_info/arrive_report"
-			android:layout_width="fill_parent"
-			android:layout_height="60dip"
-			android:text="到着!!"
-			/>
-	</FrameLayout>
+		<FrameLayout
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:layout_weight="1.5"
+			>
+			
+			<LinearLayout
+				android:id="@+id_location_info/go_location_frame"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:weightSum="10.0"
+				android:orientation="horizontal"
+				>
+				<Button
+					android:id="@+id_location_info/go_location"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:layout_weight="4.0"
+					android:text="経路検索"
+					android:background="@drawable/search_route_button"
+					/>
+				<Spinner
+					android:id="@+id_location_info/route_search_kind"
+					android:layout_width="0dip"
+					android:layout_height="fill_parent"
+					android:layout_weight="6.0"
+					android:prompt="@string/RouteSearchKindPrompt"
+					android:entries="@array/RouteSearchKind"
+					/>
+			</LinearLayout>		
+				
+			
+			<Button 
+				android:id="@+id_location_info/arrive_report"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:text="到着!!"
+				android:background="@drawable/search_route_button"
+				/>
+		</FrameLayout>
+	</LinearLayout>
+		
 		
 	<FrameLayout
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:layout_below="@id_location_info/go_quiz_frame"
+		android:layout_alignParentTop="true"
 		android:layout_above="@id_location_info/below_frame"
 		>
 		<WebView
@@ -109,4 +101,4 @@
 			/>
 	</FrameLayout>
 	
-	</RelativeLayout>
+</RelativeLayout>
