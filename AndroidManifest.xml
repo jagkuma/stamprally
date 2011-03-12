@@ -1,56 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="jag.kumamoto.apps.gotochi" android:versionCode="1"
-	android:versionName="1.0">
+	android:versionCode="1"
+	android:versionName="1.0" package="jag.kumamoto.apps.gotochi.stamprally">
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <supports-screens android:smallScreens="false" android:largeScreens="true" android:normalScreens="true" android:resizeable="true" android:anyDensity="true"></supports-screens>
 	<application android:icon="@drawable/icon" android:label="@string/app_name"
 		android:debuggable="true">
-		<activity android:name="EntranceActivity">
-			<!--
-				<intent-filter> <action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-				</intent-filter>
-			-->
-			<meta-data android:name="GotochiApp" android:value="true" />
-		</activity>
-
-		<activity android:name=".MainActivity" android:label="@string/app_name">
-			<intent-filter>
-				<category android:name="android.intent.category.DEFAULT" />
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="jag.gotochi.category.ACTIVITY" />
-				<data android:scheme="gotochi" android:host="kumamoto" />
-			</intent-filter>
-			<meta-data android:name="GotochiApp" android:value="true" />
-		</activity>
-
-		<service android:name="GotochiService" android:exported="true"></service>
-
-		<activity android:name="ServiceShowWarningActivity"
-			android:theme="@style/ServiceShowWarning"></activity>
-		<receiver android:name="RootBroadcastReceiver">
-			<intent-filter>
-				<action android:name="jag.kumamoto.apps.gotochi.LOCATION_CHANGE"></action>
-			</intent-filter>
-		</receiver>
 
 
 
-		<activity android:name="jag.kumamoto.apps.StampRally.HomeActivity" android:theme="@style/Theme.Home" android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation">
+		<activity android:theme="@style/Theme.Home" android:screenOrientation="portrait" android:configChanges="keyboardHidden|orientation" android:name="HomeActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name="jag.kumamoto.apps.StampRally.HelpActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"></activity>
-		<activity android:name="jag.kumamoto.apps.StampRally.ThanksActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"></activity>
-		<activity android:name="jag.kumamoto.apps.StampRally.SettingsActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"></activity>
-		<activity android:name="jag.kumamoto.apps.StampRally.CollectionsActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"></activity>
-		<activity android:name="jag.kumamoto.apps.StampRally.MapActivity"
-			android:launchMode="singleTop" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"></activity>
-		<activity android:name="jag.kumamoto.apps.StampRally.LocationInfoActivity"
-			android:launchMode="singleTop" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"></activity>
-		<activity android:name="jag.kumamoto.apps.StampRally.QuizActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"></activity>
-		<service android:name="jag.kumamoto.apps.StampRally.ArriveWatcherService" android:exported="false"></service>
+		<activity android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait" android:name="HelpActivity"></activity>
+		<activity android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait" android:name="ThanksActivity"></activity>
+		<activity android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait" android:name="SettingsActivity"></activity>
+		<activity android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait" android:name="CollectionsActivity"></activity>
+		<activity android:launchMode="singleTop" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait" android:name="MapActivity"></activity>
+		<activity android:launchMode="singleTop" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait" android:name="LocationInfoActivity"></activity>
+		<activity android:name="QuizActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"></activity>
+		<service android:name="ArriveWatcherService" android:exported="false"></service>
 		<uses-library android:name="com.google.android.maps" />
 
 

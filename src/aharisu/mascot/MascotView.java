@@ -1,6 +1,6 @@
 package aharisu.mascot;
 
-import jag.kumamoto.apps.gotochi.R;
+import jag.kumamoto.apps.gotochi.stamprally.R;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;

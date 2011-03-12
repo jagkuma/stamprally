@@ -10,7 +10,7 @@
 	    android:layout_height="fill_parent"
 	    android:orientation="vertical"
 	    >
-	    <jag.kumamoto.apps.StampRally.FlowingTextView
+	    <jag.kumamoto.apps.gotochi.stamprally.FlowingTextView
 	    	android:id="@+id_map/infobar"
 	    	android:layout_width="fill_parent"
 	    	android:layout_height="wrap_content"

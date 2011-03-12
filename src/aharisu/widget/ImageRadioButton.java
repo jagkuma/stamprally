@@ -1,6 +1,6 @@
 package aharisu.widget;
 
-import jag.kumamoto.apps.gotochi.R;
+import jag.kumamoto.apps.gotochi.stamprally.R;
 import aharisu.util.AsyncDataGetter;
 import aharisu.util.Size;
 import android.content.Context;
