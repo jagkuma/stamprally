@@ -15,10 +15,11 @@
 		android:background="@drawable/location_info_below_background"
 		>
 		
-		<ImageButton android:id="@+id_location_info/return_to_map"
-			android:layout_width="60dip"
+		<Button android:id="@+id_location_info/return_to_map"
+			android:layout_width="55dip"
 			android:layout_height="fill_parent"
 			android:layout_alignParentRight="true"
+			android:background="@drawable/return_to_map"
 			/>
 		
 		<FrameLayout android:id="@+id_location_info/go_quiz_frame"
