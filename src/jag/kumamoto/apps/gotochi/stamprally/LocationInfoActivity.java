@@ -239,7 +239,10 @@ public class LocationInfoActivity extends Activity{
 		
 		findViewById(R.id_location_info.progress_frame).setVisibility(View.GONE);
 		
-		if(mQuizes == null) {
+		if(mQuizes == null || mQuizes.length == 0) {
+			findViewById(R.id_location_info.go_quiz_frame).setVisibility(View.GONE);
+			
+			
 			//TODO クイズデータの取得に失敗した
 			//エラー表示
 			Log.e("quizData" , "get failure");

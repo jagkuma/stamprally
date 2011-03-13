@@ -88,7 +88,7 @@ public class QuizActivity extends Activity{
 		}
 		
 		mQuizes = getQuizData(extras);
-		if(mQuizes == null) {
+		if(mQuizes == null || mQuizes.length == 0) {
 			setResult(Activity.RESULT_CANCELED);
 			finish();
 			return;
