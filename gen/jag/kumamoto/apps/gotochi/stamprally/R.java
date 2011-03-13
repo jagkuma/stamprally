@@ -100,17 +100,18 @@ public final class R {
         public static final int thanks=0x7f0a0004;
     }
     public static final class id_location_info {
-        public static final int arrive_report=0x7f0b0007;
+        public static final int arrive_report=0x7f0b0008;
         public static final int below_frame=0x7f0b0000;
-        public static final int go_location=0x7f0b0005;
-        public static final int go_location_frame=0x7f0b0004;
-        public static final int go_quiz=0x7f0b0002;
-        public static final int go_quiz_frame=0x7f0b0001;
-        public static final int not_show_next_time=0x7f0b000a;
-        public static final int progress_frame=0x7f0b0003;
-        public static final int route_search_kind=0x7f0b0006;
-        public static final int webView_progress=0x7f0b0009;
-        public static final int webview=0x7f0b0008;
+        public static final int go_location=0x7f0b0006;
+        public static final int go_location_frame=0x7f0b0005;
+        public static final int go_quiz=0x7f0b0003;
+        public static final int go_quiz_frame=0x7f0b0002;
+        public static final int not_show_next_time=0x7f0b000b;
+        public static final int progress_frame=0x7f0b0004;
+        public static final int return_to_map=0x7f0b0001;
+        public static final int route_search_kind=0x7f0b0007;
+        public static final int webView_progress=0x7f0b000a;
+        public static final int webview=0x7f0b0009;
     }
     public static final class id_map {
         public static final int alt_type_check=0x7f0c0009;

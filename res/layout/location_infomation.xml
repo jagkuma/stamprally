@@ -6,22 +6,27 @@
 	android:orientation="vertical"
 	>
 	
-	<LinearLayout android:id="@+id_location_info/below_frame"
+	<RelativeLayout android:id="@+id_location_info/below_frame"
 		android:layout_width="fill_parent"
-		android:layout_height="60dip"
+		android:layout_height="55dip"
 		android:layout_alignParentBottom="true"
 		android:paddingTop="5dip"
 		android:orientation="horizontal"
 		android:background="@drawable/location_info_below_background"
 		>
-		<FrameLayout
-			android:id="@+id_location_info/go_quiz_frame"
-			android:layout_width="0dip"
+		
+		<ImageButton android:id="@+id_location_info/return_to_map"
+			android:layout_width="60dip"
 			android:layout_height="fill_parent"
-			android:layout_weight="0.8"
+			android:layout_alignParentRight="true"
+			/>
+		
+		<FrameLayout android:id="@+id_location_info/go_quiz_frame"
+			android:layout_width="88dip"
+			android:layout_height="fill_parent"
+			android:layout_alignParentLeft="true"
 			>
-			<Button
-				android:id="@+id_location_info/go_quiz"
+			<Button android:id="@+id_location_info/go_quiz"
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"
 				android:text="@string/location_goto_quiz"
@@ -35,9 +40,10 @@
 		</FrameLayout>
 		
 		<FrameLayout
-			android:layout_width="0dip"
+			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
-			android:layout_weight="1.5"
+			android:layout_toLeftOf="@id_location_info/return_to_map"
+			android:layout_toRightOf="@id_location_info/go_quiz_frame"
 			>
 			
 			<LinearLayout
@@ -51,7 +57,7 @@
 					android:id="@+id_location_info/go_location"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
-					android:layout_weight="4.0"
+					android:layout_weight="4.5"
 					android:text="@string/location_search_route"
 					android:background="@drawable/search_route_button"
 					/>
@@ -59,7 +65,7 @@
 					android:id="@+id_location_info/route_search_kind"
 					android:layout_width="0dip"
 					android:layout_height="fill_parent"
-					android:layout_weight="6.0"
+					android:layout_weight="5.5"
 					android:prompt="@string/location_search_route_kind_prompt"
 					android:entries="@array/location_search_route_kind"
 					/>
@@ -74,7 +80,7 @@
 				android:background="@drawable/search_route_button"
 				/>
 		</FrameLayout>
-	</LinearLayout>
+	</RelativeLayout>
 		
 		
 	<FrameLayout

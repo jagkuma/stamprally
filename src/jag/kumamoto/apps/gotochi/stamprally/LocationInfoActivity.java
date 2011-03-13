@@ -170,6 +170,13 @@ public class LocationInfoActivity extends Activity{
 			});
 		}
 		
+		
+		//マップ画面に戻るボタンの設定
+		findViewById(R.id_location_info.return_to_map).setOnClickListener(new View.OnClickListener() {
+			@Override public void onClick(View v) {
+				finish();
+			}
+		});
 	}
 	
 	private String getInfomationURL(StampPin pin) {
