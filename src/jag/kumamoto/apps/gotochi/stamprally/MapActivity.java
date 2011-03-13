@@ -135,7 +135,12 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 		//スタンプラリーの場所を示すピンのレイヤを追加
 		mPinOverlay = new StampPinOverlay(this,
 				getResources().getDrawable(R.drawable.marker_none),
-				map);
+				map,
+				new StampPinOverlay.OnClickListener() {
+					@Override public void onClick(StampPin pin) {
+						gotoInfomation(pin);
+					}
+				});
 		overlayList.add(mPinOverlay);
 		
 		mMyLocationOverlay = new MyLocationOverlay(this, map, 
@@ -153,8 +158,14 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 		overlayList.add(mMyLocationOverlay);
 		
 		//ピンの情報を示すレイヤを追加
-		PinInfoOverlay infoOverlay = new PinInfoOverlay(createPinInfoOnClickListener(),
-				mPinOverlay, mMyLocationOverlay, map, getResources().getDrawable(R.drawable.marker_none));
+		PinInfoOverlay infoOverlay = new PinInfoOverlay(mPinOverlay, mMyLocationOverlay, 
+				map, 
+				getResources().getDrawable(R.drawable.marker_none),
+				new PinInfoOverlay.OnClickListener() {
+					@Override public void onClick(StampPin pin) {
+						gotoInfomation(pin);
+					}
+				});
 		overlayList.add(infoOverlay);
 		mPinOverlay.setInfoOverlay(infoOverlay);
 		
@@ -462,27 +473,22 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 	}
 	
 	
-	private PinInfoOverlay.OnClickListener createPinInfoOnClickListener() {
-		return new PinInfoOverlay.OnClickListener() {
-			@Override public void onClick(StampPin pin) {
-				
-				Intent intent = new Intent(MapActivity.this, LocationInfoActivity.class);
-				intent.putExtra(ConstantValue.ExtrasStampPin, pin);
-				
-				boolean isArrived = isShowGoQuiz(pin);
-				intent.putExtra(ConstantValue.ExtrasIsArrive, isArrived);
-				
-				if(pin.type == StampPin.STAMP_TYPE_QUIZ && isArrived) {
-					intent.putExtra(ConstantValue.ExtrasShowGoQuiz, true);
-				}
-				
-				if(mUser != null) {
-					intent.putExtra(ConstantValue.ExtrasUser, mUser);
-				}
-				
-				startActivityForResult(intent, RequestShowInfoId);
-			}
-		};
+	private void gotoInfomation(StampPin pin) {
+		Intent intent = new Intent(MapActivity.this, LocationInfoActivity.class);
+		intent.putExtra(ConstantValue.ExtrasStampPin, pin);
+		
+		boolean isArrived = isShowGoQuiz(pin);
+		intent.putExtra(ConstantValue.ExtrasIsArrive, isArrived);
+		
+		if(pin.type == StampPin.STAMP_TYPE_QUIZ && isArrived) {
+			intent.putExtra(ConstantValue.ExtrasShowGoQuiz, true);
+		}
+		
+		if(mUser != null) {
+			intent.putExtra(ConstantValue.ExtrasUser, mUser);
+		}
+		
+		startActivityForResult(intent, RequestShowInfoId);
 	}
 	
 	

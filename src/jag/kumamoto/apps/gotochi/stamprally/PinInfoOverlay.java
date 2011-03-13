@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Paint.Style;
@@ -17,6 +18,7 @@ import android.graphics.Path.Direction;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.util.FloatMath;
 import android.view.MotionEvent;
 
 import com.google.android.maps.GeoPoint;
@@ -25,6 +27,7 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.google.android.maps.Projection;
 
 
 /**
@@ -199,6 +202,10 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 	private boolean mTouchOutside = true;
 	private boolean mLastHitTest = false;
 	
+	private boolean mHitted = false;
+	private float mTouchDownX;
+	private float mTouchDownY;
+	
 	private final OnClickListener mListener;
 	
 	
@@ -207,8 +214,8 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 	private final StampPinOverlay mOverlay;
 	private final MyLocationOverlay mMyLocationOverlay;
 	
-	public PinInfoOverlay(OnClickListener listener, StampPinOverlay overlay,
-			MyLocationOverlay myLocationOverlay, MapView map, Drawable drawble) {
+	public PinInfoOverlay(StampPinOverlay overlay, MyLocationOverlay myLocationOverlay, 
+			MapView map, Drawable drawble, OnClickListener listener) {
 		super(drawble);
 		
 		mListener = listener;
@@ -259,12 +266,35 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 		if(mItem == null)
 			return super.onTouchEvent(event, mapView);
 		
+		boolean handle = false;
 		switch(event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 				mTouchDown = true;
+				if(hitTest(event, mapView)) {
+					mHitted = true;
+					mTouchDownX = event.getX();
+					mTouchDownY = event.getY();
+				}
+				break;
+			case MotionEvent.ACTION_MOVE:
+				if(mHitted) {
+					float diffX = mTouchDownX - event.getX();
+					float diffY = mTouchDownY - event.getY();
+					
+					if(FloatMath.sqrt((diffX * diffX) + (diffY * diffY)) > 7) {
+						mHitted = false;
+					}
+				}
 				break;
 			case MotionEvent.ACTION_UP:
 				mTouchDown = false;
+				if(mHitted && hitTest(event, mapView)) {
+					if(mItem != null) {
+						mListener.onClick(mItem.stampPin);
+					}
+					
+					handle = true;
+				}
 				if(mTouchOutside || mLastHitTest || mItem != null) {
 					mItem.setMarker(mItem.mNormalDrawable);
 				} else {
@@ -276,7 +306,22 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 				break;
 		}
 		
-		return super.onTouchEvent(event, mapView);
+		return handle ? true: super.onTouchEvent(event, mapView);
+	}
+	
+	private boolean hitTest(MotionEvent event, MapView map) {
+		if(mItem == null)
+			return false;
+		
+		Point pt = new Point();
+		Projection projection = map.getProjection();
+		
+		int x = (int)event.getX();
+		int y = (int)event.getY();
+		
+		projection.toPixels(mItem.getPoint(), pt);
+		
+		return hitTest(mItem, mItem.getMarker(0), x - pt.x, y - pt.y);
 	}
 	
 	@Override public boolean onTap(GeoPoint p, MapView mapView) {
@@ -289,8 +334,8 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 			List<Overlay> overlays = mMap.getOverlays();
 			overlays.remove(this);
 			
-			PinInfoOverlay overlay = new PinInfoOverlay(
-					mListener, mOverlay, mMyLocationOverlay, mMap,  mDrawable);
+			PinInfoOverlay overlay = new PinInfoOverlay(mOverlay, mMyLocationOverlay,
+					mMap,  mDrawable, mListener);
 			
 			mOverlay.setInfoOverlay(overlay);
 			overlays.add(overlay);
@@ -300,16 +345,6 @@ public class PinInfoOverlay extends ItemizedOverlay<OverlayItem>{
 			e.printStackTrace();
 			return true;
 		}
-	}
-	
-	@Override protected boolean onTap(int index) {
-		
-		if(mItem != null) {
-			mListener.onClick(mItem.stampPin);
-		}
-		
-		
-		return true;
 	}
 	
 	
