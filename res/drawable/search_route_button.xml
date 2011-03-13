@@ -2,15 +2,15 @@
 	<item android:state_window_focused="false" android:state_enabled="true"
         android:drawable="@drawable/search_route_button_normal" />
    	<item android:state_window_focused="false" android:state_enabled="false"
-        android:drawable="@drawable/search_route_button_disable" />
+        android:drawable="@drawable/location_info_button_disable" />
     <item android:state_pressed="true" 
-        android:drawable="@drawable/search_route_button_pressed" />
+        android:drawable="@drawable/location_info_button_pressed" />
     <item android:state_focused="true" android:state_enabled="true"
         android:drawable="@drawable/search_route_button_selected" />
     <item android:state_enabled="true"
         android:drawable="@drawable/search_route_button_normal" />
     <item android:state_focused="true"
-        android:drawable="@drawable/search_route_button_disable_focused" />
+        android:drawable="@drawable/location_info_button_disable_focused" />
     <item
-         android:drawable="@drawable/search_route_button_disable" />
+         android:drawable="@drawable/location_info_button_disable" />
 </selector>
