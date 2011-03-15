@@ -10,6 +10,7 @@ import java.util.Queue;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import jag.kumamoto.apps.gotochi.stamprally.Data.FormatVersionMissMatchException;
 import jag.kumamoto.apps.gotochi.stamprally.Data.QuizChoices;
 import jag.kumamoto.apps.gotochi.stamprally.Data.QuizData;
 import jag.kumamoto.apps.gotochi.stamprally.Data.StampRallyURL;
@@ -266,6 +267,10 @@ public class QuizActivity extends Activity{
 					} catch (JSONException e) {
 						//XXX JSONフォーマットが不正
 						e.printStackTrace();
+					} catch (FormatVersionMissMatchException e) {
+						//サーバからのレスポンスのバージョンがアプリのバージョンと違う
+						//アプリのアップデートを促す
+						ApplicationUpdateDialogHelper.showApplicationUpdateDialog(QuizActivity.this);
 					}
 					
 					return false;

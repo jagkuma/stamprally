@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import jag.kumamoto.apps.gotochi.stamprally.Data.FormatVersionMissMatchException;
 import jag.kumamoto.apps.gotochi.stamprally.Data.QuizData;
 import jag.kumamoto.apps.gotochi.stamprally.Data.StampPin;
 import jag.kumamoto.apps.gotochi.stamprally.Data.StampRallyURL;
@@ -227,6 +228,10 @@ public class LocationInfoActivity extends Activity{
 				} catch (JSONException e) {
 					//XXX JSONフォーマットエラー
 					e.printStackTrace();
+				} catch (FormatVersionMissMatchException e) {
+					//サーバからのレスポンスのバージョンがアプリのバージョンと違う
+					//アプリのアップデートを促す
+					ApplicationUpdateDialogHelper.showApplicationUpdateDialog(LocationInfoActivity.this);
 				}
 				
 				return quizes;
@@ -347,6 +352,10 @@ public class LocationInfoActivity extends Activity{
 				} catch (JSONException e) {
 					//XXX JSONフォーマットが不正
 					e.printStackTrace();
+				} catch (FormatVersionMissMatchException e) {
+					//サーバからのレスポンスのバージョンがアプリのバージョンと違う
+					//アプリのアップデートを促す
+					ApplicationUpdateDialogHelper.showApplicationUpdateDialog(LocationInfoActivity.this);
 				}
 				
 				return false;

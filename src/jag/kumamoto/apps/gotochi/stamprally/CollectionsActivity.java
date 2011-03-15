@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import jag.kumamoto.apps.gotochi.stamprally.Data.FormatVersionMissMatchException;
 import jag.kumamoto.apps.gotochi.stamprally.Data.Prize;
 import jag.kumamoto.apps.gotochi.stamprally.Data.StampRallyURL;
 import jag.kumamoto.apps.gotochi.stamprally.Data.User;
@@ -185,6 +186,10 @@ public class CollectionsActivity extends Activity{
 				} catch (JSONException e) {
 					//XXX JSONフォーマットエラー
 					e.printStackTrace();
+				} catch (FormatVersionMissMatchException e) {
+					//サーバからのレスポンスのバージョンがアプリのバージョンと違う
+					//アプリのアップデートを促す
+					ApplicationUpdateDialogHelper.showApplicationUpdateDialog(CollectionsActivity.this);
 				}
 				
 				if(prizes == null) {

@@ -121,4 +121,8 @@
 <string name="arrive_stamp_arrive_content_format">%sに到着しました。ここをタップして情報を見てみよう</string>
 
 
+<string name="update_dialog_title">アプリケーションの更新</string>
+<string name="update_dialog_message">アプリケーションを更新する必要があります。\n更新はAndroidマーケットから行います。マーケットへ移動後、アプリケーションのアップデートを行ってください。\n（※アップデートを行わないと動作が不安定になる可能性があります)</string>
+<string name="update_dialog_button">マーケットへ</string>
+
 </resources>

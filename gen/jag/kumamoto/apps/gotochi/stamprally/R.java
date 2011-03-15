@@ -300,6 +300,9 @@ public final class R {
         public static final int settings_user_gender_unknown=0x7f05003a;
         public static final int settings_user_nickname=0x7f050035;
         public static final int settings_user_nickname_input_hint=0x7f050036;
+        public static final int update_dialog_button=0x7f050067;
+        public static final int update_dialog_message=0x7f050066;
+        public static final int update_dialog_title=0x7f050065;
     }
     public static final class style {
         public static final int Custom_Button_Home=0x7f070000;

@@ -31,6 +31,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import jag.kumamoto.apps.gotochi.stamprally.Data.FormatVersionMissMatchException;
 import jag.kumamoto.apps.gotochi.stamprally.Data.StampPin;
 import jag.kumamoto.apps.gotochi.stamprally.Data.StampRallyURL;
 import jag.kumamoto.apps.gotochi.stamprally.Data.User;
@@ -277,6 +278,10 @@ final class UserSettingsHelper {
 				} catch (JSONException e) {
 					//XXX JSONフォーマットが不正
 					e.printStackTrace();
+				} catch (FormatVersionMissMatchException e) {
+					//サーバからのレスポンスのバージョンがアプリのバージョンと違う
+					//アプリのアップデートを促す
+					ApplicationUpdateDialogHelper.showApplicationUpdateDialog(mLayout.getContext());
 				}
 
 				return false;
@@ -373,6 +378,9 @@ final class UserSettingsHelper {
 						case 3:
 							//XXX JSONフォーマットが不正
 							break;
+						case 4:
+							//サーバとの通信フォーマットミスマッチ
+							break;
 						default:
 							return user;
 						}
@@ -388,6 +396,10 @@ final class UserSettingsHelper {
 				} catch (JSONException e) {
 					//XXX JSONフォーマットが不正
 					e.printStackTrace();
+				} catch (FormatVersionMissMatchException e) {
+					//サーバからのレスポンスのバージョンがアプリのバージョンと違う
+					//アプリのアップデートを促す
+					ApplicationUpdateDialogHelper.showApplicationUpdateDialog(mLayout.getContext());
 				}
 				
 				return null;
@@ -526,6 +538,9 @@ final class UserSettingsHelper {
 								case 3:
 									//XXX JSONフォーマットが不正
 									return false;
+								case 4:
+									//サーバとの通信フォーマットのミスマッチ
+									return false;
 								}
 							}
 						}
@@ -541,6 +556,10 @@ final class UserSettingsHelper {
 				} catch (JSONException e) {
 					//XXX JSONフォーマットが不正
 					e.printStackTrace();
+				} catch (FormatVersionMissMatchException e) {
+					//サーバからのレスポンスのバージョンがアプリのバージョンと違う
+					//アプリのアップデートを促す
+					ApplicationUpdateDialogHelper.showApplicationUpdateDialog(mLayout.getContext());
 				}
 
 				return false;
@@ -723,6 +742,11 @@ final class UserSettingsHelper {
 			//XXX JSONフォーマットが不正
 			e.printStackTrace();
 			return 3;
+		} catch (FormatVersionMissMatchException e) {
+			//サーバからのレスポンスのバージョンがアプリのバージョンと違う
+			//アプリのアップデートを促す
+			ApplicationUpdateDialogHelper.showApplicationUpdateDialog(mLayout.getContext());
+			return 4;
 		}
 	}
 		

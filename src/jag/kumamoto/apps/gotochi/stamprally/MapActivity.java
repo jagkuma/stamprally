@@ -12,6 +12,7 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 
+import jag.kumamoto.apps.gotochi.stamprally.Data.FormatVersionMissMatchException;
 import jag.kumamoto.apps.gotochi.stamprally.Data.StampPin;
 import jag.kumamoto.apps.gotochi.stamprally.Data.StampRallyURL;
 import jag.kumamoto.apps.gotochi.stamprally.Data.User;
@@ -262,14 +263,18 @@ public class MapActivity extends com.google.android.maps.MapActivity{
 				} catch (JSONException e1) {
 					//XXX JSONフォーマットが不正
 					e1.printStackTrace();
+				} catch (FormatVersionMissMatchException e) {
+					//サーバからのレスポンスのバージョンがアプリのバージョンと違う
+					//アプリのアップデートを促す
+					ApplicationUpdateDialogHelper.showApplicationUpdateDialog(MapActivity.this);
 				}
 				
 				if(pins == null) {
-					pins = new StampPin[0];
+					return null;
+				} else {
+					return new Pair<StampPin[], Pair<StampPin[], StampPin[]>>(pins,
+							StampPin.extractNewAndDeletePins(mStampPins, pins));
 				}
-				
-				return new Pair<StampPin[], Pair<StampPin[], StampPin[]>>(pins,
-						StampPin.extractNewAndDeletePins(mStampPins, pins));
 			}
 			
 			

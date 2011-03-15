@@ -20,6 +20,11 @@ public final class StampRallyURL {
 	
 	
 	/**
+	 * 現在のサーバからのレスポンスフォーマットバージョン
+	 */
+	private static final int CurrentFormatVersion = 1;
+	
+	/**
 	 * ピンの取得
 	 * @return 
 	 */
@@ -141,8 +146,22 @@ public final class StampRallyURL {
 	 * @return
 	 * @throws JSONException
 	 */
-	public static boolean isSuccess(JSONObject obj) throws JSONException {
-		return obj.getString("status").equals("OK") && obj.getString("success").equals("true");
+	public static boolean isSuccess(JSONObject obj) throws JSONException, FormatVersionMissMatchException {
+		boolean success = obj.getString("status").equals("OK") && obj.getString("success").equals("true");
+		if(success) {
+			try {
+				int version = Integer.parseInt(obj.getString("version"), 10);
+				if(version != CurrentFormatVersion) {
+					throw new FormatVersionMissMatchException();
+				}
+			} catch (NumberFormatException e){
+				e.printStackTrace();
+				return false;
+			}
+			
+			return true;
+		}
+		return false;
 	}
 		
 }
