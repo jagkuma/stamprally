@@ -183,7 +183,7 @@ public class LocationInfoActivity extends Activity{
 	private String getInfomationURL(StampPin pin) {
 		return (pin.url != null && !pin.url.equals("") && !pin.url.equals("null")) ?
 				pin.url :
-				new StringBuilder("http://ja.wikipedia.org/wiki/")
+				new StringBuilder("http://ja.m.wikipedia.org/wiki/")
 					.append(URLEncoder.encode(pin.name))
 					.toString();
 	}
