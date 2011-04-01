@@ -277,7 +277,9 @@ public class StampPinOverlay extends ItemizedOverlay<StampPinOverlay.StampRallyM
 	}
 	
 	@Override public boolean onDown(MotionEvent e) {
-		return true;
+		
+		//NexusOne(2.2.2)ではtrueを返すと謎挙動を示すようなのでfalseに修正
+		return false;
 	}
 	
 	@Override public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
