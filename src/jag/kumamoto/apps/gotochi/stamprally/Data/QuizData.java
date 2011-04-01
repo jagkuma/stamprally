@@ -1,5 +1,6 @@
 package jag.kumamoto.apps.gotochi.stamprally.Data;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,21 +54,49 @@ public final class QuizData implements Parcelable{
 		
 		int count = jsonQuizes.length();
 		QuizData[] quizes = new QuizData[count];
+		
+		int actualCount = 0;
 		for(int i = 0;i < count;++i) {
 			JSONObject jsonQuiz = jsonQuizes.getJSONObject(i);
 			
 			final long id = jsonQuiz.getJSONObject(JsonNameKey).getLong(JsonNameID);
 			final long pinId = jsonQuiz.getJSONObject(JsonNamePinKey).getLong(JsonNameID);
-			final String title = jsonQuiz.getString(JsonNameTitle);
-			final String html = jsonQuiz.getString(JsonNameHTML);
-			final int point = jsonQuiz.getInt(JsonNamePoint);
-			final int order = jsonQuiz.getInt(JsonNameOrder);
-			final QuizChoices choices = QuizChoices.decodeJSONArray(jsonQuiz.getJSONArray(JsonNameChoices));
+			String title = jsonQuiz.getString(JsonNameTitle);
+			final String html = constractHTML(jsonQuiz.getString(JsonNameHTML));
+			final int point = jsonQuiz.isNull(JsonNamePoint) ? 1 :  jsonQuiz.getInt(JsonNamePoint);
+			final int order = jsonQuiz.isNull(JsonNameOrder) ? 0 : jsonQuiz.getInt(JsonNameOrder);
 			
-			quizes[i] = new QuizData(id, pinId, title, html, point, order, choices);
+			try {
+				final QuizChoices choices = QuizChoices.decodeJSONArray(jsonQuiz.getJSONArray(JsonNameChoices));
+				quizes[actualCount] = new QuizData(id, pinId, title, html, point, order, choices);
+				++actualCount;
+			}catch(JSONException e) {
+				//とりあえず握りつぶす
+			}
+		}
+		
+		if(count != actualCount)
+		{
+			QuizData[] tmp = new QuizData[actualCount];
+			for(int i = 0;i < actualCount;++i)
+				tmp[i] = quizes[i];
+			
+			quizes = tmp;
 		}
 		
 		return quizes;
+	}
+	
+	private static String constractHTML(String html)
+	{
+		if(html.trim().startsWith("<html"))
+			return html;
+		else
+		{
+			return String.format(
+					"<html xmlns=\"_http://www.w3.org/1999/xhtml\"><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"> <meta http-equiv=\"Content-Style-Type\" content=\"text/css\"> </head><body>%s</body></html>",
+					html);
+		}
 	}
 
 	
