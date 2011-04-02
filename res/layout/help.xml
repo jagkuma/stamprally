@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<WebView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id_help/webview"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-/>
+>
+	<WebView 
+		android:id="@+id_help/webview"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		/>
+		
+	<ProgressBar android:id="@+id_help/progress"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="top|center_horizontal"
+		android:layout_marginTop="5dip"
+		android:layout_marginLeft="15dip"
+		android:layout_marginRight="15dip"
+		android:max="100"
+		style="?android:attr/progressBarStyleHorizontal"
+		/>
+</FrameLayout>	

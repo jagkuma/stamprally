@@ -90,6 +90,7 @@ public final class R {
         public static final int user_name=0x7f080000;
     }
     public static final class id_help {
+        public static final int progress=0x7f090001;
         public static final int webview=0x7f090000;
     }
     public static final class id_home {

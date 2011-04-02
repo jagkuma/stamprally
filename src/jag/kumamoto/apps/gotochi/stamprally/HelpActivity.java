@@ -1,12 +1,12 @@
 package jag.kumamoto.apps.gotochi.stamprally;
 
-import java.io.IOException;
-
-import aharisu.util.DataGetter;
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 
 /**
  * 
@@ -16,6 +16,7 @@ import android.webkit.WebView;
  *
  */
 public class HelpActivity extends Activity {
+	private static final String URL = "http://kumamotogotochi.appspot.com/apps/gotochi/stamprally/help";
 	
 	@Override protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,14 +24,24 @@ public class HelpActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.help);
 		
-		try {
-			((WebView)findViewById(R.id_help.webview)).loadData(
-					DataGetter.getHTML(this, R.raw.help),
-					"text/html",
-					"utf-8");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		WebView webView = (WebView)findViewById(R.id_help.webview);
+		webView.loadUrl(URL);
+		webView.setWebChromeClient(new WebChromeClient() {
+			public void onProgressChanged(WebView view, int newProgress) {
+				ProgressBar progress = (ProgressBar)findViewById(R.id_help.progress);
+				if(newProgress < 100) {
+					if(progress.getVisibility() == View.GONE) {
+						progress.setVisibility(View.VISIBLE);
+					}
+					
+					progress.setProgress(newProgress);
+				} else {
+					progress.setVisibility(View.GONE);
+				}
+			}
+		});
+			
+		
 	}
 	
 
