@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="app_name">熊本スタンプラリー</string>
+<string name="app_name">熊本ご当地アプリ</string>
 
 
 <string name="common_ok">OK</string>
@@ -10,7 +10,7 @@
 <string name="common_not_show_next_time">次回から表示しない</string>
 <string name="common_login">ログインする</string>
 <string name="common_no_login">ログインしていません</string>
-<string name="common_can_modify_option_on_settings">設定画面でこのオプションを変更することだできます</string>
+<string name="common_can_modify_option_on_settings">設定画面でこのオプションを変更することができます</string>
 <string name="common_communication_failure">あれ?ネットワークの調子がおかしいぞ\n設定を変更するか時間をおいて実行してください</string>
 
 
