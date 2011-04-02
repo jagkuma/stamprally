@@ -79,10 +79,10 @@ public final class StampPin implements Parcelable{
 			final int latitude = jsonPin.getInt(JsonNameLatitude);
 			final int longitude = jsonPin.getInt(JsonNameLongitude);
 			final String name = jsonPin.getString(JsonNameName);
-			final int point = jsonPin.getInt(JsonNamePoint);
-			final int prefCode = jsonPin.getInt(JsonNamePrefCode);
-			final int areaCode = jsonPin.getInt(JsonNameAreaCode);
-			final int type = jsonPin.getInt(JsonNameType);
+			final int point = jsonPin.isNull(JsonNamePoint) ? 1 : jsonPin.getInt(JsonNamePoint);
+			final int prefCode = jsonPin.isNull(JsonNamePrefCode) ? 43 : jsonPin.getInt(JsonNamePrefCode);
+			final int areaCode = jsonPin.isNull(JsonNameAreaCode) ? 1 : jsonPin.getInt(JsonNameAreaCode);
+			final int type = jsonPin.isNull(JsonNameType) ? STAMP_TYPE_NONE : jsonPin.getInt(JsonNameType);
 			final String url = jsonPin.getString(JsonNameURL);
 			
 			pins[i] = new StampPin(id, latitude, longitude, name, point, prefCode, areaCode, type, url, false);
