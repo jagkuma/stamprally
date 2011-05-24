@@ -2,6 +2,12 @@
 <resources>
 <string name="app_name">熊本ご当地アプリ</string>
 
+<string name="device_cap_dialog_title">※注意</string>
+<string name="device_cap_dialog_msg">以下の問題によってアプリケーションを起動できません</string>
+<string name="device_cap_network_disable">・ネットワーク接続がありません</string>
+<string name="device_cap_gps_disable">・GPSが無効になっています</string>
+<string name="device_cap_location_disable">・位置情報を取得できません</string>
+
 
 <string name="common_ok">OK</string>
 <string name="common_cancel">キャンセル</string>
@@ -10,6 +16,7 @@
 <string name="common_not_show_next_time">次回から表示しない</string>
 <string name="common_login">ログインする</string>
 <string name="common_no_login">ログインしていません</string>
+<string name="common_settings">設定</string>
 <string name="common_can_modify_option_on_settings">設定画面でこのオプションを変更することができます</string>
 <string name="common_communication_failure">あれ?ネットワークの調子がおかしいぞ\n設定を変更するか時間をおいて実行してください</string>
 

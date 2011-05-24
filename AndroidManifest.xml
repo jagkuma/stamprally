@@ -23,7 +23,9 @@
 		<activity android:launchMode="singleTop" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait" android:name="LocationInfoActivity"></activity>
 		<activity android:name="QuizActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait"></activity>
 		<service android:name="ArriveWatcherService" android:exported="false"></service>
+		<activity android:name="ServiceShowWarningActivity" android:theme="@style/ServiceShowWarning"></activity>
 		<uses-library android:name="com.google.android.maps" />
+		
 
 
 

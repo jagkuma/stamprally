@@ -42,6 +42,13 @@ case INTERFACE_TRANSACTION:
 reply.writeString(DESCRIPTOR);
 return true;
 }
+case TRANSACTION_resetupLocationListener:
+{
+data.enforceInterface(DESCRIPTOR);
+this.resetupLocationListener();
+reply.writeNoException();
+return true;
+}
 case TRANSACTION_showArriveNotification:
 {
 data.enforceInterface(DESCRIPTOR);
@@ -138,6 +145,20 @@ return mRemote;
 public java.lang.String getInterfaceDescriptor()
 {
 return DESCRIPTOR;
+}
+public void resetupLocationListener() throws android.os.RemoteException
+{
+android.os.Parcel _data = android.os.Parcel.obtain();
+android.os.Parcel _reply = android.os.Parcel.obtain();
+try {
+_data.writeInterfaceToken(DESCRIPTOR);
+mRemote.transact(Stub.TRANSACTION_resetupLocationListener, _data, _reply, 0);
+_reply.readException();
+}
+finally {
+_reply.recycle();
+_data.recycle();
+}
 }
 public void showArriveNotification(jag.kumamoto.apps.gotochi.stamprally.Data.StampPin pin) throws android.os.RemoteException
 {
@@ -273,15 +294,17 @@ _data.recycle();
 }
 }
 }
-static final int TRANSACTION_showArriveNotification = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
-static final int TRANSACTION_removeArriveNotification = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
-static final int TRANSACTION_getArrivedStampPins = (android.os.IBinder.FIRST_CALL_TRANSACTION + 2);
-static final int TRANSACTION_changeArriveCheckInterval = (android.os.IBinder.FIRST_CALL_TRANSACTION + 3);
-static final int TRANSACTION_checkArrive = (android.os.IBinder.FIRST_CALL_TRANSACTION + 4);
-static final int TRANSACTION_onLocationChanged = (android.os.IBinder.FIRST_CALL_TRANSACTION + 5);
-static final int TRANSACTION_registerApproachCallback = (android.os.IBinder.FIRST_CALL_TRANSACTION + 6);
-static final int TRANSACTION_unregisterApproachCallback = (android.os.IBinder.FIRST_CALL_TRANSACTION + 7);
+static final int TRANSACTION_resetupLocationListener = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
+static final int TRANSACTION_showArriveNotification = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
+static final int TRANSACTION_removeArriveNotification = (android.os.IBinder.FIRST_CALL_TRANSACTION + 2);
+static final int TRANSACTION_getArrivedStampPins = (android.os.IBinder.FIRST_CALL_TRANSACTION + 3);
+static final int TRANSACTION_changeArriveCheckInterval = (android.os.IBinder.FIRST_CALL_TRANSACTION + 4);
+static final int TRANSACTION_checkArrive = (android.os.IBinder.FIRST_CALL_TRANSACTION + 5);
+static final int TRANSACTION_onLocationChanged = (android.os.IBinder.FIRST_CALL_TRANSACTION + 6);
+static final int TRANSACTION_registerApproachCallback = (android.os.IBinder.FIRST_CALL_TRANSACTION + 7);
+static final int TRANSACTION_unregisterApproachCallback = (android.os.IBinder.FIRST_CALL_TRANSACTION + 8);
 }
+public void resetupLocationListener() throws android.os.RemoteException;
 public void showArriveNotification(jag.kumamoto.apps.gotochi.stamprally.Data.StampPin pin) throws android.os.RemoteException;
 public void removeArriveNotification(long pinId) throws android.os.RemoteException;
 public long[] getArrivedStampPins() throws android.os.RemoteException;

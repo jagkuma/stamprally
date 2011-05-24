@@ -56,6 +56,10 @@ public class ArriveWatcherService extends Service{
 	
 	private final IArriveWatcherService.Stub mStub = new IArriveWatcherService.Stub() {
 		
+		@Override public void resetupLocationListener() throws RemoteException {
+			setupLocationListener();
+		}
+
 		@Override public void showArriveNotification(StampPin pin) throws RemoteException {
 			ArriveWatcherService.this.showArriveNotification(pin);
 		}
@@ -325,6 +329,11 @@ public class ArriveWatcherService extends Service{
 		
 		mLocationProvier = lm.getBestProvider(criteria, true);
 		
+		if(mLocationProvier == null) {
+			criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+			mLocationProvier = lm.getBestProvider(criteria, true);
+		}
+		
 		requestLocationUpdates(StampRallyPreferences.getArrivePollingIntervalType(this));
 	}
 	
@@ -338,7 +347,18 @@ public class ArriveWatcherService extends Service{
 			criteria.setBearingRequired(false);	//方位情報は不要
 			
 			mLocationProvier = lm.getBestProvider(criteria, true);
+			
+			if(mLocationProvier == null) {
+				criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+				mLocationProvier = lm.getBestProvider(criteria, true);
+			}
 		} 
+		
+		if(mLocationProvier == null) {
+			//位置情報取得ができない
+			showLocationProviderWarningActivity();
+			return;
+		}
 		
 		int minTime;
 		float minDistance;
@@ -365,6 +385,16 @@ public class ArriveWatcherService extends Service{
 				minTime,
 				minDistance,
 				mLocationListener);
+	}
+	
+	private void showLocationProviderWarningActivity() {
+		final Context context = getApplicationContext();
+		
+		Intent intent = new Intent(context, ServiceShowWarningActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.putExtra(ServiceShowWarningActivity.WARNING_GPS_DISABLE, true);
+		
+		context.startActivity(intent);
 	}
 	
 	private void stopLocationListener() {

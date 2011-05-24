@@ -5,6 +5,7 @@ import jag.kumamoto.apps.gotochi.stamprally.IApproachPinCallback;
 import android.location.Location;
 
 interface IArriveWatcherService {
+	void resetupLocationListener();
 	void showArriveNotification(in StampPin pin);
 	void removeArriveNotification(long pinId);
 	long[] getArrivedStampPins();
